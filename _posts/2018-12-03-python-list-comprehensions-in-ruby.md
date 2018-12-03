@@ -1,6 +1,7 @@
 ---
 title: Python List Comprehensions... in Ruby?
 layout: post
+tags: [ruby, python]
 ---
 
 ...find the Ruby way.
