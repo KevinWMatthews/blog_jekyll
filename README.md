@@ -5,7 +5,8 @@ A blog about software ideas that I care about. Written using Jekyll.
 
 ## Getting Started
 
-Follow Jekyll's [installation notes](https://jekyllrb.com/docs/installation/ubuntu/).
+I'm following Jekyll's [installation instructions](https://jekyllrb.com/docs/installation/),
+specifically for [Ubuntu Linux](https://jekyllrb.com/docs/installation/ubuntu/).
 
 
 ### System Setup
@@ -35,7 +36,8 @@ $ gem install bundler
 
 If you require root privileges, check and reload your `.bashrc`.
 
-I've been installing jekyll locally using a Gemfile, not to the system.
+Jekyll remcommends installing itself to the system, but I've been
+installing it locally using a Gemfile.
 
 
 ### Create Jekyll Site
