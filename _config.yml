@@ -1,4 +1,7 @@
 theme: minima
 title: blog.kevinwmatthews.com
+author: Kevin W Matthews
+description:
+    In search of well-crafted code.
 header_pages:
     about-me.md
