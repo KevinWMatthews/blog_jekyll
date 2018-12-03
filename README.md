@@ -52,8 +52,10 @@ Create a `Gemfile` with:
 
 ```
 source 'https://rubygems.org'
+
 # For just jekyll:
 gem 'jekyll'
+# gem '<your_theme>'
 
 # For GitHub Pages:
 # gem 'github-pages', group: :jekyll_plugins

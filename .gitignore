@@ -1,3 +1,4 @@
 .bundle/
-vendor/
+.sass-cache/
 _site/
+vendor/
