@@ -3,4 +3,4 @@ layout: home
 title: '{{ blog_name_here }}'
 ---
 
-Tips, tricks, and tests.
+In search of well-crafted code.
