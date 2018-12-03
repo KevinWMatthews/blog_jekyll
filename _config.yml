@@ -6,3 +6,4 @@ description:
 header_pages:
     - about-me.md
     - about-this-blog.md
+permalink: /:title
