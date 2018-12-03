@@ -6,7 +6,7 @@ description:
 header_pages:
     - about-me.md
     - about-this-blog.md
-source: blog
+source: source
 permalink: /:title
 collections:
     posts:
