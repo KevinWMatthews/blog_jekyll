@@ -3,7 +3,7 @@ layout: page
 title: About Me
 ---
 
-## Hello, I'm Kevin.
+# Hello, I'm Kevin.
 
 I write embedded software professionally and web applications on the side.
 
