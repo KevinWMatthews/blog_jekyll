@@ -9,11 +9,13 @@ layout: post
 
 Where is the code? How can I (actually you) run it?
 
-Most code examples are posted on GitHub along with instructions on how to
-compile and run it using CMake/gcc, docker-compose, or Docker.
+Build systems can be complex even for a simple project, so I've handled the details.
 
-Here is a [sample project](https://github.com/KevinWMatthews/c-hello_world/)
-along with [build documentation](https://kevinwmatthews.github.io/c-hello_world/):
+[This project](https://github.com/KevinWMatthews/c-hello_world/) can be built
+with CMake and gcc, docker, or docker-compose.
+See [the docs](https://kevinwmatthews.github.io/c-hello_world/) to learn how.
+
+The project is simple:
 
 ```c
 #include <stdio.h>
@@ -24,5 +26,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
+
+to highlight the techniques used in the setup process.
 
 Welcome and enjoy!
