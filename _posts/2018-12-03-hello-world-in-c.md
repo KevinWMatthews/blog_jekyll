@@ -15,7 +15,7 @@ compile and run it using CMake/gcc, docker-compose, or Docker.
 Here is a [sample project](https://github.com/KevinWMatthews/c-hello_world/)
 along with [build documentation](https://kevinwmatthews.github.io/c-hello_world/):
 
-```C
+```c
 #include <stdio.h>
 
 int main(int argc, char *argv[])

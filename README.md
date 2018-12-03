@@ -85,3 +85,8 @@ Serve your site with:
 ```
 $ bundle exec jekyll serve
 ```
+
+
+## Links
+
+  * Jekyll's [syntax highlighter](https://github.com/jneen/rouge/wiki/List-of-supported-languages-and-lexers)
