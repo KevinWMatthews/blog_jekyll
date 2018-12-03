@@ -8,8 +8,9 @@ layout: post
 
 ## Python List Comprehensions
 
-The Python language has one-line, built-in syntax for creating arrays
-(and also dictionaries and sets).
+The Python language has one-line,
+[built-in syntax](https://python-3-patterns-idioms-test.readthedocs.io/en/latest/Comprehensions.html)
+for creating arrays (and also dictionaries and sets).
 
 ```python
 [x**2 for x in range(0, 10) if x % 2 != 0]
@@ -38,7 +39,7 @@ For each number in the range,
         square the number
 ```
 
-Complex but simple, depending on your point of view. Powerful either way.
+Complex yet simple, depending on your point of view. Powerful either way.
 
 
 ## Ruby Methods
