@@ -7,3 +7,6 @@ header_pages:
     - about-me.md
     - about-this-blog.md
 permalink: /:title
+collections:
+    posts:
+        permalink: /post/:title
