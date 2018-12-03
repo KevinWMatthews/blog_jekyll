@@ -6,8 +6,7 @@ description:
 header_pages:
     - about-me.md
     - about-this-blog.md
-exclude: ["Gemfile", "Gemfile.lock", "node_modules", "vendor/bundle/", "vendor/cache/", "vendor/gems/", "vendor/ruby/",
-    "README.md"]
+source: blog
 permalink: /:title
 collections:
     posts:
