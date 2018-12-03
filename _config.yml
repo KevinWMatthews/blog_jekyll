@@ -4,4 +4,5 @@ author: Kevin W Matthews
 description:
     In search of well-crafted code.
 header_pages:
-    about-me.md
+    - about-me.md
+    - about-this-blog.md
