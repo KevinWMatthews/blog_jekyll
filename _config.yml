@@ -1,5 +1,5 @@
 theme: minima
-title: blog.kevinwmatthews.com
+title: '{{ blog_name_here }}'
 author: Kevin W Matthews
 description:
     In search of well-crafted code.
