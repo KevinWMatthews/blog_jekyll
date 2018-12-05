@@ -7,20 +7,20 @@ layout: default
 			<h1 class="page-heading">{{ page.title }}</h1>
 		{%- endif %}
 
-		{% if page.tag %}
+		{%- if page.tag -%}
 			{% comment %}
 			Do not display content - something I did with the generator causes the
 			content of each successive page to display on the next.
 			{% endcomment %}
-		{% else %}
+		{%- else -%}
 			{{ content }}
-		{% endif %}
+		{%- endif -%}
 
-		{% if page.tag %}
+		{%- if page.tag -%}
 		{% assign posts = site.tags[page.tag] %}
-		{% else %}
+		{%- else -%}
 		{% assign posts = site.posts %}
-		{% endif %}
+		{%- endif -%}
 
 		{%- if posts.size > 0 %}
 			<h2 class="post-list-heading">{{ page.tag | capitalize | default: "Posts" }}</h2>
