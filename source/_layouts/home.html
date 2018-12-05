@@ -28,14 +28,7 @@ layout: default
 			{%- endfor -%}
 		</ul>
 
-		{%- if site.tags.size > 0 -%}
-		<h2 class="post-list-heading">Tags</h2>
-		<ul>
-			{%- for tag in site.tags -%}
-			<li><a href="{{ tag[0] }}">{{ tag[0] }}</a></li>
-			{%- endfor -%}
-		</ul>
-		{%- endif -%}
+		{%- include tag-list.html -%}
 
 		<p class="feed-subscribe"><svg class="svg-icon orange"><use xlink:href="{{ '/assets/minima-social-icons.svg#rss' | relative_url }}"></use></svg><a href="{{ "/feed.xml" | relative_url }}">Subscribe</a></p>
 	{%- endif -%}
