@@ -1,6 +1,7 @@
 theme: minima
 title: '{{ blog_name_here }}'
 author: Kevin W Matthews
+author_url: https://www.kevinwmatthews.com
 description:
     In search of well-crafted code.
 header_pages:
