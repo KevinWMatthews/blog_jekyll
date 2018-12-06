@@ -3,12 +3,12 @@ title: '{{ blog_name_here }}'
 author: Kevin W Matthews
 author_url: https://www.kevinwmatthews.com
 description:
-    In search of well-crafted code.
+  In search of well-crafted code.
 header_pages:
-    - about-me.md
-    - about-this-blog.md
+  - about-me.md
+  - about-this-blog.md
 source: source
 permalink: /:title
 collections:
-    posts:
-        permalink: /post/:title
+  posts:
+    permalink: /post/:title
