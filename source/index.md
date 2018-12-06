@@ -1,6 +1,4 @@
 ---
 layout: home
-title: '{{ blog_name_here }}'
+title: In search of well-crafted code
 ---
-
-In search of well-crafted code.
