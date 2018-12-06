@@ -3,7 +3,7 @@ title: '{{ blog_name_here }}'
 author: Kevin W Matthews
 author_url: https://www.kevinwmatthews.com
 description:
-  In search of well-crafted code.
+  Exploring software developoment and design. Actual code included.
 header_pages:
   - about-me.md
   - about-this-blog.md
