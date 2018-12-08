@@ -1,7 +1,7 @@
 ---
 title: Hello, World in C
 layout: post
-tags: [c, cmake, docker, docker-compose]
+tags: [c, cmake, docker]
 ---
 
 ...and an introduction to this blog.
