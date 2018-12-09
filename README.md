@@ -57,10 +57,9 @@ source 'https://rubygems.org'
 
 # For just jekyll:
 gem 'jekyll'
-# gem '<your_theme>'
 
 # For GitHub Pages:
-# gem 'github-pages', group: :jekyll_plugins
+gem 'github-pages', group: :jekyll_plugins
 ```
 
 Install locally:
@@ -73,8 +72,16 @@ I've been ignoring the post-build messages from `html-pipeline`.
 
 Create `_config.yml`:
 
-```
-# Empty for now
+```yml
+theme: minima
+# I use this for GitHub Pages
+remote_theme: KevinWMatthews/minima
+title: '<your_title>'
+description: Blah blah blah.
+author: Kevin W Matthews
+author_url: https://www.kevinwmatthews.com
+header_pages:
+  - page1.md
 ```
 
 
