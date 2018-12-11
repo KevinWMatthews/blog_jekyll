@@ -4,7 +4,7 @@ module Jekyll
       @site = site
       @base = base
       @tag = tag
-      @name = "#{tag}.html"
+      @name = "/tags/#{tag}.html"
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), 'home.html')
