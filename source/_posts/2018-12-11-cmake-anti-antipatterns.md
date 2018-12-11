@@ -111,7 +111,7 @@ Explanation [here](https://youtu.be/bsXLMQ6WgIk?t=1577).
 ## Resources
 
   * [GitBook Docs](https://cliutils.gitlab.io/modern-cmake/)
-  * [Offical docs intro](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html)
+  * [Offical docs intro](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#introduction)
   * [Official docs index page](https://cmake.org/cmake/help/latest/)
   * Video of [Daniel Pfeiffer](https://youtu.be/bsXLMQ6WgIk)'s excellent talk at at C++Now 2017, with [slides](https://www.slideshare.net/DanielPfeifer1/effective-cmake)
   * Video of [Mathieu Ropert](https://youtu.be/eC9-iRN2b04) at CppCon 2017
