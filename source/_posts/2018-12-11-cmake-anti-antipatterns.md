@@ -4,9 +4,7 @@ layout: post
 tags: [cmake]
 ---
 
-...what to do right. Find working source code
-[at this dead link]() or check out
-[the docs]().
+...what to do right.
 
 
 ## Why Anti-Antipatterns?
