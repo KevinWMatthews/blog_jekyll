@@ -31,7 +31,7 @@ To specify compiler attributes (such as the language standard), use
 ```cmake
 target_compile_features(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
-    <feature>
+        <feature>
 )
 ```
 
@@ -48,7 +48,7 @@ To add `-I` or `-isystem` flags, use [target_include_directories()](https://cmak
 ```cmake
 target_include_directories(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
-    "path/to/directory"
+        "path/to/directory"
 )
 ```
 This will pass `-Ipath/to/directory` to the preprocessor.
@@ -61,7 +61,7 @@ To add `-D` flags, use
 ```cmake
 target_compile_definitions(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
-    OPTION
+        OPTION
 )
 ```
 
