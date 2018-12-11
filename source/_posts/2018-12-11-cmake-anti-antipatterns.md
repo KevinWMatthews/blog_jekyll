@@ -27,7 +27,7 @@ bleed over to others.
 ### Set Compiler Features
 
 To specify compiler attributes (such as the language standard), use
-[target_compile_features()](https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html#prop_gbl:CMAKE_C_KNOWN_FEATURES):
+[target_compile_features()](https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html#CMAKE_C_KNOWN_FEATURES):
 ```cmake
 target_compile_features(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
@@ -37,14 +37,14 @@ target_compile_features(TARGET
 
 This will translate the feature into the flag that is appropriate for the compiler.
 These are complete lists of
-[C features](https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html#prop_gbl:CMAKE_C_KNOWN_FEATURES)
+[C features](https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html#CMAKE_C_KNOWN_FEATURES)
 and
-[C++ features](https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_CXX_KNOWN_FEATURES.html#prop_gbl:CMAKE_CXX_KNOWN_FEATURES).
+[C++ features](https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_CXX_KNOWN_FEATURES.html#CMAKE_CXX_KNOWN_FEATURES).
 
 
 ### Set Include Flags
 
-To add `-I` or `-isystem` flags, use [target_include_directories()](https://cmake.org/cmake/help/latest/command/target_include_directories.html#command:target_include_directories):
+To add `-I` or `-isystem` flags, use [target_include_directories()](https://cmake.org/cmake/help/latest/command/target_include_directories.html#target_include_directories):
 ```cmake
 target_include_directories(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
@@ -57,7 +57,7 @@ This will pass `-Ipath/to/directory` to the preprocessor.
 ### Set Compile Definitions
 
 To add `-D` flags, use
-[target_compile_definitions()](https://cmake.org/cmake/help/latest/command/target_compile_definitions.html#command:target_compile_definitions):
+[target_compile_definitions()](https://cmake.org/cmake/help/latest/command/target_compile_definitions.html#target_compile_definitions):
 ```cmake
 target_compile_definitions(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
@@ -72,7 +72,7 @@ yourself.
 ### Set Compile Options
 
 To pass other compiler flags, use
-[target_compile_options()](https://cmake.org/cmake/help/latest/command/target_compile_options.html#command:target_compile_options):
+[target_compile_options()](https://cmake.org/cmake/help/latest/command/target_compile_options.html#target_compile_options):
 ```cmake
 target_compile_options(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
@@ -92,7 +92,7 @@ will pass `-Wall` to the compiler.
 ### Link Libraries
 
 To link against a library, use
-[target_link_libraries()](https://cmake.org/cmake/help/latest/command/target_link_libraries.html#command:target_link_libraries):
+[target_link_libraries()](https://cmake.org/cmake/help/latest/command/target_link_libraries.html#target_link_libraries):
 ```cmake
 target_link_libraries(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
