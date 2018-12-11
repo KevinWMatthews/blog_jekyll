@@ -27,7 +27,7 @@ bleed over to others.
 ### Set Compiler Features
 
 To specify compiler attributes (such as the language standard), use
-[target_compile_features()](https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html#CMAKE_C_KNOWN_FEATURES):
+[target_compile_features()](https://cmake.org/cmake/help/latest/command/target_compile_features.html):
 ```cmake
 target_compile_features(TARGET
     [PUBLIC/PRIVATE/INTERFACE]
