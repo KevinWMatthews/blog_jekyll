@@ -3,9 +3,13 @@ layout: default
 ---
 
 <div class="home">
-		{%- if page.title %}
-			<h1 class="page-heading">{{ page.title }}</h1>
-		{%- endif %}
+		<h1 class="page-heading">
+			{%- if page.tag -%}
+			Topic: {{ page.tag }}
+			{%- else -%}
+			{{ page.title }}
+			{%- endif -%}
+		</h1>
 
 		{%- if page.tag -%}
 			{% comment %}
@@ -23,7 +27,7 @@ layout: default
 		{%- endif -%}
 
 		{%- if posts.size > 0 %}
-			<h2 class="post-list-heading">{{ page.tag | capitalize | default: "Posts" }}</h2>
+			<h2 class="post-list-heading">Posts</h2>
 			<ul class="post-list">
 				{%- for post in posts %}
 				<li>
