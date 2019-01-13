@@ -1,6 +1,6 @@
 ---
 title: Test Driven Development in C
-layout: post
+layout: single
 tags: [c, cpputest, tdd, cmake, docker]
 ---
 

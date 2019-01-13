@@ -1,6 +1,6 @@
 ---
 title: CMake Anti-Antipatterns
-layout: post
+layout: single
 tags: [cmake]
 ---
 

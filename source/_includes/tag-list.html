@@ -1,9 +1,0 @@
-			{%- if site.tags.size > 0 %}
-			<h2 class="post-list-heading">Topics</h2>
-			<p>Filter posts by an individual topic:</p>
-			<ul>
-				{%- for tag in site.tags %}
-				<li><a href="/tags/{{ tag[0] }}">{{ tag[0] }}</a></li>
-				{%- endfor %}
-			</ul>
-			{% endif -%}

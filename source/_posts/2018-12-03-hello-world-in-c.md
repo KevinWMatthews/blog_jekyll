@@ -1,6 +1,6 @@
 ---
 title: Hello, World in C
-layout: post
+layout: single
 tags: [c, cmake, docker]
 ---
 
