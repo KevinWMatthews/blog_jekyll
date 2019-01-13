@@ -4,7 +4,7 @@ permalink: /about-this-blog/
 
 # What is this all about?
 
-This series of posts is about good practices in software development.
+This blog explores good practices in software development.
 
 The examples are built around design patterns, testing strategies, language
 semantics, and third-party libraries.
