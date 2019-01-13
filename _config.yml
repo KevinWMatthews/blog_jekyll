@@ -13,10 +13,11 @@ exclude:
   - Gemfile.lock
   - README.md
   - vendor
-
 category_archive:
   type: liquid
   path: /categories/
 tag_archive:
   type: liquid
   path: /tags/
+search: true
+search_full_content: true
