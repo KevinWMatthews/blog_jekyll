@@ -1,5 +1,4 @@
 ---
-title: About This Blog
 permalink: /about-this-blog/
 ---
 
