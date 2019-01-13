@@ -1,7 +1,10 @@
 ---
 title: CMake Anti-Antipatterns
 layout: single
-tags: [cmake]
+categories:
+  - CMake
+tags:
+  - cmake
 ---
 
 ...what to do right.

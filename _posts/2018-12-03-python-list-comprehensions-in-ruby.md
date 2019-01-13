@@ -1,7 +1,11 @@
 ---
 title: Python List Comprehensions... in Ruby?
 layout: single
-tags: [ruby, python]
+categories:
+  - ruby
+tags:
+  - ruby
+  - python
 ---
 
 ...find the Ruby way.

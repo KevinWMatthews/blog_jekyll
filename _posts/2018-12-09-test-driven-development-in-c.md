@@ -1,7 +1,14 @@
 ---
 title: Test Driven Development in C
 layout: single
-tags: [c, cpputest, tdd, cmake, docker]
+categories:
+  - TDD
+tags:
+  - c
+  - cpputest
+  - tdd
+  - cmake
+  - docker
 ---
 
 ...a short introduction. Find working source code [on Github](https://github.com/KevinWMatthews/c-cpputest_intro) or check out

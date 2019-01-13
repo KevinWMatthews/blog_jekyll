@@ -1,7 +1,13 @@
 ---
 title: Hello, World in C
 layout: single
-tags: [c, cmake, docker]
+permalink: /c-hello-world/
+categories:
+  - C
+tags:
+  - c
+  - cmake
+  - docker
 ---
 
 ...and an introduction to this blog. Find working source code
