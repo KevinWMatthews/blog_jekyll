@@ -1,4 +1,8 @@
 main:
+  - title: "Posts by Tag"
+    url: /tags/
+  - title: "Posts by Category"
+    url: /categories/
   - title: "About Me"
     url: /about-me/
   - title: "About This Blog"
