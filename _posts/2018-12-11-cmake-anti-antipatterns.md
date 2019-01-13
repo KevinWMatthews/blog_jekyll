@@ -6,7 +6,7 @@ tags:
   - cmake
 ---
 
-...what to do right.
+Cheat sheet for modern CMake, ignoring the old way.
 
 
 ## Why Anti-Antipatterns?

@@ -9,7 +9,9 @@ tags:
   - docker
 ---
 
-...and an introduction to this blog. Find working source code
+An introduction to compiling and running C example code from this blog.
+
+Find working source code
 [on GitHub](https://github.com/KevinWMatthews/c-hello_world/) or check out
 [the docs](https://kevinwmatthews.github.io/c-hello_world/).
 

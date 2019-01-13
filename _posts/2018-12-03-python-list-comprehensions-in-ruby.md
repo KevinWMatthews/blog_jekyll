@@ -7,7 +7,7 @@ tags:
   - python
 ---
 
-...find the Ruby way.
+Find Ruby's analogue for Python's built-in list creation feature.
 
 
 ## Python List Comprehensions

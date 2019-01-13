@@ -10,8 +10,10 @@ tags:
   - docker
 ---
 
-...a short introduction. Find working source code [on Github](https://github.com/KevinWMatthews/c-cpputest_intro) or check out
-[the docs](https://kevinwmatthews.github.io/c-cpputest_intro/).
+An introduction to testing C code using CppUTest.
+
+Find working source code [on Github](https://github.com/KevinWMatthews/c-cpputest_intro)
+or check out [the docs](https://kevinwmatthews.github.io/c-cpputest_intro/).
 
 
 ## CppUTest?
