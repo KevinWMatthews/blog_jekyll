@@ -4,11 +4,12 @@ author: Kevin W Matthews
 author_url: https://www.kevinwmatthews.com
 description:
   Exploring software development and design. Actual code included.
-header_pages:
-  - about-me.md
-  - about-this-blog.md
-source: source
-permalink: /:title
-collections:
-  posts:
-    permalink: /post/:title
+include:
+  - _pages
+exclude:
+  - .bundle
+  - .sass-cache
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
