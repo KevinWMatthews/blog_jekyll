@@ -1,6 +1,5 @@
 ---
 title: Hello, World in C
-layout: single
 permalink: /c-hello-world/
 categories:
   - C

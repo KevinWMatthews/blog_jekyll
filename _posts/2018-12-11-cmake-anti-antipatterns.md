@@ -1,6 +1,5 @@
 ---
 title: CMake Anti-Antipatterns
-layout: single
 categories:
   - CMake
 tags:

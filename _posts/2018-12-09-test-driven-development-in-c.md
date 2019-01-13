@@ -1,6 +1,5 @@
 ---
 title: Test Driven Development in C
-layout: single
 categories:
   - TDD
 tags:
