@@ -1,4 +1,4 @@
-theme: minima
+theme: minimal-mistakes-jekyll
 title: '{{ blog_name_here }}'
 author: Kevin W Matthews
 author_url: https://www.kevinwmatthews.com

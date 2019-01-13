@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem 'jekyll'
-group :jekyll_plugins do
-    gem 'jekyll-tidy'
-end
-gem 'minima'
+gem 'minimal-mistakes-jekyll'
+#group :jekyll_plugins do
+#    gem 'jekyll-tidy'
+#end
