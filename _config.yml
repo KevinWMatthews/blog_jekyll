@@ -44,3 +44,7 @@ tag_archive:
 # Site search
 search: true
 search_full_content: true
+
+# Pagination for index page
+paginate: 5
+paginate_path: /page:num/
