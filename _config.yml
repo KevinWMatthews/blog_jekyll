@@ -51,6 +51,7 @@ defaults:
       type: posts
     values:
       layout: single
+      author_profile: true
 
 # Post archives
 category_archive:

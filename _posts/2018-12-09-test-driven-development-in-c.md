@@ -1,5 +1,8 @@
 ---
-title: Test Driven Development in C
+title: &title TDD in C
+toc_label: *title
+toc: true
+toc_sticky: true
 categories:
   - TDD
 tags:
@@ -10,13 +13,13 @@ tags:
   - docker
 ---
 
-An introduction to testing C code using CppUTest.
+An introduction to Test Driven Development in C code using CppUTest.
 
 Find working source code [on Github](https://github.com/KevinWMatthews/c-cpputest_intro)
 or check out [the docs](https://kevinwmatthews.github.io/c-cpputest_intro/).
 
 
-## CppUTest?
+## Introduction
 
 [CppUTest](http://cpputest.github.io/) is a unit testing framework tailored for embedded C applications. It's
 written in C++ (hence "Cpp") but requires little working knowledge of that language.

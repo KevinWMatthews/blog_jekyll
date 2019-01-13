@@ -1,5 +1,8 @@
 ---
-title: CMake Anti-Antipatterns
+title: &title CMake Anti-Antipatterns
+toc_label: *title
+toc: true
+toc_sticky: true
 categories:
   - CMake
 tags:
