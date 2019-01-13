@@ -4,7 +4,7 @@ permalink: /about-me/
 
 # Hello, I'm Kevin.
 
-I write embedded software professionally and web applications on the side.
+I a software developer for embedded systems.
 
 Most of my daily work is in C and Python but I've used and studied C++, Ruby,
 JavaScript, and a little bit of Rust.

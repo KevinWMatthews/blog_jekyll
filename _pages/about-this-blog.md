@@ -4,13 +4,11 @@ permalink: /about-this-blog/
 
 # What is this all about?
 
-This blog explores good practices in software development.
+This blog is an outlet for my growth as a software developer - a collection of
+ideas on how to craft quality code.
 
-The examples are built around design patterns, testing strategies, language
-semantics, and third-party libraries.
-
-It is a collection of what I've had occasion to learn, so there is a bias toward
-embedded systems.
+The examples center around design patterns, testing strategies, and how
+these vary between languages.
 
 The goal of each post is to actually do the thing in question, so
 code examples are part of working projects. These are available
