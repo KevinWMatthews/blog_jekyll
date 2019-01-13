@@ -21,6 +21,15 @@ author:
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/KevinWMatthews"
 
+footer:
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/KevinWMatthews"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/kevinwmatthews"
+
 # Files to serve
 include:
   - _pages
