@@ -1,6 +1,7 @@
 ---
 layout: single
 title: About Me
+permalink: /about-me/
 ---
 
 # Hello, I'm Kevin.
