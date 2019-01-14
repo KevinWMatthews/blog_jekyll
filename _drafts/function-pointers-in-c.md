@@ -1,6 +1,6 @@
 ---
-title: &title Function Pointers in C
-permalink: /funtion-pointers-in-c/
+title: &title "Function Pointers in C: Basic Syntax"
+permalink: /funtion-pointers-in-c-basic-syntax/
 toc_label: *title
 toc: true
 toc_sticky: true
@@ -10,16 +10,13 @@ tags:
   - c
 ---
 
-Syntax cheatsheet for function pointers.
+Function pointers are one of the few methods that C provides for executing
+generic behavior. They can be used for dependency injection and so
+are a powerful tool for managing dependencies within a project.
 
+This is the first of a four-part series on function pointers.
 Find source code and documentation
 [on GitHub](https://github.com/KevinWMatthews/c-function_pointers).
-
-
-## Introduction
-
-Function pointers are one of the few methods that C provides for indirection.
-They can be used for dependency injection/inversion.
 
 
 ## Basic Syntax
