@@ -40,9 +40,9 @@ return_value (*function_name)(parameter_list)
 There are two additions, both required:
 
   * Pointer operator `*`
-  * Parenthesis `()`
+  * Parentheses `()`
 
-The parenthesis are for scope - they prevent the pointer operator from being
+The parentheses are for scope - they prevent the pointer operator from being
 associated with the return type.
 
 An example declaration is:
@@ -52,8 +52,8 @@ int actual_function(char parameter)
 int (*function_pointer)(char parameter)
 ```
 
-The mechanism is simple: wrap the function name in parenthesis, then add a star
-inside the parenthesis to create a pointer.
+The mechanism is simple: wrap the function name in parentheses, then add a star
+inside the parentheses to create a pointer.
 
 
 ### In Declarations
@@ -86,7 +86,7 @@ int (*function_pointer)(char *parameter);
 
 ### With Pointer Return Types
 
-Functions can also return pointers. This is why parenthesis are required - they distinguish between the two `*` operators:
+Functions can also return pointers. This is why parentheses are required - they distinguish between the two `*` operators:
 ```c
 // Returns a pointer to an int
 int *actual_function(void);
@@ -95,8 +95,8 @@ int *actual_function(void);
 int *(*function_pointer)(void);
 ```
 
-The substitution is still the same: wrap the function name in parenthesis,
-then add a star inside the parenthesis.
+The substitution is still the same: wrap the function name in parentheses,
+then add a star inside the parentheses.
 
 ### With Pointer Argument and Return Types
 
@@ -156,4 +156,4 @@ int pthread_create(pthread_t *thread,
 So many stars!
 
 The key to deciphering this is to start reading at the most deeply nested
-parenthesis and read outward.
+parentheses and read outward.
