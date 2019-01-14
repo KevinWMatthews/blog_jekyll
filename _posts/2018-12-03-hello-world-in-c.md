@@ -2,7 +2,7 @@
 title: Hello, World in C
 permalink: /c-hello-world/
 categories:
-  - C
+  - c
 tags:
   - c
   - cmake

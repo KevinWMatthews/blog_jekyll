@@ -4,7 +4,7 @@ toc_label: *title
 toc: true
 toc_sticky: true
 categories:
-  - CMake
+  - cmake
 tags:
   - cmake
 ---

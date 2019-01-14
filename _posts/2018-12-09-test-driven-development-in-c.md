@@ -4,7 +4,8 @@ toc_label: *title
 toc: true
 toc_sticky: true
 categories:
-  - TDD
+  - tdd
+  - c
 tags:
   - c
   - cpputest
