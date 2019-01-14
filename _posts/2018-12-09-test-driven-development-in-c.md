@@ -1,5 +1,6 @@
 ---
 title: &title TDD in C
+permalink: /test-driven-development-in-c/
 toc_label: *title
 toc: true
 toc_sticky: true

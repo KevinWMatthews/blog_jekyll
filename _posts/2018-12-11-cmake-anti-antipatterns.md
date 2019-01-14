@@ -1,5 +1,6 @@
 ---
 title: &title CMake Anti-Antipatterns
+permalink: /cmake-anti-antipatterns/
 toc_label: *title
 toc: true
 toc_sticky: true

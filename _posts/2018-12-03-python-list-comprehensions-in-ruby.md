@@ -1,5 +1,6 @@
 ---
 title: Python List Comprehensions... in Ruby?
+permalink: /python-list-comprehensions-in-ruby/
 categories:
   - ruby
 tags:

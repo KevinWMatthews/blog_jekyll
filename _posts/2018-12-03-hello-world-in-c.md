@@ -1,6 +1,6 @@
 ---
 title: Hello, World in C
-permalink: /c-hello-world/
+permalink: /hello-world-in-c/
 categories:
   - c
 tags:
