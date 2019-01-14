@@ -12,6 +12,10 @@ tags:
 
 Syntax cheatsheet for function pointers.
 
+Find source code and documentation
+[on GitHub](https://github.com/KevinWMatthews/c-function_pointers).
+
+
 ## Introduction
 
 Function pointers are one of the few methods that C provides for indirection.
