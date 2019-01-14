@@ -8,11 +8,12 @@ categories:
   - c
 tags:
   - c
+  - function-pointers
 ---
 
-Function pointers are one of the few methods that C provides for executing
-generic behavior. They can be used for dependency injection and so
-are a powerful tool for managing dependencies within a project.
+Function pointers are one of the few mechanisms that C provides for executing
+generic behavior. They can be used to implement dependency injection and thus
+can be a powerful tool for managing dependencies within a project.
 
 This is the first of a four-part series on function pointers.
 Find source code and documentation
@@ -49,8 +50,21 @@ int actual_function(char parameter)
 int (*function_pointer)(char parameter)
 ```
 
-The mechanism is simple: wrap the function name in parentheses, then add a star
-inside the parentheses to create a pointer.
+The conversion mechanism is simple: wrap the function name in parentheses,
+then add a star inside the parentheses (before the name) to create a pointer.
+
+Recognizing function pointers is a skill in its own right. They always follow
+the same pattern, which you can learn to recognize:
+
+```c
+// Neighboring parentheses with a pointer in the first
+(*)()
+```
+
+If you notice this, look for a return value and parameter list.
+
+Keep in mind the trick for reading C in general: find the most deeply nested set
+of parentheses, then work outward from there.
 
 
 ### In Declarations
@@ -152,5 +166,26 @@ int pthread_create(pthread_t *thread,
 ```
 So many stars!
 
-The key to deciphering this is to start reading at the most deeply nested
-parentheses and read outward.
+
+## Summary
+
+Function pointer syntax is based on a pattern:
+```c
+(*)()
+```
+
+This pattern is expanded to:
+```c
+return_value (*function_name)(parameter_list)
+```
+
+To write function pointers, use an existing function signature as a basis and then:
+  * wrap the function name in parentheses
+  * put a star inside the parentheses (before the name)
+
+To read function pointers, learn to recognize this pattern:
+  * neighboring parentheses
+  * a pointer in the first set
+
+Remember the trick for reading: start at the most deeply nested
+parentheses and work outward.
