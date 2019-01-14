@@ -1,14 +1,79 @@
-theme: minima
+theme: minimal-mistakes-jekyll
+
+# Site settings
 title: '{{ blog_name_here }}'
-author: Kevin W Matthews
-author_url: https://www.kevinwmatthews.com
-description:
-  Exploring software development and design. Actual code included.
-header_pages:
-  - about-me.md
-  - about-this-blog.md
-source: source
-permalink: /:title
-collections:
-  posts:
-    permalink: /post/:title
+name: &name Kevin W Matthews
+description: &description Exploring software development and design. Actual code included.
+
+# Site author
+author:
+  name: *name
+  avatar: "/assets/images/me.jpg"
+  bio: "Embedded developer by day, aspiring polyglot by night."
+  links:
+    - label: "Kevin W Matthews"
+      icon: "fas fa-fw fa-link"
+      url: "https://www.kevinwmatthews.com"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/kevinwmatthews"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/KevinWMatthews"
+
+footer:
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/KevinWMatthews"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/kevinwmatthews"
+
+# Files to serve
+include:
+  - _pages
+exclude:
+  - .bundle
+  - .sass-cache
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+
+# Default settings
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: home
+      author_profile: true
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+
+# Post archives
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+# Site search
+search: true
+search_full_content: true
+
+# Pagination for index page
+paginate: 5
+paginate_path: /page:num/

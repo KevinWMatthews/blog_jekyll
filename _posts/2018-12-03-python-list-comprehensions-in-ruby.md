@@ -1,10 +1,13 @@
 ---
 title: Python List Comprehensions... in Ruby?
-layout: post
-tags: [ruby, python]
+categories:
+  - ruby
+tags:
+  - ruby
+  - python
 ---
 
-...find the Ruby way.
+Find Ruby's analogue for Python's built-in list creation feature.
 
 
 ## Python List Comprehensions

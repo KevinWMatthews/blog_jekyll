@@ -1,10 +1,15 @@
 ---
-title: CMake Anti-Antipatterns
-layout: post
-tags: [cmake]
+title: &title CMake Anti-Antipatterns
+toc_label: *title
+toc: true
+toc_sticky: true
+categories:
+  - CMake
+tags:
+  - cmake
 ---
 
-...what to do right.
+Cheat sheet for modern CMake, ignoring the old way.
 
 
 ## Why Anti-Antipatterns?
