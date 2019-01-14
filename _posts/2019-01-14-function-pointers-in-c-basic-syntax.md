@@ -1,6 +1,7 @@
 ---
 title: &title "Function Pointers in C: Basic Syntax"
 permalink: /funtion-pointers-in-c-basic-syntax/
+excerpt: Introduction to function pointer syntax in C. Part 1 of 4.
 toc_label: *title
 toc: true
 toc_sticky: true
@@ -12,7 +13,7 @@ tags:
 ---
 
 Function pointers are one of the few mechanisms that C provides for executing
-generic behavior. They can be used to implement dependency injection and thus
+generic behavior. They can be used to implement dependency injection and
 can be a powerful tool for managing dependencies within a project.
 
 This is the first of a four-part series on function pointers.
