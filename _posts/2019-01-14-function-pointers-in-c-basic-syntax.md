@@ -21,7 +21,7 @@ Find source code and documentation
 [on GitHub](https://github.com/KevinWMatthews/c-function_pointers).
 
 
-## Basic Syntax
+## Syntax
 
 The syntax for function pointers can obscure but it is based directly on the
 usual syntax for functions.
