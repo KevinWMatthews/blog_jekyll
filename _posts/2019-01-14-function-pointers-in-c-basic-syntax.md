@@ -1,7 +1,8 @@
 ---
 title: &title "Function Pointers in C: Basic Syntax"
 permalink: /funtion-pointers-in-c-basic-syntax/
-excerpt: Introduction to function pointer syntax in C. Part 1 of 4.
+excerpt: "Introduction to function pointer syntax in C.
+Function pointers, part 1 of 4."
 toc_label: *title
 toc: true
 toc_sticky: true
