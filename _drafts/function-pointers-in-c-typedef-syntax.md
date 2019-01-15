@@ -109,14 +109,17 @@ The conversion between the two is left as an exercise to the reader....
 Interestingly, attempting to define a function with this form results in a
 compiler error on gcc:
 ```c
-void signal(int signum, void (*handler)(int))
+void signal(int signum, void (*handler)(int)) (int)
 {
-  // Function body here
+    // Function body here
 }
 ```
 ```
 error: ‘signal’ declared as function returning a function
 ```
+
+C functions can't return an *actual function*, though they can return a pointer
+to a function (an address in memory).
 
 But enough with `signal`; the docs recommend to use
 [sigaction](http://man7.org/linux/man-pages/man2/sigaction.2.html)
