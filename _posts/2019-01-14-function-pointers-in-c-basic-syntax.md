@@ -2,9 +2,9 @@
 title: &title "Function Pointers in C: Basic Syntax"
 permalink: /funtion-pointers-in-c-basic-syntax/
 excerpt: "Introduction to function pointer syntax in C.
-Function pointers, part 1 of 4."
-toc_label: *title
+Function pointers, part 1."
 toc: true
+toc_label: *title
 toc_sticky: true
 categories:
   - c
@@ -17,9 +17,13 @@ Function pointers are one of the few mechanisms that C provides for executing
 generic behavior. They can be used to implement dependency injection and
 can be a powerful tool for managing dependencies within a project.
 
-This is the first of a four-part series on function pointers.
-Find source code and documentation
-[on GitHub](https://github.com/KevinWMatthews/c-function_pointers).
+
+## Source
+
+This is the first in a series on function pointers in C.
+Find [source code](https://github.com/KevinWMatthews/c-function_pointers)
+and [documentation](https://kevinwmatthews.github.io/c-function_pointers/)
+for all examples on GitHub.
 
 
 ## Syntax

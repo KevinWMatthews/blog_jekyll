@@ -2,7 +2,7 @@
 title: &title "Function Pointers in C: As Function Parameters"
 permalink: /function-pointers-in-c-as-function-parameters/
 excerpt: "Passing function pointers to functions in C.
-Function pointers, part 3 of 4."
+Function pointers, part 3."
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -13,9 +13,13 @@ tags:
   - function-pointers
 ---
 
-This is the third of a four-part series on function pointers.
-Find source code and documentation
-[on GitHub](https://github.com/KevinWMatthews/c-function_pointers).
+
+## Source
+
+This is the third in a series on function pointers in C.
+Find [source code](https://github.com/KevinWMatthews/c-function_pointers)
+and [documentation](https://kevinwmatthews.github.io/c-function_pointers/)
+for all examples on GitHub.
 
 
 ## Syntax
