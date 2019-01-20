@@ -118,7 +118,7 @@ if (function_pointer)
 
 The standard library seems to avoid type aliases for function pointers but has
 used them for complex situations. One example is the (historical) function
-[signal](http://man7.org/linux/man-pages/man2/signal.2.html):
+[signal()](http://man7.org/linux/man-pages/man2/signal.2.html):
 
 ```c
 typedef void (*sighandler_t)(int);
@@ -126,7 +126,7 @@ sighandler_t signal(int signum, sighandler_t handler);
 ```
 
 This declares a type alias `sighandler_t` for a function that accepts an `int`
-and returns `void`. The `signal` function both accepts and returns this type.
+and returns `void`. The `signal()` function both accepts and returns this type.
 
 Without the typedef, this becomes throughly obtuse:
 ```c
@@ -160,7 +160,7 @@ void signal(int signum, void (*handler)(int)) (int)
 C functions can't return an *actual function*, though they can return a pointer
 to a function (an address in memory).
 
-But enough with `signal`; the docs recommend to use
+But enough with `signal()`; the docs recommend to use
 [sigaction](http://man7.org/linux/man-pages/man2/sigaction.2.html)
 instead. Take a look at this for some examples of traditional function pointer
 syntax.
