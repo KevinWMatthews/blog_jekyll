@@ -59,7 +59,7 @@ Recognizing function pointers is a skill in its own right. They always follow
 the same pattern, which you can learn to recognize:
 
 ```c
-// Neighboring parentheses with a pointer in the first
+// Neighboring parentheses with a pointer in the first pair
 (*)()
 ```
 
@@ -69,26 +69,9 @@ Keep in mind the trick for reading C in general: find the most deeply nested set
 of parentheses, then work outward from there.
 
 
-### In Declarations
-
-Function pointer declarations can cause extra confusion because the function name,
-like a parameter name, is optional:
-```c
-// Parameter name omitted
-int actual_function(char);
-
-// Function name and parameter name omitted
-int (*)(char);
-```
-
-This technique is often used in header files and
-API documentation.
-
-
 ### With Pointer Argument Types
 
-A function can also accept a pointer as a parameter, so function pointers
-can also:
+A function can also accept a pointer as a parameter:
 
 ```c
 int actual_function(char *parameter);
@@ -96,10 +79,13 @@ int actual_function(char *parameter);
 int (*function_pointer)(char *parameter);
 ```
 
+Both function and function pointer accept a `char *` and return an `int`.
+
 
 ### With Pointer Return Types
 
-Functions can also return pointers. This is why parentheses are required - they distinguish between the two `*` operators:
+Functions can also return pointers. This is why parentheses are required around
+the function pointer name - they distinguish between the two `*` operators:
 ```c
 // Returns a pointer to an int
 int *actual_function(void);
@@ -108,8 +94,11 @@ int *actual_function(void);
 int *(*function_pointer)(void);
 ```
 
+These accept no arguments and returns an `int *`.
+
 The substitution is still the same: wrap the function name in parentheses,
 then add a star inside the parentheses.
+
 
 ### With Pointer Argument and Return Types
 
@@ -122,12 +111,12 @@ int *actual_function(char *parameter);
 int *(*function_pointer)(char *parameter);
 ```
 
-This example:
-  * accepts a `char *`
-  * returns an `int *`
+These:
+  * accept a `char *`
+  * return an `int *`
 
 
-### Void Pointers
+### With Void Pointers
 
 Using `void` pointers can seem more obtuse, but the syntax is similar:
 
@@ -138,10 +127,26 @@ void *(*function_pointer)(void *parameter)
 ```
 
 These:
-  * accept a void pointer
-  * return a void pointer
+  * accept a `void *`
+  * return a `void *`
 
 And, of course, the latter is a pointer itself (a function pointer).
+
+
+### With Names Omitted
+
+Function pointer declarations can be confusing because the function name,
+like a parameter name, is optional:
+```c
+// Parameter name omitted
+int actual_function(char);
+
+// Function name and parameter name omitted
+int (*)(char);
+```
+
+This technique is often used in header files and
+API documentation.
 
 
 ## Example
@@ -187,7 +192,7 @@ To write function pointers, use an existing function signature as a basis and th
 
 To read function pointers, learn to recognize this pattern:
   * neighboring parentheses
-  * a pointer in the first set
+  * a pointer in the first pair
 
 Remember the trick for reading: start at the most deeply nested
 parentheses and work outward.
