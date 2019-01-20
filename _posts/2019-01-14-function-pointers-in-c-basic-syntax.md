@@ -27,14 +27,14 @@ Find source code and documentation
 The syntax for function pointers can obscure but it is based directly on the
 usual syntax for functions.
 
-Functions in C are defined as:
+Functions in C are declared with:
 ```c
 return_value function_name(parameter_list)
 ```
 
 while function pointers use:
 ```c
-return_value (*function_name)(parameter_list)
+return_value (*function_pointer_name)(parameter_list)
 ```
 
 There are two additions, both required:
@@ -63,7 +63,8 @@ the same pattern, which you can learn to recognize:
 (*)()
 ```
 
-If you notice this, look for a return value and parameter list.
+If you notice this, look for a return value and parameter list; you likely
+are looking at a pointer to a function.
 
 Keep in mind the trick for reading C in general: find the most deeply nested set
 of parentheses, then work outward from there.
@@ -79,7 +80,9 @@ int actual_function(char *parameter);
 int (*function_pointer)(char *parameter);
 ```
 
-Both function and function pointer accept a `char *` and return an `int`.
+Both function and function pointer
+  * accept a `char *`
+  * return an `int`
 
 
 ### With Pointer Return Types
@@ -94,7 +97,9 @@ int *actual_function(void);
 int *(*function_pointer)(void);
 ```
 
-These accept no arguments and returns an `int *`.
+These:
+  * accept `void` (no parameters)
+  * return an `int *`
 
 The substitution is still the same: wrap the function name in parentheses,
 then add a star inside the parentheses.
@@ -149,7 +154,7 @@ This technique is often used in header files and
 API documentation.
 
 
-## Example
+### Example
 
 The Linux `pthread` library provides a real-world example of function pointers,
 namely the  `start_routine`
@@ -171,7 +176,58 @@ int pthread_create(pthread_t *thread,
     void *(*start_routine) (void *),  // <-- This one
     void *arg);
 ```
-So many stars!
+Read closely!
+
+
+## Function Pointers as Variables
+
+Function pointers can be declared like variables:
+```c
+int (*function_pointer)(char) = NULL;
+```
+
+This creates a variable, `function_pointer`, that can store the address of an
+actual function (or `NULL`).
+
+The function signatures must match! In this case, you should only assign a
+function that accepts a `char` and returns an `int`. Doing otherwise results
+in a compiler warning and could lead to undefined behavior. Heed the
+compiler's warnings!
+
+Here is an example of an assignment:
+```c
+int actual_function(char *character)
+{
+    // Do stuff...
+}
+
+int (*function_pointer)(char) = actual_function;
+```
+
+This creates a variable `function_pointer` and stores the address of
+`actual_function` in it.
+
+There is no need to use an `&` (address of) operator in the assignment - C
+automatically uses the address of `actual_function`.
+
+
+## Calling Function Pointers
+
+Function pointers can be called just like any other function:
+```c
+/* snip */
+
+int (*function_pointer)(char) = actual_function;
+
+function_pointer();
+```
+
+C handles the details automagically. In fact, I think C converts 'normal'
+functions to function pointers whenever the
+[function call operator](https://en.cppreference.com/w/c/language/operator_other#Function_call)
+`()` is called, but those details aren't important here.
+Call a function pointer as you would call an actual function,
+but don't forget to check for `NULL`!
 
 
 ## Summary
@@ -183,16 +239,35 @@ Function pointer syntax is based on a pattern:
 
 This pattern is expanded to:
 ```c
-return_value (*function_name)(parameter_list)
+// In general
+return_value (*function_pointer_name)(parameter_list)
+
+// Example
+void (*function_pointer_name)(void)
 ```
 
-To write function pointers, use an existing function signature as a basis and then:
-  * wrap the function name in parentheses
-  * put a star inside the parentheses (before the name)
-
-To read function pointers, learn to recognize this pattern:
+Learn to recognize this pattern:
   * neighboring parentheses
   * a pointer in the first pair
 
-Remember the trick for reading: start at the most deeply nested
+Remember the trick for reading C: start at the most deeply nested
 parentheses and work outward.
+
+
+Here is an example:
+```c
+// Define a function
+void actual_function(void)
+{
+    // ...
+}
+
+// Initialize a function pointer
+void (*function_pointer)(void) = actual_function;
+
+// Call the function through the pointer
+if (function_pointer)
+    function_pointer();
+```
+
+As always, don't forget to check for `NULL`!

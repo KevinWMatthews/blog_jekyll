@@ -72,8 +72,7 @@ int some_actual_function(char *character)
 FUNCTION_POINTER function_pointer = some_actual_function;
 ```
 
-There is no need to use a `&` operator in the assignment; C handles the
-automatically
+There is no need to use a `&` operator in the assignment.
 
 This is straightforward when compared to the standard syntax:
 ```c
