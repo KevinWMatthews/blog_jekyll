@@ -207,7 +207,7 @@ int (*function_pointer)(char) = actual_function;
 This creates a variable `function_pointer` and stores the address of
 `actual_function` in it.
 
-There is no need to use an `&` (address of) operator in the assignment - C
+There is no need to use an `&` (address of) operator in the assignment -- C
 automatically uses the address of `actual_function`.
 
 
@@ -222,12 +222,29 @@ int (*function_pointer)(char) = actual_function;
 function_pointer();
 ```
 
-C handles the details automagically. In fact, I think C converts 'normal'
-functions to function pointers whenever the
-[function call operator](https://en.cppreference.com/w/c/language/operator_other#Function_call)
-`()` is called, but those details aren't important here.
+There is no need to dereference the function pointer using `(*)`:
+```c
+// Unneeded dereference
+(*function_pointer)();
+```
+C handles the dereferencing automagically. In fact, C seems to do this for all
+function calls; the standard implies that normal 'function designators' are
+converted to function pointers behind the scenes before the `()` operator
+is applied. But I digress -- those details aren't important here.
+
 Call a function pointer as you would call an actual function,
-but don't forget to check for `NULL`!
+but don't forget to check for `NULL`:
+
+```c
+if (function_pointer)
+    function_pointer();
+```
+
+Alternatively, use:
+```c
+if (function_pointer != NULL)
+    function_pointer();
+```
 
 
 ## Summary
@@ -237,18 +254,18 @@ Function pointer syntax is based on a pattern:
 (*)()
 ```
 
+Learn to recognize:
+  * neighboring parentheses
+  * a pointer in the first pair
+
 This pattern is expanded to:
 ```c
 // In general
 return_value (*function_pointer_name)(parameter_list)
 
-// Example
+// Specific example
 void (*function_pointer_name)(void)
 ```
-
-Learn to recognize this pattern:
-  * neighboring parentheses
-  * a pointer in the first pair
 
 Remember the trick for reading C: start at the most deeply nested
 parentheses and work outward.
@@ -262,7 +279,7 @@ void actual_function(void)
     // ...
 }
 
-// Initialize a function pointer
+// Initialize a function pointer variable
 void (*function_pointer)(void) = actual_function;
 
 // Call the function through the pointer
