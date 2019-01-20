@@ -3,8 +3,8 @@ title: &title "Function Pointers in C: Typedef Syntax"
 permalink: /funtion-pointers-in-c-typedef-syntax/
 excerpt: "Type alias for function pointers in C using the typedef keyword.
 Function pointers, part 2 of 4."
-toc_label: *title
 toc: true
+toc_label: *title
 toc_sticky: true
 categories:
   - c
@@ -13,10 +13,10 @@ tags:
   - function-pointers
 ---
 
-Sure, function pointers are powerful, but the syntax... too much noise!
+Sure, function pointers are powerful, but the syntax... so much noise!
 Wouldn't it be nice if you could store a function pointer in a variable, much
 like any other type? The `typedef` keyword lets you do just that. Use it to
-specify the ugly function pointer details once, hide it behind an alias, and
+specify the function pointer details once, hide it behind an alias, and
 then use the alias like a built-in type.
 
 This is the second of a four-part series on function pointers.
@@ -33,16 +33,17 @@ First a refresher on creating a type alias for a built-in type:
 typedef int CUSTOM_TYPE;
 ```
 
-This creates a new type, `CUSTOM_TYPE`, that can be used in place of a
-traditional `int`:
+This creates a synonym (often called an alias) `CUSTOM_TYPE` that can be used in
+place of the traditional specifier `int`:
 ```c
 CUSTOM_TYPE the_meaning = 42;
 // is equivalent to
 int the_meaning = 42;
 ```
 
-I'm using screaming snake case (caps with underscores), but the case of the
-custom type alias is conventional; choose what suits you.
+Here I'm using screaming snake case (all caps with underscores), but this is
+a personal convention; choose what suits you.
+
 
 ### Typedef for Function Pointers
 
@@ -51,22 +52,32 @@ Type aliases for function pointers use a somewhat different syntax:
 typedef return_value (*CUSTOM_TYPE)(parameter_list);
 ```
 
-The name of the new type is in the middle of the `typedef` statement, not at the
-end.
+The name of the new alias is in the middle of the `typedef` statement, not at the
+end. As with [function pointers](/funtion-pointers-in-c-basic-syntax/),
+the `*` operator must be enclosed in parentheses
+to prevent it from applying to the return value.
 
 Here is a specific example:
 ```c
-typedef int (*FUNCTION_POINTER)(char *string);
+typedef int (*FUNCTION_POINTER)(char);
 ```
 
-This new type, `FUNCTION_POINTER`, can be used much like a built-in type:
+This new type alias, `FUNCTION_POINTER`, can be used much like a built-in type:
 ```c
+int some_actual_function(char *character)
+{
+    // Function body here
+}
+
 FUNCTION_POINTER function_pointer = some_actual_function;
 ```
 
+There is no need to use a `&` operator in the assignment; C handles the
+automatically
+
 This is straightforward when compared to the standard syntax:
 ```c
-int (*function_pointer)(char *) = some_actual_function;
+int (*function_pointer)(char) = some_actual_function;
 ```
 
 
@@ -74,21 +85,21 @@ int (*function_pointer)(char *) = some_actual_function;
 
 The function can be called quite easily using the pointer:
 ```c
-typedef int (*FUNCTION_POINTER)(char *string);
+typedef int (*FUNCTION_POINTER)(char character);
 
 FUNCTION_POINTER function_pointer = /* some_actual_function */;
 
-int result = function_pointer("A string");
+int result = function_pointer('c');
 ```
 
-This calls `some_actual_function` with a single argument, `"A string"`, and
+This calls `some_actual_function` with a single argument, `'c'`, and
 stores the return value in `result`.
 
 
 ## Real-world Example
 
 The standard library seems to avoid type aliases for function pointers but has
-used them for complex situaitons. One example is the (historical) function
+used them for complex situations. One example is the (historical) function
 [signal](http://man7.org/linux/man-pages/man2/signal.2.html):
 
 ```c
@@ -123,18 +134,20 @@ to a function (an address in memory).
 
 But enough with `signal`; the docs recommend to use
 [sigaction](http://man7.org/linux/man-pages/man2/sigaction.2.html)
-instead. Take a look for some examples of traditional function pointer syntax.
+instead. Take a look at this for some examples of traditional function pointer
+syntax.
+
 
 ## Summary
 
-Using a `typedef` for function pointers allows you to tread function pointers
-similar to built-in types:
+Using a `typedef` for function pointers allows you to treat function pointers
+much like built-in types:
 ```c
 typedef void (*FUNCTION_POINTER)(void);
-FUNCTION_POINTER function_pointer = /* actual_function */;
+FUNCTION_POINTER function_pointer = /* actual function name */;
 if (function_pointer)
     function_pointer();
 ```
 
-This is an powerful and straightforward way to store and execute generic behavior.
+This is a powerful and straightforward way to store and execute generic behavior.
 Of course, don't forget to check for `NULL`!
