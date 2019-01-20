@@ -171,8 +171,19 @@ syntax.
 Using a `typedef` for function pointers allows you to treat function pointers
 much like built-in types:
 ```c
+// Declare a custom type
 typedef void (*FUNCTION_POINTER)(void);
-FUNCTION_POINTER function_pointer = /* actual function name */;
+
+// Define a function
+void actual_function(void)
+{
+    // ...
+}
+
+// Initialize a function pointer variable
+FUNCTION_POINTER function_pointer = actual_function;
+
+// Call the function through the pointer
 if (function_pointer)
     function_pointer();
 ```
