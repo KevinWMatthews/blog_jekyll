@@ -14,14 +14,18 @@ tags:
 ---
 
 Sure, function pointers are powerful, but the syntax... so much noise!
-Wouldn't it be nice if you could store a function pointer in a variable, much
-like any other type? The `typedef` keyword lets you do just that. Use it to
-specify the function pointer details once, hide it behind an alias, and
-then use the alias like a built-in type.
+Wouldn't it be nice if you could store a function pointer in a variable but
+only use a single specifier, just like any other type?
+The `typedef` keyword lets you do just that. Use it to
+define the function pointer details once, hide them behind an alias, and
+then use this alias like a built-in type.
+
+## Source
 
 This is the second of a four-part series on function pointers.
-Find source code and documentation
-[on GitHub](https://github.com/KevinWMatthews/c-function_pointers).
+Find [source code](https://github.com/KevinWMatthews/c-function_pointers)
+and [documentation](https://kevinwmatthews.github.io/c-function_pointers/)
+on GitHub.
 
 
 ## Syntax
@@ -34,7 +38,7 @@ typedef int CUSTOM_TYPE;
 ```
 
 This creates a synonym (often called an alias) `CUSTOM_TYPE` that can be used in
-place of the traditional specifier `int`:
+place of the traditional type specifier `int`:
 ```c
 CUSTOM_TYPE the_meaning = 42;
 // is equivalent to
@@ -62,8 +66,13 @@ Here is a specific example:
 typedef int (*FUNCTION_POINTER)(char);
 ```
 
-This new type alias, `FUNCTION_POINTER`, can be used much like a built-in type:
+
+## Function Pointers as Variables
+
+A type alias for a function pointer can be used much like a built-in type:
 ```c
+typedef int (*FUNCTION_POINTER)(char);
+
 int some_actual_function(char *character)
 {
     // Function body here
@@ -80,19 +89,28 @@ int (*function_pointer)(char) = some_actual_function;
 ```
 
 
-### Calling the Function
+## Calling Function Pointers
 
 The function can be called quite easily using the pointer:
 ```c
 typedef int (*FUNCTION_POINTER)(char character);
 
-FUNCTION_POINTER function_pointer = /* some_actual_function */;
+/* snip */
+
+FUNCTION_POINTER function_pointer = some_actual_function;
 
 int result = function_pointer('c');
 ```
 
 This calls `some_actual_function` with a single argument, `'c'`, and
 stores the return value in `result`.
+
+As with all pointers, be sure to check for `NULL` to prevent segfaults:
+
+```c
+if (function_pointer)
+    function_pointer();
+```
 
 
 ## Real-world Example
@@ -116,8 +134,8 @@ void ( *signal(int signum, void (*handler)(int)) ) (int)
 
 The conversion between the two is left as an exercise to the reader....
 
-Interestingly, attempting to define a function with this form results in a
-compiler error on gcc:
+Interestingly, attempting to define a function with the non-`typedef` form
+results in a compiler error on gcc:
 ```c
 void signal(int signum, void (*handler)(int)) (int)
 {
@@ -126,6 +144,16 @@ void signal(int signum, void (*handler)(int)) (int)
 ```
 ```
 error: ‘signal’ declared as function returning a function
+void signal(int signum, void (*handler)(int)) (int)
+     ^
+```
+
+and on clang:
+```
+error: function cannot return function type 'void (int)'
+void signal(int signum, void (*handler)(int)) (int)
+           ^
+1 error generated.
 ```
 
 C functions can't return an *actual function*, though they can return a pointer

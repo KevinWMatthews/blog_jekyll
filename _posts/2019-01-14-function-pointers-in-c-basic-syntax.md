@@ -154,7 +154,7 @@ This technique is often used in header files and
 API documentation.
 
 
-### Example
+### Real-world Example
 
 The Linux `pthread` library provides a real-world example of function pointers,
 namely the  `start_routine`
