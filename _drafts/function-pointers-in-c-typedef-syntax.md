@@ -1,8 +1,7 @@
 ---
 title: &title "Function Pointers in C: Typedef Syntax"
 permalink: /funtion-pointers-in-c-typedef-syntax/
-excerpt: "Type alias for function pointers in C using the typedef keyword.
-Function pointers, part 2."
+excerpt: "Part 2: Type alias for function pointers in C using the typedef keyword."
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -23,7 +22,8 @@ then use this alias like a built-in type.
 
 ## Source
 
-This is the second in a series on function pointers in C.
+This is the second in a
+[series on function pointers](/tags/#function-pointers) in C.
 Find [source code](https://github.com/KevinWMatthews/c-function_pointers)
 and [documentation](https://kevinwmatthews.github.io/c-function_pointers/)
 for all examples on GitHub.

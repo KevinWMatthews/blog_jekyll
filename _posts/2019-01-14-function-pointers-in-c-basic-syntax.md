@@ -1,8 +1,7 @@
 ---
 title: &title "Function Pointers in C: Basic Syntax"
 permalink: /funtion-pointers-in-c-basic-syntax/
-excerpt: "Introduction to function pointer syntax in C.
-Function pointers, part 1."
+excerpt: "Part 1: Introduction to function pointer syntax in C."
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -20,7 +19,8 @@ can be a powerful tool for managing dependencies within a project.
 
 ## Source
 
-This is the first in a series on function pointers in C.
+This is the first in a
+[series on function pointers](/tags/#function-pointers) in C.
 Find [source code](https://github.com/KevinWMatthews/c-function_pointers)
 and [documentation](https://kevinwmatthews.github.io/c-function_pointers/)
 for all examples on GitHub.

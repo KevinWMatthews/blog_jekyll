@@ -1,8 +1,7 @@
 ---
 title: &title "Function Pointers in C: As Function Parameters"
 permalink: /function-pointers-in-c-as-function-parameters/
-excerpt: "Passing function pointers to functions in C.
-Function pointers, part 3."
+excerpt: "Part 3: Passing function pointers to functions in C."
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -16,7 +15,8 @@ tags:
 
 ## Source
 
-This is the third in a series on function pointers in C.
+This is the third in a
+[series on function pointers](/tags/#function-pointers) in C.
 Find [source code](https://github.com/KevinWMatthews/c-function_pointers)
 and [documentation](https://kevinwmatthews.github.io/c-function_pointers/)
 for all examples on GitHub.
@@ -35,7 +35,7 @@ void calling_function(FUNCTION_POINTER function_pointer);
 ```
 
 Note that we don't need to add a `*` -  the custom type `FUNCTION_POINTER`
-captures this behavior.
+captures this.
 
 We can fill out the definition of the function like this:
 ```c
