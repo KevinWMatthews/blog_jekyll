@@ -158,31 +158,6 @@ This technique is often used in header files and
 API documentation.
 
 
-### Real-world Example
-
-The Linux `pthread` library provides a real-world example of function pointers,
-namely the  `start_routine`
-parameter of
-[pthread_create()](http://man7.org/linux/man-pages/man3/pthread_create.3.html):
-```c
-void *(*start_routine) (void *)
-```
-
-This function pointer:
-  * is named `start_routine`
-  * accepts a void pointer (parameter name omitted)
-  * returns a void pointer
-
-This is just one of the parameters. The entire declaration is:
-```c
-int pthread_create(pthread_t *thread,
-    const pthread_attr_t *attr,
-    void *(*start_routine) (void *),  // <-- This one
-    void *arg);
-```
-Read closely!
-
-
 ## Function Pointers as Variables
 
 Function pointers can be declared like variables:
@@ -249,6 +224,30 @@ Alternatively, use:
 if (function_pointer != NULL)
     function_pointer();
 ```
+
+
+## Real-world Example
+
+The Linux `pthread` library provides a real-world example of function pointers.
+Let's examine the `start_routine` parameter of
+[pthread_create()](http://man7.org/linux/man-pages/man3/pthread_create.3.html):
+```c
+void *(*start_routine) (void *)
+```
+
+This function pointer:
+  * is named `start_routine`
+  * accepts a void pointer (parameter name omitted)
+  * returns a void pointer
+
+This is just one of the parameters. The entire declaration is:
+```c
+int pthread_create(pthread_t *thread,
+    const pthread_attr_t *attr,
+    void *(*start_routine) (void *),  // <-- This one
+    void *arg);
+```
+Read closely!
 
 
 ## Summary
