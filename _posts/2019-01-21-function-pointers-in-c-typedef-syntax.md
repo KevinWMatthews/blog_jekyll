@@ -67,6 +67,10 @@ Here is a specific example:
 typedef int (*FUNCTION_POINTER)(char);
 ```
 
+This creates a custom type, `FUNCTION_POINTER`. This type refers to a function that:
+  * accepts a `char`
+  * returns an `int`
+
 
 ## Function Pointers as Variables
 
