@@ -272,3 +272,12 @@ variable_storing_closure(2)
 
 
 ## Examples
+
+
+## Resources
+
+  * [Stack Overflow](https://stackoverflow.com/a/36878651/8807809)
+ has a very good intro to lambda calculus and closures.
+  * [Wikipedia](https://en.wikipedia.org/wiki/Closure_(computer_programming))
+  * Python docs?
+  * Where else?
