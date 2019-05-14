@@ -26,6 +26,7 @@ As of C++11, futures and promises are part of the C++ standard library.
 TODO are all features present?
 Header file `<future>`.
 
+Unidirectional, lock-free information exchange from one thread to another.
 
 ## Syntax
 
