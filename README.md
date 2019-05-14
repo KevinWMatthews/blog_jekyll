@@ -89,8 +89,18 @@ header_pages:
 
 Serve your site with:
 
-```
+```bash
 $ bundle exec jekyll serve
+```
+
+To serve drafts:
+```bash
+$ bundle exec jekyll serve -D
+```
+
+To change the port,
+```bash
+$ bundle exec jekyll serve -P <port>
 ```
 
 
