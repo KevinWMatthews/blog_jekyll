@@ -48,8 +48,8 @@ void calls_function_pointer(FUNCTION_POINTER function_pointer)
 }
 ```
 
-Note that we verify the function pointer manually before calling it.
-We want to be able to pass `NULL` safely:
+Note that we validate the function pointer manually before calling it.
+This is because we want to be able to pass `NULL` safely:
 ```c
 calls_function_pointer(NULL);   // should not segfault!
 ```
@@ -67,6 +67,8 @@ This can be passed to a function as follows:
 calls_function_pointer(pass_this_function);
 ```
 
+The compiler treats `pass_this_function` as a function pointer.
+
 
 ### Function Pointers with Arguments
 
@@ -81,6 +83,11 @@ void calls_function_pointer(FUNCTION_POINTER function_pointer)
 }
 ```
 If the argument is not provided, compilation will fail:
+```
+error: too few arguments to function ‘function_pointer’
+         function_pointer();
+```
+
 
 ### Function Pointers In a Variable
 
@@ -96,7 +103,8 @@ calls_function_pointer(variable);
 
 ### Using Traditional Syntax
 
-Traditional syntax works the same way but is more verbose:
+Some libraries do not use typedef syntax for function pointers, opting instead for
+the more verbose traditional syntax. This works in the same way:
 ```c
 void calls_function_pointer(void (*function_pointer)(void))
 {

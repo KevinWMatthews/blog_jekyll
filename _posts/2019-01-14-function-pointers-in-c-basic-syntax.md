@@ -51,9 +51,9 @@ associated with the return type.
 
 An example declaration is:
 ```c
-int actual_function(char parameter)
+void actual_function(void)
 
-int (*function_pointer)(char parameter)
+void (*function_pointer)(void)
 ```
 
 The conversion mechanism is simple: wrap the function name in parentheses,
@@ -74,6 +74,22 @@ Keep in mind the trick for reading C in general: find the most deeply nested set
 of parentheses, then work outward from there.
 
 
+### With Argument and Return Value
+
+Function pointers can accept arguments and return a useful value:
+
+```c
+int actual_function(char parameter)
+
+int (*function_pointer)(char parameter)
+```
+
+Both the function and function pointer:
+  * accept a `char`
+  * return an `int`
+
+
+
 ### With Pointer Argument Types
 
 A function can also accept a pointer as a parameter:
@@ -84,7 +100,7 @@ int actual_function(char *parameter);
 int (*function_pointer)(char *parameter);
 ```
 
-Both function and function pointer
+Both the function and function pointer
   * accept a `char *`
   * return an `int`
 
@@ -138,8 +154,6 @@ void *(*function_pointer)(void *parameter)
 These:
   * accept a `void *`
   * return a `void *`
-
-And, of course, the latter is a pointer itself (a function pointer).
 
 
 ### With Names Omitted
@@ -226,7 +240,7 @@ if (function_pointer != NULL)
 ```
 
 
-## Real-world Example
+## Real-World Example
 
 The Linux `pthread` library provides a real-world example of function pointers.
 Let's examine the `start_routine` parameter of

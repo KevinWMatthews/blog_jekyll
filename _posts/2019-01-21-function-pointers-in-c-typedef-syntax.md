@@ -64,11 +64,20 @@ to prevent it from applying to the return value.
 
 Here is a specific example:
 ```c
-typedef int (*FUNCTION_POINTER)(char);
+typedef void (*FUNCTION_POINTER)(void);
+```
+This creates a custom type, `FUNCTION_POINTER`. This type refers to a function pointer that:
+  * accepts no arguments
+  * returns no arguments
+
+
+The custom type can support more complex behavior:
+```c
+typedef int (*ANOTHER_FUNCTION_POINTER)(char *);
 ```
 
-This creates a custom type, `FUNCTION_POINTER`. This type refers to a function that:
-  * accepts a `char`
+This creates a custom type, `ANOTHER_FUNCTION_POINTER`. This type refers to a function that:
+  * accepts a `char *`
   * returns an `int`
 
 
@@ -78,7 +87,7 @@ A type alias for a function pointer can be used much like a built-in type:
 ```c
 typedef int (*FUNCTION_POINTER)(char);
 
-int some_actual_function(char *character)
+int some_actual_function(char character)
 {
     // Function body here
 }
