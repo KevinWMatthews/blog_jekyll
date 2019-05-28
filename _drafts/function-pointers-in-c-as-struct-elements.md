@@ -22,9 +22,12 @@ for all examples on GitHub.
 
 ## Syntax
 
-### Using Typedef Syntax
+Function pointers can be stored directly in a struct.
+As usual, there are several syntax options available.
+We'll start with typedef syntax because it keeps the struct definition simpler.
 
-Typedefs provide the most straightforward experience.
+
+### Using Typedef Syntax
 
 First define a type for the function pointer:
 ```c
@@ -39,14 +42,14 @@ typedef struct STRUCTURE
 } STRUCTURE;
 ```
 
-New variables can be declared as follows:
+New variables can be defined as follows:
 ```c
 STRUCTURE structure = {
   .function_pointer = NULL
 };
 ```
 
-Of course, you'll typically want the function pointer to refer to somethign useful:
+Of course, you'll typically want the function pointer to refer to something useful:
 ```c
 void function(void)
 {
@@ -67,9 +70,29 @@ if (structure.function_pointer)
 As always, be sure to check for NULL!
 
 
-### With Argument and Return Value
+### With Argument
 
-TODO ?
+If the function pointer accepts an argument, the calling function must provide it:
+```c
+typedef void (*FUNCTION_POINTER)(char);
+typedef struct STRUCTURE
+{
+  FUNCTION_POINTER function_pointer;
+} STRUCTURE;
+
+void function(char character)
+{
+  // something useful
+}
+
+STRUCTURE structure = {
+  .function_pointer = function
+};
+
+structure.function_pointer('c');  // <-- pass an argument
+```
+
+Omitting the argument results in a compiler error.
 
 
 ### Using Traditional Syntax
@@ -79,7 +102,8 @@ in full. This is more complex but has the same effect:
 ```c
 typedef struct STRUCTURE
 {
-  // The struct element name is within the parenthesis
+  // The struct element name is within the parenthesis,
+  // e.g. (*name)
   void (*function_pointer)(void);
 } STRUCTURE;
 ```
