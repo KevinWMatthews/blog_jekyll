@@ -95,9 +95,9 @@ Both the function and function pointer:
 A function can also accept a pointer as a parameter:
 
 ```c
-int actual_function(char *parameter);
+int actual_function(char *parameter)
 
-int (*function_pointer)(char *parameter);
+int (*function_pointer)(char *parameter)
 ```
 
 Both the function and function pointer
@@ -111,10 +111,10 @@ Functions can also return pointers. This is why parentheses are required around
 the function pointer name - they distinguish between the two `*` operators:
 ```c
 // Returns a pointer to an int
-int *actual_function(void);
+int *actual_function(void)
 
 // Function pointer; function returns a pointer to an int
-int *(*function_pointer)(void);
+int *(*function_pointer)(void)
 ```
 
 These:
@@ -131,9 +131,9 @@ More stars, you say? Functions can both accept and return pointers, leading
 to a small army of stars:
 
 ```c
-int *actual_function(char *parameter);
+int *actual_function(char *parameter)
 
-int *(*function_pointer)(char *parameter);
+int *(*function_pointer)(char *parameter)
 ```
 
 These:

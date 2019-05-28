@@ -24,9 +24,14 @@ for all examples on GitHub.
 
 ## Syntax
 
+Function pointers can be passed to a function much like any other variable type.
+This can be done in a few different ways, but we'll start with typedef syntax as
+it tends to make the function signature less verbose.
+
+
 ### Using Typedef Syntax
 
-Passing function pointers to a function is simpler to read when using a custom type alias:
+Use the `typedef` keyword to create a custom type alias:
 ```c
 typedef void (*FUNCTION_POINTER)(void);
 
@@ -34,8 +39,8 @@ typedef void (*FUNCTION_POINTER)(void);
 void calls_function_pointer(FUNCTION_POINTER function_pointer);
 ```
 
-Note that we don't need to add a `*` because the custom type `FUNCTION_POINTER`
-captures this.
+Note that we don't need to add a `*` to the function signature because
+the custom type `FUNCTION_POINTER` captures this.
 
 We can fill out the definition of the function like this:
 ```c
@@ -112,8 +117,8 @@ void calls_function_pointer(void (*function_pointer)(void))
     function_pointer();
 }
 ```
-The argument to the function `calls_function_pointer` is a pointer to a function
-(note the `(*)`). It accepts a `void` parameter and returns `void`.
+The parameter of `calls_function_pointer` is a pointer to a function
+- note the `(*)`. This function pointer accepts a `void` parameter and returns `void`.
 
 We can define and execute the remainder of the example similarly:
 ```c
