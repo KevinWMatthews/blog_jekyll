@@ -1,6 +1,6 @@
 ---
 title: &title "Concurrency in Rust: Threads"
-permalink: /concurrency-in-rust-threads/
+permalink: /concurrency-in-rust-std-thread/
 excerpt: "Part 1: Using Threads From the Standard Library"
 toc: true
 toc_label: *title

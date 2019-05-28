@@ -1,6 +1,6 @@
 ---
 title: &title "Concurrency in C++: Threads"
-permalink: /concurrency-in-cxx-threads/
+permalink: /concurrency-in-cxx-std-thread/
 excerpt: "Part 1: Using Threads From the Standard Library"
 toc: true
 toc_label: *title
