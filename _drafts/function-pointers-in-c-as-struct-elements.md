@@ -18,7 +18,7 @@ This is the fourth in a
 [series on function pointers](/tags/#function-pointers) in C.
 Find [source code](https://github.com/KevinWMatthews/c-function_pointers)
 and [documentation](https://kevinwmatthews.github.io/c-function_pointers/)
-for all examples on GitHub.
+on GitHub.
 
 ## Syntax
 
@@ -131,4 +131,43 @@ TODO
 
 ## Summary
 
-TODO
+Typedef syntax allows function pointers to be stored much like a variable:
+```c
+typedef void (*FUNCTION_POINTER)(void);
+
+typedef struct STRUCTURE
+{
+  FUNCTION_POINTER function_pointer;
+} STRUCTURE;
+
+void function(void)
+{
+  // ...
+}
+
+STRUCTURE structure = {
+  .function_pointer = function,
+};
+structure.function_pointer();
+```
+
+Traditional syntax is more verbose:
+```c
+typedef struct STRUCTURE
+{
+  void (*function_pointer)(void);
+} STRUCTURE;
+
+void function(void)
+{
+  // ...
+}
+
+STRUCTURE structure = {
+  .function_pointer = function,
+};
+structure.function_pointer();
+```
+
+Both follow the same pattern - store the function pointer in a structe element,
+call the underlying function through the function pointer using `()`.
