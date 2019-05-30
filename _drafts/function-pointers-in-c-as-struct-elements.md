@@ -126,7 +126,49 @@ if (structure.function_pointer)
 
 ### Real-World Example
 
-TODO
+The Linux library function [sigaction](http://man7.org/linux/man-pages/man2/sigaction.2.html)
+is an example of function pointers in the wild.
+
+```c
+struct sigaction {
+  void       (*sa_handler)(int);
+  void       (*sa_sigaction)(int, siginfo_t *, void *);
+  sigset_t   sa_mask;
+  int        sa_flags;
+  void       (*sa_restorer)(void);
+};
+```
+
+This structure stores several function pointers:
+  * `void (*sa_handler)(int)`
+    - element name `sa_handler`
+    - accepts an `int`
+    - returns `void`
+  * `void (*sa_sigaction)(int, siginfo_t *, void *)`
+    - element name `sa_sigaction`
+    - accepts an `int`, `siginfo_t` pointer, and `void` pointer
+    - returns `void`
+  * `void (*sa_restorer)(void)`
+    - element name `sa_restorer`
+    - accepts `void`
+    - returns `void`
+
+The struct could be populated something like:
+```c
+void custom_sigint_handler(int signal_number)
+{
+  //...
+}
+
+struct sigaction = {
+  sa_handler = custom_sigint_handler
+};
+```
+
+After further configuration, this `struct sigaction`
+(along with the custom behavior that it stores)
+is passed as an argument to the function `sigaction()`.
+This allows the system to execute custom user behavior when a signal is received.
 
 
 ## Summary
