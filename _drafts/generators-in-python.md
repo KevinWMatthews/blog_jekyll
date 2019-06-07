@@ -52,7 +52,11 @@ class Iterator:
     return item
 ```
 
-Iterators use `__next__` to:
+The iterator is responsible for maintaining internal state - where it was in
+the collection when `__next__` was last called.
+
+Iterators use `__next__` (by calling the built-in `next()`) to:
+
   * returns a value from the collection
   * raise `StopIteration` when the end of the collection is reached
 
@@ -83,8 +87,30 @@ class Iterable:
       index += 1
 ```
 
+The magic stems from the keyword `yield`. This tells Python to create a to
+create [generator function](https://docs.python.org/3/glossary.html#term-generator)
+instead of a function object. Python knows that this will return a series of values
+(using `next()`) instead of a single return value.
+
+Due to the `yield` keyword, the generator function will return a
+[generator iterator](https://docs.python.org/3/glossary.html#term-generator-iterator)
+instead of a standard iterator.
+
+ Generator iterators do a lot of magic behind the scenes:
+  * create `__iter__()` and `__next__()` automatically.
+  * track local variables between calls
+  * raise `StopIteration` automatically
+
+When `next()` is called, the generator iterator will execute the code it contains
+until `yield` is reached. At this point, it suspends execution, gives control
+to the caller, and provides its argument (hopefully an item in the collection)
+to the caller.
+
+Notice that is is easier for a generator to track the state in the collection -
+a generator can use local variables since these are automagically stored between calls.
+
 This is best thought of at the high level:
-for each item in the collection, `__iter__` must yield flow control and provide
+for each item in the collection, `__next__` must yield flow control and provide
 an item.
 
 Another way to think of this is to look at a `for` loop:
@@ -93,11 +119,14 @@ Another way to think of this is to look at a `for` loop:
 for item in iterable:
   # body of foor loop - user code here
 ```
-`yield` fills in the item and lets the body of the `for` loop run once.
+`yield` fills in the item and lets the body of the `for` loop run once, then
+the `for` loop calls the generator iterator again.
 
-In detail, `for` calls `iterable.__iter__()`. `__iter()` provides a single item from the
-collection and then lets the body of the for loop run. Once the body is finished,
-`for` calls `iterable.__iter__()` again and the process repeats.
+In detail, `for` creates an iterator using `iter()`.
+It calls `next()` on this iterator, which provides a single item from the
+collection. The body of the for loop runs once. Once it is finished,
+`for` calls `next()` again. The process repeats until the iterator raises
+`StopIteration`.
 
 
 ### Under the Hood

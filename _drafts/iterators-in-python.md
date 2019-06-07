@@ -97,14 +97,28 @@ while True:
 
 Our looping construct can now consistently create an iterator for any class.
 
+Python provides built-in functions so that `__iter__` and `__next__` need not
+be called directly:
+```python
+iterable = Iterable(params)
+
+iterator = iter(iterable)
+while True:
+  try:
+    item = next(iterator)
+    # user adds code here
+  except StopIteration:
+    break
+```
+
 The manual looping process is verbose and error prone, and hides the user's
 code in the middle of the loop. `for..in` cleans up the syntax by doing the
 iterationautomagically, turning manual iteration:
 ```python
-iterator = iterable.__iter__()
+iterator = iter(iterable)
 while True:
   try:
-    item = iterator.__next__()
+    item = next(iterator)
     # user adds code here
   except StopIteration:
     break
@@ -153,6 +167,8 @@ class Iterator:
     self.index += 1
     return item
 ```
+
+TODO the iterator class tracks internal state.
 
 We can use it like this:
 ```python
