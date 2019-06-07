@@ -1,5 +1,5 @@
 ---
-title: &title "Python Generator Cheat Sheet"
+title: &title "Generator Cheat Sheet"
 permalink: /python-generator-cheat-sheet/
 excerpt: "Quickstart for Python generators"
 toc: true
@@ -33,7 +33,7 @@ class Iterable:
       yield item
 ```
 
-To make a function iterable, simply `yield`:
+To make a function iterable, simply `yield` instead of returning:
 
 ```python
 def function(collection):
@@ -42,7 +42,7 @@ def function(collection):
 ```
 
 
-### Examples
+## Examples
 
 Iterable class:
 
@@ -64,7 +64,7 @@ for item in collection:
   print(item)
 ```
 
-Create a generator directly:
+Iterable function:
 
 ```python
 def iterate_over(collection):
@@ -76,6 +76,6 @@ for item in iterate_over(collection):
   print(item)
 ```
 
-This is a trivial example - one could iterate directly on the collection with
-the same effect. In a real-world scenario, the generator function would do
-extra processing.
+These are trivial examples; in this case one could iterate directly on the
+collection with the same effect. In a real-world scenario, the generator
+function would do extra processing.
