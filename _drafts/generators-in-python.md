@@ -81,9 +81,9 @@ class Iterable:
 
   def __iter__(self):
     index = 0
-    max_index = len(collection)
+    max_index = len(self.collection)
     while index < max_index:
-      yield collection[index]
+      yield self.collection[index]
       index += 1
 ```
 
@@ -127,6 +127,26 @@ It calls `next()` on this iterator, which provides a single item from the
 collection. The body of the for loop runs once. Once it is finished,
 `for` calls `next()` again. The process repeats until the iterator raises
 `StopIteration`.
+
+
+Tracking an index specifically isn't so Pythonic. We can use `for..in` syntax
+within the generator. Our generator won't realize that it is using another
+generator under the hood....
+
+```python
+class Iterable:
+  def __init__(self, collection):
+    self.collection = collection
+
+  def __iter__(self):
+    for item in self.collection:
+      yield item
+
+collection = (2, 3, 4)
+iterable = Iterable(collection)
+for item in iterable:
+  print(item)
+```
 
 
 ### Under the Hood
