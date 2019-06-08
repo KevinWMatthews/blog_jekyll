@@ -33,11 +33,21 @@ easier and safer.
 
 ### Manually loop over collection
 
-We would like to execute some user behavior for each item in a user-defined
-collection:
+Let's say that we have a collection that is stored in a class:
 
 ```python
-collection = # user creates collection
+class Iterable:
+    def __init__(self):
+        self.collection = # user creates collection
+```
+
+We would like to loop over this collection and execute some function on each item:
+
+```python
+iterable = Iterable()
+collection = iterable.collection
+
+# loop over collection
 index = 0
 max_index = len(collection)
 
@@ -46,17 +56,19 @@ while index < max_index:
     # user adds code here
 ```
 
-This is effective but error-prone. We could accidentaly start at the wrong index
-or loop off the end of the collection. Further, the user must add their
-code in the middle of a loop - not so clear to read.
+This is effective but error-prone. It requries specific knowledge of both the
+class and the collection. We must know where the collection is stored, how to access
+individual items, where to start looping, and when to finish looping.
+Further, the user must add their code in the middle of a loop - not so clear to read.
 
 
 ### Python iterator type
 
-To prevent the user from having to track indices, we can create a class that does
-this for us. Python defines a specific API. An iterator must:
+To isolate the user from these details, we can create a class that does iteration
+for us. Python defines a specific protocol; an iterator must:
 
-  * return the next item from the collection using `__next__()` (Python2 requires `next()`)
+  * return the next item from the collection using `__next__()`
+    - (Python2 requires `next()`)
   * raise `StopIteration` when the end of the collection is reached
 
 A sketch of this looks like:
@@ -68,27 +80,15 @@ class Iterator:
         # store current location in collection
 
     def __next__(self):
-        # if end of collection, raise StopIteration
-        # else return current item and move to next location in collection
-```
-
-We then loop over the collection using:
-
-```python
-collection = # user creates collection
-iterator = Iterator(collection)
-while True:
-    try:
-        item = iterator.__next__()
-        # user adds code here
-    except StopIteration:
-        break
+        # if reached end of collection, raise StopIteration
+        # else return current item and
+        # move to next location in collection
 ```
 
 
 ### Retrieve an item using `__next__()`
 
-Let's convert our example to this new API:
+Let's convert our example to this new iterator protocol:
 
 ```python
 class Iterator:
@@ -101,63 +101,18 @@ class Iterator:
         if index >= max_index:
             raise StopIteration
 
-        item = collection[item]
+        item = collection[index]
         self.index += 1
         return item
 ```
 
-We use it like this:
+We then loop over the collection using:
 
 ```python
 collection = # user creates collection
 iterator = Iterator(collection)
-while True:
-    try:
-        iterator.__next__()
-    except StopIteration:
-        break
-```
 
-
-### Retrieve an item using
-
-The `for` statement is a Python language feature. The core behavior is that
-`for _ in object` creates an iterator and calls its `__next__()` method
-(or `next()` in Python2) until the iterator raises the `StopIteration` exception.
-
-Something like this:
-
-```python
-class Iterator:
-    def __init__(self):
-        pass
-
-    def __next__(self):
-        # return an item from the collection
-        # or raise StopIteration
-
-# for does this:
-iterator = Iterator()
-while True:
-    try:
-        iterator.__next__()
-    except StopIteration:
-        break
-```
-
-To be useful, `__next__()` should return an item from the collection:
-
-```python
-class Iterator:
-    def __init__(self, collection):
-        self.collection = collection
-
-    def __next__(self):
-        # return an item from the collection
-        # or raise StopIteration
-
-# for does this
-iterator = Iterator(some_collection)
+# loop over collection
 while True:
     try:
         item = iterator.__next__()
@@ -166,29 +121,25 @@ while True:
         break
 ```
 
+This is an improvement; the user no longer needs to know details of how to
+access the collection.
+
 
 ### Create an iterator using `__iter__()`
 
-The above example requires that `for` know how to create an iterator.
-This isn't extensible, so Python requires that this class knows how to create
-its own iterator (what else would?) and that it expose this with a consistent API:
-`__iter__()`. For example:
+The above example still requires that we know how to create each type of iterator.
+What if different iterators require different parameters?
+This isn't extensible, so Python requires that we encapsulate this knowledge
+in a class and expose it with a consistent API: `__iter__()`. For example:
 
 ```python
 class Iterable:
     def __init__(self):
-        self.collection = # Create collection
+        self.collection = # user creates collection
 
     def __iter__(self):
+        # Create the correct iterator
         return Iterator(self.collection)
-
-class Iterator:
-    def __init__(self, collection):
-        self.collection = collection
-
-    def __next__(self):
-        # return an item from the collection
-        # or raise StopIteration
 ```
 
 We can then use it like this:
@@ -196,7 +147,7 @@ We can then use it like this:
 ```python
 iterable = Iterable()
 
-# for does this
+# loop over collection
 iterator = iterable.__iter__()
 while True:
     try:
@@ -206,7 +157,7 @@ while True:
         break
 ```
 
-The for loop can now create an iterator for any class.
+We can now create an iterator for any class that meets Python's protocol.
 
 
 ### Use built-in methods
@@ -217,7 +168,7 @@ Python provides built-in functions `iter()` and `next()` that call
 ```python
 iterable = Iterable()
 
-# for does this
+# loop over collection
 iterator = iter(iterable)
 while True:
     try:
@@ -235,11 +186,12 @@ it here.
 
 ### Automatic looping
 
-The manual looping process is verbose and error prone, and hides the user's
-code in the middle of the loop. The `for` statement cleans up the syntax by doing
+The above example still places the user's code in the middle of the loop.
+Python provides the `for` statement to fix this. `for` will do
 the iteration automagically, turning manual iteration:
 
 ```python
+# loop over collection
 iterator = iter(iterable)
 while True:
     try:
@@ -251,6 +203,7 @@ while True:
 into:
 
 ```python
+# loop over collection
 for item in iterable:
     # user adds code here
 ```
@@ -261,6 +214,8 @@ exception. Now we can simply write:
 
 ```python
 iterator = Iterable()
+
+# loop over collection
 for item in iterable:
     # user adds code here
 ```
@@ -271,29 +226,26 @@ Pretty cool!
 ### Iterators Must be Iterable
 
 Notice that `for` automatically creates an iterator. What happens if we create
-an iterator ourselves (not using the `Iterable` class) and pass it into a `for` loop?
+an iterator ourselves (not using out `Iterable` class) and pass it into a `for` loop?
 
 ```python
-class Iterator:
-    def __init__(self):
-        # Store collection
-
-    def __next__(self):
-        # return an item from the collection
-        # or raise StopIteration
-
 collection = # user creates collection
-iterator = Iterator(collection)   # create iterator directly
+
+# create iterator directly
+iterator = Iterator(collection)
+
+# loop over collection
 for item in iterator:
     # user adds code here
 ```
 
 It fails:
+
 ```
 AttributeError: 'Iterator' object has no attribute '__iter__'
 ```
 
-This seems strange... we can't iterate over an iterator?
+This seems strange; we can't iterate over... an iterator?
 This happens because `for` always creates an iterator by calling `iter()`.
 To fix this, add a simple `__iter__()` method to our iterator:
 
@@ -309,69 +261,14 @@ The iterator simply returns itself! Now `for` can call `iter()` (which calls
 `__iter__()`) and loop properly.
 
 
-### Recap
+### Summary
 
 Here is the full example:
 
 ```python
 class Iterable:
     def __init__(self):
-        self.collection = # Create your collection
-
-    def __iter__(self):
-        return Iterator(self.collection)
-
-class Iterator:
-    def __init__(self, collection):
-        self.collection = collection
-
-    def __iter__(self):
-      return self
-
-    def __next__(self):
-        # return an item from the collection
-        # or raise StopIteration
-```
-
-It can be used like this:
-
-```python
-iterable = Iterable()
-for item in iterable:
-    # user adds code here
-```
-
-
-## Tracking internal state
-
-Thus far we've glossed over how the iterator actually extracts an item from
-the collection. To do this, the iterator must know where it is in the collection
-across several calls to `__next__()`.
-
-```python
-class Iterator:
-    def __init__(self, collection):
-        self.collection = collection
-        # store current location in collection
-
-    def __next__(self):
-        # if item in collection, return item and move to next location
-        # else raise StopIteration
-```
-
-The iterator must explictly track its current location in the collection.
-
-This may be more clear with an example.
-
-
-### Example
-
-Here is an example of a functioning iterable and a corresponding iterator:
-
-```python
-class Iterable:
-    def __init__(self, collection):
-        self.collection = collection
+        self.collection = # user creates collection
 
     def __iter__(self):
         return Iterator(collection)
@@ -379,7 +276,6 @@ class Iterable:
 class Iterator:
     def __init__(self, collection):
         self.collection = collection
-        # Must track the curerent index while iterating
         self.index = 0
         self.max_index = len(collection)
 
@@ -395,12 +291,48 @@ class Iterator:
         return item
 ```
 
-The iterator explicitly tracks its current location in the collection and also
-checks boundary conditions for the container.
+It can be used like this:
 
-While it is useful, these explicit checks are error-prone.
-To circumvent these problems, Python provides [generators](/generators-in-python/).
-In the meantime, we can use this iterator as follows:
+```python
+iterable = Iterable()
+
+# loop over collection
+for item in iterable:
+    # user adds code here
+```
+
+
+## Example
+
+Here is a simple working example of an iterable and a corresponding iterator:
+
+```python
+class Iterable:
+    def __init__(self, collection):
+        self.collection = collection
+
+    def __iter__(self):
+        return Iterator(collection)
+
+class Iterator:
+    def __init__(self, collection):
+        self.collection = collection
+        self.index = 0
+        self.max_index = len(collection)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index >= self.max_index:
+            raise StopIteration
+
+        item = self.collection[self.index]
+        self.index += 1
+        return item
+```
+
+Use it like this:
 
 ```python
 collection = (4, 5, 6)
@@ -413,9 +345,24 @@ for item in iterable:
 Pretty slick!
 
 
+## Why not iterators?
+
+As useful as they are, there are a few downsides to creating iterators directly.
+An iterator must:
+
+  * explicitly track its current location in the collection across several calls to `__next__()`
+  * checks boundary conditions for the container
+  * create an extra class for the iterator itself
+
+To circumvent these issues, read about using [generators](/generators-in-python/).
+
+
 ## Further Reading
 
-  * Iterators in the [Python Practice Book](https://anandology.com/python-practice-book/iterators.html)
+A few useful links in no particular order:
+
+  * Python [tutorial on iterators](https://docs.python.org/3/tutorial/classes.html#iterators)
   * Python docs on the [iterator type](https://docs.python.org/3/library/stdtypes.html#iterator-types)
   * Python [tutorial on the for statement](https://docs.python.org/3/tutorial/controlflow.html#for-statements)
   * Python [reference on the for statement](https://docs.python.org/3/reference/compound_stmts.html#the-for-statement)
+  * Iterators in the [Python Practice Book](https://anandology.com/python-practice-book/iterators.html)
