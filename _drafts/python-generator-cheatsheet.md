@@ -28,17 +28,17 @@ keyword to "return" a value:
 
 ```python
 class Iterable:
-  def __iter__(self):
-    for item in collection:
-      yield item
+    def __iter__(self):
+        for item in collection:
+            yield item
 ```
 
 To make a function iterable, simply `yield` instead of returning:
 
 ```python
 def function(collection):
-  for item in collection:
-    yield item
+    for item in collection:
+        yield item
 ```
 
 
@@ -48,32 +48,31 @@ Iterable class:
 
 ```python
 class Iterable:
-  def __init__(self, collection):
-    self.collection = collection
+    def __init__(self, collection):
+        self.collection = collection
 
-  def __iter__(self):
-    index = 0
-    max_index = len(self.collection)
-    while index < max_index:
-      yield self.collection[index]
-      index += 1
+    def __iter__(self):
+        for item in self.collection:
+            yield item
 
-collection = [9, 8, 7]
+
+collection = [7, 8, 9]
 iterable = Iterable(collection)
+
 for item in collection:
-  print(item)
+    print(item)
 ```
 
 Iterable function:
 
 ```python
 def iterate_over(collection):
-  for item in collection:
-    yield item
+    for item in collection:
+        yield item
 
-collection = [9, 8, 7]
+collection = [7, 8, 9]
 for item in iterate_over(collection):
-  print(item)
+    print(item)
 ```
 
 These are trivial examples; in this case one could iterate directly on the
