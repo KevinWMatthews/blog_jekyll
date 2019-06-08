@@ -163,3 +163,8 @@ while True:
   except StopIteration:
     break
 ```
+
+
+### Further Reading
+
+  * [Python3 wiki](https://wiki.python.org/moin/Generators)
