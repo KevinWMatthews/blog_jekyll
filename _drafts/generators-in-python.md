@@ -13,11 +13,9 @@ tags:
 ---
 
 If you're already comfortable with generators, look at the
-[generator cheat sheet]().
+[generator cheat sheet](/python-generator-cheatsheet/). If you need an
+introduction to iterators, look at this [iterator](/iterators-in-python/) post.
 
-TODO generator vs generator function
-Reread [this](https://anandology.com/python-practice-book/iterators.html)
-Resources?
 
 ## Source
 
@@ -27,64 +25,85 @@ and [documentation]() on GitHub.
 
 ## Background
 
-Generators are syntactic sugar around [iterators](/iterators-in-python/):
+Generators provide sequential access to each item in a collection.
+They are syntactic sugar around [iterators](/iterators-in-python/):
 
 ```python
 class Iterable:
-  def __init__(self, collection):
-    self.collection = collection
+    def __init__(self, collection):
+        self.collection = collection
 
-  def __iter__(self):
-    return Iterator(collection)
+    def __iter__(self):
+        return Iterator(collection)
 
 class Iterator:
-  def __init__(self, collection):
-    self.collection = collection
-    self.index = 0
-    self.max_index = len(collection)
+    def __init__(self, collection):
+        self.collection = collection
+        self.index = 0
+        self.max_index = len(collection)
 
-  def __next__(self):
-    if self.index >= self.max_index:
-      raise StopIteration
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index >= self.max_index:
+            raise StopIteration
 
     item = self.collection[self.index]
     self.index += 1
     return item
 ```
 
-The iterator is responsible for maintaining internal state - where it was in
-the collection when `__next__` was last called.
+Iterable classes use the `__iter__()` method to create an iterator.
+This iterator uses the `__next__()` method to provide access to each item in the
+iterable class's collection.
 
-Iterators use `__next__` (by calling the built-in `next()`) to:
+The iterator must explicitly maintain internal state - it must know where it was
+in the collection when `__next__` was most recently called.
 
-  * returns a value from the collection
+Generators simplify this process - they hide the iterator. The developer no
+longer needs to create two classes or explicitly track internal state; the
+generator does this automatically.
+
+
+## ?
+
+Iterators must implement a `__next__` method (to be called by the built-in `next()`)
+that will:
+
+  * track current location in the collection
+  * return the current value from the collection
   * raise `StopIteration` when the end of the collection is reached
 
-Python has in a language feature to help us do this automagically: `yield`.
-(`yield` creates a generator?).
+Generators automagically create an iterator with these requirements.
+They can be created in a surprisingly simple way: using a Python language feature
+called a [yield expression](https://docs.python.org/3/reference/expressions.html#yieldexpr).
+When python encounters a `yield` expression in a function, it will create
+a [generator function](https://docs.python.org/3/glossary.html#term-generator)
+instead of a function object.
 
-Here is some pseudo-ish code:
+Here is some pseudo-ish code for creating an iterable class:
 
 ```python
 class Iterable:
-  def __iter__(self):
-    while item_left_in_collection:
-      yield item_in_collection
-      move to next item
+    def __iter__(self):
+        while item_left_in_collection:
+            yield item_in_collection
+            move to next item
 ```
 
 In detail, it could look like this:
 ```python
 class Iterable:
-  def __init__(self, collection):
-    self.collection = collection
+    def __init__(self, collection):
+        self.collection = collection
 
-  def __iter__(self):
-    index = 0
-    max_index = len(self.collection)
-    while index < max_index:
-      yield self.collection[index]
-      index += 1
+    def __iter__(self):
+        index = 0
+        max_index = len(self.collection)
+        while index < max_index:
+            yield self.collection[index]
+            index += 1
 ```
 
 The magic stems from the keyword `yield`. This tells Python to create a to

@@ -1,6 +1,6 @@
 ---
 title: &title "Generator Cheat Sheet"
-permalink: /python-generator-cheat-sheet/
+permalink: /python-generator-cheatsheet/
 excerpt: "Quickstart for Python generators"
 toc: true
 toc_label: *title
