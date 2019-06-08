@@ -12,8 +12,9 @@ tags:
   - generators
 ---
 
-Example of Python generator syntax. For details, see the
-[generators](/generators-in-python/) post.
+Reference for Python generator syntax. For a detailed introduction to generators,
+see blog posts on [iterators](/iterators-in-python/) and [generators](/generators-in-python/).
+
 
 ## Source
 
@@ -21,7 +22,31 @@ Find [source code](https://github.com/KevinWMatthews/python-generator_cheatsheet
 on GitHub.
 
 
-## Quasi-code
+## Background
+
+Generators can be used to make a class iterable - an instance can be passed directly
+into a `for` loop:
+
+```python
+class Iterable:
+    # ...
+
+for item in Iterable():
+    # ...
+```
+
+`__iter__()` will return a generator object that is only evaluated when necessary.
+
+Similarly, generators can be used to make a function iterable:
+```python
+def function():
+    # ...
+
+for item in function():
+    # ...
+```
+
+## Syntax
 
 To make a class iterable, create an `__iter__()` method and use the `yield`
 keyword to "return" a value:
@@ -79,7 +104,7 @@ An iterable function can be standalone or a method of a class.
 
 These are trivial examples; in this case one could iterate directly on the
 collection with the same effect. In a real-world scenario, the generator
-function would do extra processing.
+function would do extra processing that provides some added value.
 
 
 ## Further Reading
