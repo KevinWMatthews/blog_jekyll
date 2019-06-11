@@ -71,7 +71,7 @@ individual items, where in the collection to start looping, and when to finish l
 Further, the user must add their code in the middle of the loop - not so clear to read.
 
 
-### Python iterator
+### Iterator protocol
 
 To isolate the user from these details, we can create a class that does iteration
 for us. Python defines a specific protocol for this; an iterator must:
