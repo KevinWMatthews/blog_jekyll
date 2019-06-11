@@ -118,10 +118,10 @@ class Iterator:
         self.max_index = len(collection)
 
     def __next__(self):
-        if index >= max_index:
+        if self.index >= self.max_index:
             raise StopIteration
 
-        item = collection[index]
+        item = collection[self.index]
         self.index += 1
         return item
 ```
