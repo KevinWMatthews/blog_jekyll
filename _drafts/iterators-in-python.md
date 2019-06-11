@@ -22,7 +22,7 @@ If you are already comfortable with iterators, look ahead to the
 
 ## Source
 
-Find [source code]() on GitHub.
+Find [source code](https://github.com/KevinWMatthews/python-iterators) on GitHub.
 
 
 ## Background
