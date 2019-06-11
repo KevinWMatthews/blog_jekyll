@@ -14,7 +14,7 @@ tags:
 ---
 
 If you're already comfortable with generators, look at the
-[generator cheat sheet](/python-generator-cheatsheet/). If you need an
+[generator cheat sheet](/python-generator-cheatsheet/). If you want an
 introduction to iterators, look at this [iterator](/iterators-in-python/) post.
 
 
@@ -26,13 +26,77 @@ and [documentation]() on GitHub.
 
 ## Background
 
-Generators provide an easy way to give sequential access to each item in a collection.
+Generators provide an easy way to give sequential access to each item in a collection -
+they allow a class to be plugged into a `for` loop.
 They are syntactic sugar around iterators and simplify the process considerably.
 
+Since a generator automatically creates an iterator, let's take a look back at
+iterators. Here is a summary of a previous post on [iterators](/iterators-in-python/):
 
-## Recap of iterators
+```python
+class Iterable:
+    def __init__(self):
+        # ...
 
-Here is an example iterable and its iterator from a previous post on  [iterators](/iterators-in-python/):
+    def __iter__(self):
+        return Iterator()
+
+class Iterator:
+    def __init__(self):
+        # ...
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        # loop over collection, maintaining location
+        # return item or raise StopIteration
+```
+
+An iterable class must:
+  * implement an `__iter__()` method that returns an iterator
+
+This iterator must:
+  * implement an `__iter__()` method that returns itself
+  * implement a `__next__()` method that provides sequential access to each item in the collection
+  * raise a `StopIteration` exception when the end of the collection is reached
+
+Notice that the iterator must explicitly maintain internal state - it must
+remember where it is in the collection between calls to `__next__()`.
+
+
+## Introduction to generators
+
+Generators simplify the process of creating an iterator - they hide the iterator class entirely and provide easy ways for the iterator to track its current location in the collection.
+
+Generators are created using a Python language feature called a [yield expression](https://docs.python.org/3/reference/expressions.html#yieldexpr).
+When Python encounters a `yield` expression in a function, it creates
+a [generator function](https://docs.python.org/3/glossary.html#term-generator)
+instead of a regular function object. A generator function is a special function;
+when called, it is not executed. Instead, Python captures the body of the
+generator function in a [generator iterator](https://docs.python.org/3/glossary.html#term-generator-iterator)
+and returns this object instead. This generator iterator can be used to execute
+the code in the generator function at a later time.
+
+A generator iterator is a specialized iterator. It satisfies the above
+requirements of an iterator: it provides each item in the collection and
+raises `StopIteration` when it runs out of items. It also provides a few
+[methods](https://docs.python.org/3/reference/expressions.html#generator-iterator-methods) that we won't need to discuss here.
+
+A summary is as follows:
+  * Python creates a generator function when it encounters the `yield` keyword
+  * When a generator function is called, Python instead creates and returns a generator iterator
+  * The generator iterator controls the execution of the generator function's code
+
+In practice, creating a generator is surprisingly easy:
+
+```python
+class Iterable:
+    def __iter__(self):
+        yield # each item in the collection
+```
+
+If we look back at our previous [example iterator](/iterators-in-python/#example):
 
 ```python
 class Iterable:
@@ -60,41 +124,7 @@ class Iterator:
         return item
 ```
 
-An iterable class must:
-  * implement an `__iter__()` method that returns an iterator
-
-This iterator must:
-  * implement an `__iter__()` method that returns itself
-  * implement a `__next__()` method that provides sequential access to each item in the collection
-  * raise a `StopIteration` exception when the end of the collection is reached
-
-Notice that the iterator must explicitly maintain internal state - it must know where it was
-in the collection when `__next__` was most recently called.
-
-
-## Introduction to generators
-
-Generators simplify the process of creating an iterator - they hide the iterator class entirely and provide easy ways for the iterator to track its current location in the collection.
-
-Generators are created in a surprisingly simple way: using a Python language feature called a [yield expression](https://docs.python.org/3/reference/expressions.html#yieldexpr).
-When Python encounters a `yield` expression in a function, it will create
-a [generator function](https://docs.python.org/3/glossary.html#term-generator)
-instead of a regular function object. Generator functions are special functions - when called, Python automatically creates and returns a [generator iterator](https://docs.python.org/3/glossary.html#term-generator-iterator).
-
-A generator iterator is a specialized iterator. It satisfies the above
-requirements of an iterator: it provides each item in the collection and
-raises `StopIteration` when it runs out of items. It also provides a few
-[methods](https://docs.python.org/3/reference/expressions.html#generator-iterator-methods) that we won't need to discuss here.
-
-Here is some pseudo-ish code for creating an iterable class:
-
-```python
-class Iterable:
-    def __iter__(self):
-        yield # each item in the collection
-```
-
-In detail, our previous iterator could be rewritten like this:
+could be rewritten like this:
 
 ```python
 class Iterable:
@@ -111,8 +141,10 @@ class Iterable:
 
 The magic stems from the keyword `yield`.
 Python knows that this function will be expected to return a series of values
-instead of a single return value, so it creates and returns a generator iterator.
+instead of a single return value, so when `__iter__()` is called
+Python creates and returns a generator iterator.
 This object automatically:
+
   * implements an `__iter__()` method that returns itself
   * implements a `__next__()` method that calls the body of our `__iter__()` function
   * raises `StopIteration` when our function reaches the end of its collection
@@ -120,32 +152,36 @@ This object automatically:
 Since `Iterable.__iter__()` returns a valid iterator, we can plug our
 `Iterable` class into a `for` statement. The `for` loop can operate on the
 generator iterator just like any other iterator:
+
   * create one using `iter()`
   * retrieve an item in the collection using `next()`
   * catch the `StopIteration` exception
 
+This isn't so Pythonic yet (see the [final example](http://localhost:4000/generators-in-python/#using-a-generator-high-level) for that),
+but let's explore the internal details of generators before we rewrite it further.
 
-## Generator details
 
-Before looking at the details of how generator iterators work, let's explore the differences between functions and generator functions.
+## Generator mechanics
+
+First let's look at some differences between functions and generator functions.
 
 
 ### Generator functions
 
-First let's create a minimal function:
 
-```python
-def function():
-    return
-```
+#### Type
 
-When Python encounters `def` it creates a function object, which we can see by printing the function:
+When Python encounters `def` it creates a function object:
 
 ```python
 $ python3
 >>> def a_function():
 ...     return
 ...
+```
+
+We can see this by printing the function:
+```python
 >>> print(a_function)
 <function a_function at 0x7f22fa747668>
 ```
@@ -153,7 +189,6 @@ $ python3
 or inspecting it:
 
 ```python
-$ python3
 >>> import inspect
 >>> test_me = a_function
 >>> result = inspect.isfunction(test_me)
@@ -201,7 +236,11 @@ False
 
 Importantly, this generator function is not a generator (iterator) itself.
 
-Functions and generator functions be behave differently when called. Regular functions return a user-specified type - `None` in this case:
+
+#### Return value
+
+Functions and generator functions be behave differently when called.
+A regular function returns a user-specified type - in this case `None`:
 
 ```python
 $ python3
@@ -213,7 +252,7 @@ $ python3
 None
 ```
 
-By contrast, generator functions return a generator iterator:
+By contrast, a generator function returns a generator iterator:
 ```python
 $ python3
 >>> def a_generator_function():
@@ -224,7 +263,7 @@ $ python3
 <generator object a_generator_function at 0x7fe3e6112888>
 ```
 
-Inspecting this shows that the returned value is a generator iterator object (not a generator function):
+Inspecting this shows that the returned value is a now generator iterator (not a generator function):
 ```python
 >>> import inspect
 >>> test_me = a_generator_function()
@@ -239,10 +278,15 @@ False
 True
 ```
 
+In summary: `yield` creates a generator function, and
+calling a generator function returns a generator iterator.
+
 
 ### Generator iterators
 
-When a generator function is called, Python delays executing the body of the function. Instead, it returns a generator (generator iterator) that controls how and when the function is called in the future.
+When a generator function is called, Python delays executing the body of the function.
+Instead, it returns a generator iterator (often called a generator)
+that controls how and when the function is called in the future.
 
 This generator iterator will:
   * implement an `__iter__()` method that returns itself
@@ -257,21 +301,19 @@ Generator iterators do a lot of magic behind the scenes but meet all the require
 #### Exploratory generator
 
 Let's create a generator for the purposes of exploring how they work.
-It isn't so Pythonic but it will be useful.
+It isn't so Pythonic but it will be useful to learn from.
 
 ```python
-$ python3
->>> def a_generator_function():
-...     i = 0
-...     print("First execution")
-...     while True:
-...         print("Before yield: {}".format(i))
-...         yield
-...         i += 1
-...         print("After yield: {}".format(i))
-...         if i > 2:
-...             return
-...
+def a_generator_function():
+    print("First execution")
+    i = 0
+    while True:
+        print("Before yield: {}".format(i))
+        yield
+        i += 1
+        print("After yield: {}".format(i))
+        if i > 2:
+            return
 ```
 
 
@@ -280,51 +322,57 @@ $ python3
 A generator implements `__iter__()` and it returns itself:
 
 ```python
->>> generator_iterator = a_generator_function()
+generator_iterator = a_generator_function()
 
->>> print(generator_iterator)
-<generator object a_generator_function at 0x7f7233de21a8>
+print(generator_iterator)
+# <generator object a_generator_function at 0x7f7233de21a8>
 
->>> test_me = generator_iterator.__iter__()
->>> print(test_me)
-<generator object a_generator_function at 0x7f7233de21a8>
+test_me = generator_iterator.__iter__()
+print(test_me)
+# <generator object a_generator_function at 0x7f7233de21a8>
 ```
+
+Notice that the body of the generator function has not yet executed.
+
 
 #### Implement `__next__()`
 
-A generator implements `__next__()`.
+A generator implements `__next__()`:
 
 ```python
 $ python3
->>> def a_generator_function():
-...     yield
-...
->>> generator_iterator = a_generator_function()
->>> test_me = generator_iterator.__next__
->>> print(test_me)
-<method-wrapper '__next__' of generator object at 0x7f7233de2200>
+def a_generator_function():
+    yield
+
+generator_iterator = a_generator_function()
+test_me = generator_iterator.__next__
+print(test_me)
+# <method-wrapper '__next__' of generator object at 0x7f7233de2200>
 ```
+
+We are responsible for making this return an item in the collection in the
+body of the generator function, which we'll explore later.
 
 
 #### Track execution state
 
-Another key feature of generators is that they
+Generator iterators
 [track execution state](https://docs.python.org/3/reference/expressions.html#generator.__next__)
 between calls to `__next__()`.
+
 When a generator reaches a yield expression, it returns an item to the caller but
 remembers precisely what it was executing. When `__next__()` is called again,
-the generator iterator picks up exactly where it left off.
+the generator iterator picks up exactly where it left off. For example,
 
-For example,
 ```python
->>> iterator = a_generator_function().__iter__()
->>> iterator.__next__()
-First execution
-Before yield: 0
+iterator = a_generator_function().__iter__()
+iterator.__next__()
+# First execution
+# Before yield: 0
 
->>> iterator.__next__()
-After yield: 1
-Before yield: 1
+iterator.__next__()
+# After yield: 1
+# Before yield: 1
 ```
 
 Python executes only up to the `yield` expression in the first call to `__next__()`. On the secondcall to `__next__()`, Python resumes executing just after `yield`.
@@ -340,54 +388,54 @@ it can simply use local variables.
 This is apparent in the previous example and is illustrated further with another call to `__next__()`:
 
 ```python
->>> iterator.__next__()
-First execution
-Before yield: 0
+iterator.__next__()
+# First execution
+# Before yield: 0
 
->>> iterator.__next__()
-After yield: 1
-Before yield: 1
+iterator.__next__()
+# After yield: 1
+# Before yield: 1
 
->>> iterator.__next__()
-After yield: 2
-Before yield: 2
+iterator.__next__()
+# After yield: 2
+# Before yield: 2
 ```
 
 The value of `i` is stored between calls.
 
 
-#### Raise `StopIteration`
+#### Raise StopIteration
 
 When a generator function returns, the generator iterator automatically
-raises a `StopIteration` exceptino:
+raises a `StopIteration` exception:
 
 ```python
->>> iterator.__next__()
-First execution
-Before yield: 0
+iterator.__next__()
+# First execution
+# Before yield: 0
 
->>> iterator.__next__()
-After yield: 1
-Before yield: 1
+iterator.__next__()
+# After yield: 1
+# Before yield: 1
 
->>> iterator.__next__()
-After yield: 2
-Before yield: 2
+iterator.__next__()
+# After yield: 2
+# Before yield: 2
 
->>> iterator.__next__()
-After yield: 3
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-StopIteration
+iterator.__next__()
+# After yield: 3
+# Traceback (most recent call last):
+#   File "<stdin>", line 1, in <module>
+# StopIteration
 ```
 
 
-#### Simplify generator
+## Example
 
-These features of generator iterators allow us to simplify the generator function.
+These features of generator iterators allow us to simplify our cod considerably.
 
-For example, our previous iterator class must track state using instance
-variables `self.index` and `self.max_index`,
+For example, reconsider our previous iterator class and how it must track state
+using instance variables `self.index` and `self.max_index`:
 
 ```python
 class Iterator:
@@ -405,7 +453,7 @@ class Iterator:
         return item
 ```
 
-while generators can simply use local variables `index` and `max_index`:
+A generator can simply use local variables `index` and `max_index`:
 
 ```python
 class Iterator:
@@ -428,7 +476,7 @@ The fact that all state is maintained allows us to simplify further:
             yield item
 ```
 
-Python knows where it is in the `for` loop, so it can return an item and then
+Python knows where it is in the `for` loop, so it can yield/return an item and then
 pick up exactly where it left off. In detail, Python will:
 
   * start executing the `for` loop
@@ -440,8 +488,8 @@ pick up exactly where it left off. In detail, Python will:
 
 ### Using a generator, in detail
 
-Let's look at the details of what happens when we pass our simplified generator
-into a `for` loop:
+Let's think through the details of what happens when we pass our simplified
+generator into a `for` loop:
 
 ```python
 class Iterable:
@@ -462,16 +510,20 @@ There are two distinct stages: creating an iterator and looping over the collect
 
 To create an iterator:
 
-  * `for` creates an iterator using `iter()`.
-  * `iter()` calls our iterable class's `__iter__()` method, which returns a generator iterator oject
+  * `for` creates an iterator using `iter()`
+  * `iter()` calls our iterable class's `__iter__()` method
+  * `__iter__()` returns a generator iterator
 
 To loop over the collection,
 
-  * `for()` calls `next()` on the generator iterator object
+  * `for` calls `next()` on the generator iterator
   * `next()` calls the iterator's `__next__()` method
-  * `__next__()` executes the generator function (the body of out `__iter__()`) and until it reaches `yield`
-  * the generator function returns an item in the collection and suspends execution, allowing the caller (the body of the `for` statement) to execute
-  * when the body of the `for` statement finishes executing, it calls `next()` on the iterator again
+  * `__next__()` executes the code in the generator function
+  * when the generator function reaches `yield`, it
+    - suspends execution and stores execution state
+    - returns an item in the collection (and flow control) to the caller (the body of the high-level `for` statement)
+  * the high-level `for` statement executes its body
+  * when finished executing, `for` calls `next()` on the iterator again
   * the process repeats until the iterator raises a `StopIteration` exception
 
 To demonstrate some of these steps we can manually loop over the collection:
@@ -489,12 +541,17 @@ while True:
         break
 ```
 
+We've implemented `__iter__()` using `yield`, but we can see that the
+object that it returns implements `__next__()`. Further, `__next__()`
+at some point raises `StopIteration`.
+
 
 ### Using a generator, high-level
 
-Generators are powerful because the developer can ignore indices, exceptions,
-`__iter__()`, and `__next__()`. A generator should simply `yield` each item in the collection.
-`for` knows what to call to get each item.
+Generators are powerful because the developer can ignore `__iter__()`,
+`__next__()`, exceptions, and indices.
+A can simply `yield` each item in the collection and trust that
+`for` knows what to do to get each item.
 
 Let's revisit the previous example but think of it from a high-level perspective:
 
@@ -515,45 +572,68 @@ for item in iterable:
 
 There are still two distinct stages, but we'll ignore the details:
 
+To create an iterator:
+
   * `for` creates an iterator by calling `__iter__()`
+
+To loop over the collection,
+
   * the iterator `yield`s each item in the collection (using its own `for` loop)
   * the calling `for` loop receives the item and executes the user's code
+  * the process repeats until the end of the collection is reached
 
 That's it!
 
 
-### Further Reading
+## Summary
+
+Generators provide a shortcut for creating iterators. An iterable class and a
+hand-coded iterator:
+```python
+class Iterable:
+    def __init__(self):
+        # ...
+
+    def __iter__(self):
+        return Iterator()
+
+class Iterator:
+    def __init__(self):
+        # ...
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        # loop over collection, maintaining location
+        # return item or raise StopIteration
+```
+
+can be replaced with a generator function and an autogenerated iterator:
+```python
+class Iterable:
+    def __init__(self):
+        # ...
+
+    def __iter__(self):
+        for item in collection:
+            yield item
+```
+
+Both can be used as:
+```python
+iterable = Iterable()
+for item in iterable:
+    # user code
+```
+
+Pretty slick!
+
+
+## Further Reading
 
   * Python3 tutorial: [generators](https://docs.python.org/3/tutorial/classes.html#generators)
   * Python3 reference: [generators](https://docs.python.org/3/glossary.html#term-generator)
   * Python3 reference: [yield statement](https://docs.python.org/3/reference/simple_stmts.html#the-yield-statement)
   * Python3 reference: [yield expressions](https://docs.python.org/3/reference/expressions.html#yield-expressions)
   * Python3 reference: [methods on generator iterators](https://docs.python.org/3/reference/expressions.html#generator-iterator-methods)
-
-
-
-
-
-
-
-
-
-
-
-
-
-  ```
-  $ python3
-  >>> def a_generator_function():
-  ...     yield
-  ...
-  >>> generator_iterator = a_generator_function()
-  >>> members = inspect.getmembers(generator_iterator)
-  >>> for member in members:
-  ...     print(member)
-  ...
-  # ...
-  ('__iter__', <method-wrapper '__iter__' of generator object at 0x7fe3e42fd200>)
-  # ...
-  ('__next__', <method-wrapper '__next__' of generator object at 0x7fe3e42fd200>)
-  ```
