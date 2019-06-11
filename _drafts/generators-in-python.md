@@ -20,8 +20,7 @@ introduction to iterators, look at this [iterator](/iterators-in-python/) post.
 
 ## Source
 
-Find [source code]()
-and [documentation]() on GitHub.
+Find [source code](https://github.com/KevinWMatthews/python-generators) on GitHub.
 
 
 ## Background
