@@ -180,7 +180,7 @@ while True:
         break
 ```
 
-We can now create an iterator for any class that meets Python's protocol.
+We can now create an iterator for any class that meets Python's iterator protocol.
 
 
 ### Use built-in methods
@@ -202,7 +202,7 @@ while True:
         break
 ```
 
-[iter()](https://docs.python.org/3/library/functions.html#iter) and
+Both [iter()](https://docs.python.org/3/library/functions.html#iter) and
 [next()](https://docs.python.org/3/library/functions.html#next) provide
 extra behavior that isn't required for basic iterators so we won't discuss
 it here.
@@ -210,9 +210,9 @@ it here.
 
 ### Automatic looping
 
-The above example still places the user's code in the middle of the loop.
-Python provides the `for` statement to fix this. `for` will do
-the iteration automagically, turning manual iteration:
+The above example still nests the user's code in the middle of the loop.
+Python provides the `for` statement to remedy this. `for` will handle all
+iteration steps automagically, turning this loop:
 
 ```python
 # loop over collection
@@ -232,11 +232,11 @@ for item in iterable:
     # user adds code here
 ```
 
-The `for` loop:
-  * creates the iterator using `iter()`
+The `for` statement:
+  * creates an iterator using `iter()`
   * calls `next()`
   * stores the `item`
-  * checks for the the `StopIteration` exception.
+  * checks for the the `StopIteration` exception
 
 Now we can simply write:
 
