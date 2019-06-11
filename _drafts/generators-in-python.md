@@ -318,7 +318,7 @@ def a_generator_function():
 ```
 
 
-#### Implement `__iter__()`
+#### Implement `\__iter__()`
 
 A generator implements `__iter__()` and it returns itself:
 
@@ -336,7 +336,7 @@ print(test_me)
 Notice that the body of the generator function has not yet executed.
 
 
-#### Implement `__next__()`
+#### Implement `\__next__()`
 
 A generator implements `__next__()`:
 

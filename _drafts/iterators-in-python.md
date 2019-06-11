@@ -13,7 +13,12 @@ tags:
   - iteration
 ---
 
-Iterate over a class using a `for` loop.
+How to create classes that can be plugged into a `for` loop.
+
+If you are already comfortable with iterators, look ahead to the
+[generators](/generators-in-python/) post or the
+[generator cheat sheet](/python-generator-cheatsheet/).
+
 
 ## Source
 
@@ -22,14 +27,16 @@ Find [source code]() on GitHub.
 
 ## Background
 
-Create classes that can be plugged into a `for` loop.
+Iterators are the way that Python allows a `for` loop to iterate over
+collections and classes. The details of extracting items and performing range checks
+are extracted into a class that follows Python's iterator protocol.
 
 
-## Mechanics of Iteration
+## Iterator Mechanics
 
-To introduce how a `for` loop works in Python, let's first naively loop over a
-collection and then sequentially introduce Python syntax to make the process
-easier and safer.
+To gain a detailed understading of how iterators work in Python, let's first
+naively loop over a collection and then progressively introduce Python syntax to
+make the process easier and safer.
 
 
 ### Manually loop over collection
@@ -346,7 +353,7 @@ for item in iterable:
 Pretty slick!
 
 
-## Why not iterators?
+## Why not Iterators?
 
 As useful as they are, there are a few downsides to creating iterators directly.
 An iterator must:
