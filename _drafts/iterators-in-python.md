@@ -290,48 +290,6 @@ The iterator simply returns itself! Now `for` can call `iter()` (which calls
 `__iter__()`) and loop properly.
 
 
-### Summary
-
-Here is the full example:
-
-```python
-class Iterable:
-    def __init__(self, collection):
-        self.collection = collection
-
-    def __iter__(self):
-        return Iterator(collection)
-
-class Iterator:
-    def __init__(self, collection):
-        self.collection = collection
-        self.index = 0
-        self.max_index = len(collection)
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.index >= self.max_index:
-            raise StopIteration
-
-        item = self.collection[self.index]
-        self.index += 1
-        return item
-```
-
-It can be used like this:
-
-```python
-collection = # user creates collection
-iterable = Iterable(collection)
-
-# loop over collection
-for item in iterable:
-    # user adds code here
-```
-
-
 ## Example
 
 Here is a simple working example of an iterable and a corresponding iterator:
@@ -362,44 +320,49 @@ class Iterator:
         return item
 ```
 
-Use it like this:
+It can be used like this:
 
 ```python
+# user creates collection
 collection = (4, 5, 6)
 iterable = Iterable(collection)
 
+# loop over collection
 for item in iterable:
+    # user adds code here
     print(item)
 ```
 
 Pretty slick!
 
 
-## Summary
-
-Recap iterator protocol.
-
-Iterable:
-
-  * `__iter__()`
-
-Iterator:
-
-  * `__iter__()`
-  * `__next__()`
-  * `StopIteration`
-
-
 ## Why not Iterators?
 
-As useful as they are, there are a few downsides to creating iterators directly.
-An iterator must:
+As useful as they are, there are a few downsides to creating iterable classes
+using the iterator protocol. You must:
 
-  * explicitly track its current location in the collection across several calls to `__next__()`
-  * checks boundary conditions for the container
   * create an extra class for the iterator itself
+  * explicitly track the iterator's location in the collection across several calls to `__next__()`
+  * explicitly check boundary conditions for the collection
 
-To circumvent these issues, read about using [generators](/generators-in-python/).
+To circumvent these issues, Python provides [generators](/generators-in-python/).
+
+
+## Summary
+
+Python specifies an iterator protocol that allows objects to be passed to `for` loops.
+This protocol hides the details of iteration from the caller.
+
+For a class to be iterable, it must:
+
+  * Implement `__iter__()` that returns a valid iterator
+
+A valid iterator must:
+
+  * Implement `__iter__()` that returns itself
+  * Implement `__next__()` that
+    - returns the next item from the collection
+    - raises `StopIteration` when the end of the collecton is reached
 
 
 ## Further Reading
