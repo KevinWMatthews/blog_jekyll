@@ -1,5 +1,5 @@
 ---
-title: &title "Generator Cheat Sheet"
+title: &title "Python Generator Cheat Sheet"
 permalink: /python-generator-cheatsheet/
 excerpt: "Quickstart for Python generators"
 toc: true
