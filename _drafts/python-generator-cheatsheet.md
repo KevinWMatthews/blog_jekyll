@@ -26,12 +26,17 @@ on GitHub.
 
 ## Background
 
-Generators can be used to make a class iterable - an instance can be passed directly
-into a `for` loop:
+Generators can be used to make a class or a function iterable.
+Python will create a generator when it encounters the `yield` keyword in a function.
+
+To make a class iterable, implement an `__iter__()` method with `yield`.
+An instance of the class can then be passed directly into a `for` loop.
 
 ```python
 class Iterable:
-    # ...
+    def __iter__(self):
+        # ...
+        yield
 
 for item in Iterable():
     # ...
@@ -40,38 +45,23 @@ for item in Iterable():
 `__iter__()` will return a generator object that is only evaluated when necessary.
 
 Similarly, generators can be used to make a function iterable:
+
 ```python
 def function():
     # ...
+    yield
 
 for item in function():
     # ...
 ```
 
-## Syntax
-
-To make a class iterable, create an `__iter__()` method and use the `yield`
-keyword to "return" a value:
-
-```python
-class Iterable:
-    def __iter__(self):
-        for item in collection:
-            yield item
-```
-
-To make a function iterable, simply `yield` instead of returning:
-
-```python
-def function(collection):
-    for item in collection:
-        yield item
-```
-
 
 ## Examples
 
-Iterable class:
+
+### Iterable class
+
+Implement `__iter__()` with `yield`:
 
 ```python
 class Iterable:
@@ -81,32 +71,51 @@ class Iterable:
     def __iter__(self):
         for item in self.collection:
             yield item
+```
 
+Then pass an instance of the class to `for:`
 
+```python
 collection = [7, 8, 9]
 iterable = Iterable(collection)
 
-for item in collection:
+for item in iterable:
     print(item)
 ```
 
-Iterable function:
+### Iterable function
+
+Implement a function with `yield`:
 
 ```python
 def iterate_over(collection):
     for item in collection:
         yield item
+```
 
+Then call the function in `for`:
+```python
 collection = [7, 8, 9]
 for item in iterate_over(collection):
     print(item)
 ```
 
-An iterable function can be standalone or a method of a class.
 
-These are trivial examples; in this case one could iterate directly on the
-collection with the same effect. In a real-world scenario, the generator
-function would do extra processing that provides some added value.
+### Return
+
+A generator iterator raises the `StopIteration` exception when it returns,
+either at the end of a function or from the `return` keyword.
+
+```python
+def iterable_function():
+    for i in range(1..10):
+        if i > 3:
+            return
+        yield i
+
+for item in function():
+    print(item)
+```
 
 
 ## Further Reading
