@@ -13,6 +13,8 @@ tags:
   - iteration
 ---
 
+How to create classes that can be plugged into a `for` loop.
+
 If you're already comfortable with generators, look at the
 [generator cheat sheet](/python-generator-cheatsheet/). If you want an
 introduction to iterators, look at this [iterator](/iterators-in-python/) post.
@@ -64,7 +66,7 @@ Notice that the iterator must explicitly maintain internal state - it must
 remember where it is in the collection between calls to `__next__()`.
 
 
-## Introduction to generators
+## Introduction to Generators
 
 Generators simplify the process of creating an iterator - they hide the iterator class entirely and provide easy ways for the iterator to track its current location in the collection.
 
@@ -160,7 +162,7 @@ This isn't so Pythonic yet (see the [final example](http://localhost:4000/genera
 but let's explore the internal details of generators before we rewrite it further.
 
 
-## Generator mechanics
+## Generator Mechanics
 
 First let's look at some differences between functions and generator functions.
 
