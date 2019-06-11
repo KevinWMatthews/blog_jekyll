@@ -365,12 +365,12 @@ remembers precisely what it was executing. When `__next__()` is called again,
 the generator iterator picks up exactly where it left off. For example,
 
 ```python
-iterator = a_generator_function().__iter__()
-iterator.__next__()
+generator_iterator = a_generator_function()
+generator_iterator.__next__()
 # First execution
 # Before yield: 0
 
-iterator.__next__()
+generator_iterator.__next__()
 # After yield: 1
 # Before yield: 1
 ```
@@ -388,15 +388,16 @@ it can simply use local variables.
 This is apparent in the previous example and is illustrated further with another call to `__next__()`:
 
 ```python
-iterator.__next__()
+generator_iterator = a_generator_function()
+generator_iterator.__next__()
 # First execution
 # Before yield: 0
 
-iterator.__next__()
+generator_iterator.__next__()
 # After yield: 1
 # Before yield: 1
 
-iterator.__next__()
+generator_iterator.__next__()
 # After yield: 2
 # Before yield: 2
 ```
@@ -410,19 +411,20 @@ When a generator function returns, the generator iterator automatically
 raises a `StopIteration` exception:
 
 ```python
-iterator.__next__()
+generator_iterator = a_generator_function()
+generator_iterator.__next__()
 # First execution
 # Before yield: 0
 
-iterator.__next__()
+generator_iterator.__next__()
 # After yield: 1
 # Before yield: 1
 
-iterator.__next__()
+generator_iterator.__next__()
 # After yield: 2
 # Before yield: 2
 
-iterator.__next__()
+generator_iterator.__next__()
 # After yield: 3
 # Traceback (most recent call last):
 #   File "<stdin>", line 1, in <module>
@@ -438,6 +440,13 @@ For example, reconsider our previous iterator class and how it must track state
 using instance variables `self.index` and `self.max_index`:
 
 ```python
+class Iterable:
+    def __init__(self, collection):
+        self.collection = collection
+
+    def __iter__(self):
+        return Iterator(collection)
+
 class Iterator:
     def __init__(self, collection):
         self.collection = collection
@@ -456,7 +465,7 @@ class Iterator:
 A generator can simply use local variables `index` and `max_index`:
 
 ```python
-class Iterator:
+class Iterable:
     def __init__(self, collection):
         self.collection = collection
 
