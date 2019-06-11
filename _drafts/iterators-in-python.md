@@ -10,6 +10,7 @@ categories:
 tags:
   - python
   - iterators
+  - iteration
 ---
 
 Iterate over a class using a `for` loop.

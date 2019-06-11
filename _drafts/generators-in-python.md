@@ -10,6 +10,7 @@ categories:
 tags:
   - python
   - generators
+  - iteration
 ---
 
 If you're already comfortable with generators, look at the

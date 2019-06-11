@@ -10,6 +10,8 @@ categories:
 tags:
   - python
   - generators
+  - iteration
+  - cheatsheet
 ---
 
 Reference for Python generator syntax. For a detailed introduction to generators,
