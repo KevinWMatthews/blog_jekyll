@@ -1,7 +1,7 @@
 ---
 title: &title "Iterators in Python"
 permalink: /iterators-in-python/
-excerpt: "Low-level syntax for putting custom classes in a for loop"
+excerpt: "Basic Python concepts for putting custom classes in a for loop"
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -27,9 +27,11 @@ Find [source code](https://github.com/KevinWMatthews/python-iterators) on GitHub
 
 ## Background
 
-Iterators are the way that Python allows a `for` loop to iterate over
-collections and classes. The details of extracting items and performing range checks
-are extracted into a class that follows Python's iterator protocol.
+Iterators are the way that Python allows a `for` loop to traverse
+collections and classes. They the details of iteration to be encapsulated in a
+class. Python provides specific guidelines for how to do this, the
+[iterator type](https://docs.python.org/3/library/stdtypes.html#iterator-types),
+which we will explore below.
 
 
 ## Iterator Mechanics
@@ -67,19 +69,20 @@ while index < max_index:
 
 This is effective but error-prone. It requries specific knowledge of the class:
 how to create the class, where the collection is stored, how to access
-individual items, where in the collection to start looping, and when to finish looping.
-Further, the user must add their code in the middle of the loop - not so clear to read.
+individual items in the collection, where in the collection to start looping,
+and when to finish looping. Further, the user must add their code in the
+middle of the loop - not so clear to read.
 
 
 ### Iterator protocol
 
 To isolate the user from these details, we can create a class that does iteration
-for us. Python defines a specific protocol for this; an iterator must:
+for us. Python defines a specific protocol for this; an iterator must implement:
 
-  * return itself using `__iter__()`
-  * return the next item from the collection using `__next__()`
-    - (Python2 requires `next()`)
-  * raise `StopIteration` when the end of the collection is reached
+  * `__iter__()` that returns itself
+  * `__next__()` (Python2 requires `next()`) that
+    - returns the next item from the collection
+    - raises `StopIteration` when the end of the collection is reached
 
 A sketch of this looks like:
 
@@ -98,7 +101,7 @@ class Iterator:
         # move to next location in collection
 ```
 
-We will examine the `__next__()` method now and return to the details of `__iter__()`
+We will examine the `__next__()` method now and return to `__iter__()`
 [in a later section](/iterators-in-python/#iterators-must-be-iterable).
 
 
@@ -149,8 +152,8 @@ access the collection or do a range check on the current index.
 ### Create an iterator using `__iter__()`
 
 While an improvement, the above example still requires that the user knows
-how to create each type of iterator and access the collection inside the
-container. This isn't extensible, so Python requires that we extract the details of
+what iterator to create, how to create it, and how access the collection inside the
+container class. This isn't extensible, so Python requires that we extract the details of
 creating the iterator and then expose it with a consistent API: `__iter__()`.
 For example:
 
@@ -254,8 +257,8 @@ Pretty cool!
 
 ### Iterators must be iterable
 
-Notice that `for` automatically creates an iterator. What happens if we create
-an iterator ourselves (not using out `Iterable` class) and pass it into a `for` loop?
+Notice that `for` automatically creates an iterator. What happens if the iterator
+already exists and we pass it directly into a `for` loop?
 
 ```python
 collection = # user creates collection
@@ -271,7 +274,7 @@ for item in iterator:
 It fails:
 
 ```
-AttributeError: 'Iterator' object has no attribute '__iter__'
+TypeError: 'Iterator' object is not iterable
 ```
 
 This seems strange; we can't iterate over... an iterator?
