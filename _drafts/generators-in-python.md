@@ -17,7 +17,8 @@ How to create classes that can be plugged into a `for` loop.
 
 If you're already comfortable with generators, look at the
 [generator cheat sheet](/python-generator-cheatsheet/). If you want an
-introduction to iterators, look at this [iterator](/iterators-in-python/) post.
+introduction to iterators, the underpinnings of generators,
+look at this [iterator](/iterators-in-python/) post.
 
 
 ## Source
@@ -60,7 +61,7 @@ An iterable class must:
 This iterator must:
   * implement an `__iter__()` method that returns itself
   * implement a `__next__()` method that provides sequential access to each item in the collection
-  * raise a `StopIteration` exception when the end of the collection is reached
+  * raise the `StopIteration` exception when the end of the collection is reached
 
 Notice that the iterator must explicitly maintain internal state - it must
 remember where it is in the collection between calls to `__next__()`.
@@ -73,7 +74,7 @@ Generators simplify the process of creating an iterator - they hide the iterator
 Generators are created using a Python language feature called a [yield expression](https://docs.python.org/3/reference/expressions.html#yieldexpr).
 When Python encounters a `yield` expression in a function, it creates
 a [generator function](https://docs.python.org/3/glossary.html#term-generator)
-instead of a regular function object. A generator function is a special function;
+instead of a regular function. A generator function is a special function;
 when called, it is not executed. Instead, Python captures the body of the
 generator function in a [generator iterator](https://docs.python.org/3/glossary.html#term-generator-iterator)
 and returns this object instead. This generator iterator can be used to execute
@@ -84,9 +85,10 @@ requirements of an iterator: it provides each item in the collection and
 raises `StopIteration` when it runs out of items. It also provides a few
 [methods](https://docs.python.org/3/reference/expressions.html#generator-iterator-methods) that we won't need to discuss here.
 
-A summary is as follows:
+In summary:
+
   * Python creates a generator function when it encounters the `yield` keyword
-  * When a generator function is called, Python instead creates and returns a generator iterator
+  * When a generator function is called, Python creates and returns a generator iterator
   * The generator iterator controls the execution of the generator function's code
 
 In practice, creating a generator is surprisingly easy:
@@ -125,7 +127,7 @@ class Iterator:
         return item
 ```
 
-could be rewritten like this:
+can be rewritten like this:
 
 ```python
 class Iterable:
@@ -133,11 +135,8 @@ class Iterable:
         self.collection = collection
 
     def __iter__(self):
-        index = 0
-        max_index = len(self.collection)
-        while index < max_index:
-            yield self.collection[index]
-            index += 1
+        for item in self.collection:
+            yield item
 ```
 
 The magic stems from the keyword `yield`.
@@ -158,8 +157,7 @@ generator iterator just like any other iterator:
   * retrieve an item in the collection using `next()`
   * catch the `StopIteration` exception
 
-This isn't so Pythonic yet (see the [final example](http://localhost:4000/generators-in-python/#using-a-generator-high-level) for that),
-but let's explore the internal details of generators before we rewrite it further.
+Let's explore the features of generators that make this transformation possible.
 
 
 ## Generator Mechanics
