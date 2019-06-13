@@ -285,7 +285,8 @@ calling a generator function returns a generator iterator.
 
 When a generator function is called, Python delays executing the body of the function.
 Instead, it returns a generator iterator (often called a generator)
-that controls how and when the function is called in the future.
+that controls how and when the generator function is
+executed in the future.
 
 This generator iterator will:
   * implement an `__iter__()` method that returns itself
@@ -309,9 +310,11 @@ def a_generator_function():
     while True:
         print("Before yield: {}".format(i))
         yield
-        i += 1
         print("After yield: {}".format(i))
+        i += 1
+        print("After increment: {}".format(i))
         if i > 2:
+            print("Returning from generator function")
             return
 ```
 
@@ -349,8 +352,7 @@ print(test_me)
 # <method-wrapper '__next__' of generator object at 0x7f7233de2200>
 ```
 
-We are responsible for making this return an item in the collection in the
-body of the generator function, which we'll explore later.
+We'll see later that `__next__()` contains the code from the generator function.
 
 
 #### Track execution state
@@ -360,7 +362,7 @@ Generator iterators
 between calls to `__next__()`.
 
 When a generator reaches a yield expression, it returns an item to the caller but
-remembers precisely what it was executing. When `__next__()` is called again,
+remembers precisely where it was in the call stack. When `__next__()` is called again,
 the generator iterator picks up exactly where it left off. For example,
 
 ```python
@@ -370,11 +372,12 @@ generator_iterator.__next__()
 # Before yield: 0
 
 generator_iterator.__next__()
-# After yield: 1
+# After yield: 0
+# After increment: 1
 # Before yield: 1
 ```
 
-Python executes only up to the `yield` expression in the first call to `__next__()`. On the secondcall to `__next__()`, Python resumes executing just after `yield`.
+Python executes only up to the `yield` expression in the first call to `__next__()`. On the second call to `__next__()`, Python resumes executing just after `yield`.
 
 
 #### Track local state
@@ -393,11 +396,13 @@ generator_iterator.__next__()
 # Before yield: 0
 
 generator_iterator.__next__()
-# After yield: 1
+# After yield: 0
+# After increment: 1
 # Before yield: 1
 
 generator_iterator.__next__()
-# After yield: 2
+# After yield: 1
+# After increment: 2
 # Before yield: 2
 ```
 
@@ -416,24 +421,28 @@ generator_iterator.__next__()
 # Before yield: 0
 
 generator_iterator.__next__()
-# After yield: 1
+# After yield: 0
+# After increment: 1
 # Before yield: 1
 
 generator_iterator.__next__()
-# After yield: 2
+# After yield: 1
+# After increment: 2
 # Before yield: 2
 
 generator_iterator.__next__()
-# After yield: 3
+# After yield: 2
+# After increment: 3
+# Returning from generator function
 # Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
+#     generator_iterator.__next__()
 # StopIteration
 ```
 
 
 ## Example
 
-These features of generator iterators allow us to simplify our cod considerably.
+The features of generator iterators allow us to simplify our code considerably.
 
 For example, reconsider our previous iterator class and how it must track state
 using instance variables `self.index` and `self.max_index`:
@@ -476,7 +485,7 @@ class Iterable:
             index += 1
 ```
 
-The fact that all state is maintained allows us to simplify further:
+The fact that Python maintains execution state allows us to simplify further:
 
 ```python
     def __iter__(self):
@@ -484,13 +493,13 @@ The fact that all state is maintained allows us to simplify further:
             yield item
 ```
 
-Python knows where it is in the `for` loop, so it can yield/return an item and then
+Python knows where it is in the `for` loop so it can yield/return an item and then
 pick up exactly where it left off. In detail, Python will:
 
   * start executing the `for` loop
   * suspend execution of the loop at the first call to `yield`
-    - return an item to the caller
     - store all execution state
+    - return an item to the caller
   * resume executing the for loop
 
 
@@ -529,7 +538,7 @@ To loop over the collection,
   * `__next__()` executes the code in the generator function
   * when the generator function reaches `yield`, it
     - suspends execution and stores execution state
-    - returns an item in the collection (and flow control) to the caller (the body of the high-level `for` statement)
+    - returns an item in the collection and gives flow control to the caller (the body of the high-level `for` statement)
   * the high-level `for` statement executes its body
   * when finished executing, `for` calls `next()` on the iterator again
   * the process repeats until the iterator raises a `StopIteration` exception
@@ -549,17 +558,14 @@ while True:
         break
 ```
 
-We've implemented `__iter__()` using `yield`, but we can see that the
-object that it returns implements `__next__()`. Further, `__next__()`
-at some point raises `StopIteration`.
+We've only implemented `Iterable.__iter__()` using `yield`. Python created the
+iterator object that implements `__next__()` appropriately.
 
 
 ### Using a generator, high-level
 
-Generators are powerful because the developer can ignore `__iter__()`,
-`__next__()`, exceptions, and indices.
-A can simply `yield` each item in the collection and trust that
-`for` knows what to do to get each item.
+Generators are powerful because the developer can create an iterator while ignoring `__iter__()`, `__next__()`, exceptions, and collection indices.
+A generator can simply `yield` each item in the collection and trust that the high-level `for` knows what to do to get each item.
 
 Let's revisit the previous example but think of it from a high-level perspective:
 
@@ -613,7 +619,7 @@ class Iterator:
         return self
 
     def __next__(self):
-        # loop over collection, maintaining location
+        # loop over collection, maintaining current location
         # return item or raise StopIteration
 ```
 
