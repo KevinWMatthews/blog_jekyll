@@ -15,10 +15,6 @@ tags:
 
 How to create classes that can be plugged into a `for` loop.
 
-If you are already comfortable with iterators, look ahead to the
-[generators](/generators-in-python/) post or the
-[generator cheat sheet](/python-generator-cheatsheet/).
-
 
 ## Source
 
