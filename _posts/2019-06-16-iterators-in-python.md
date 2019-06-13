@@ -344,7 +344,7 @@ using the iterator protocol. You must:
   * explicitly track the iterator's location in the collection across several calls to `__next__()`
   * explicitly check boundary conditions for the collection
 
-To circumvent these issues, Python provides [generators](/generators-in-python/).
+To circumvent these issues, Python provides generators.
 
 
 ## Summary
