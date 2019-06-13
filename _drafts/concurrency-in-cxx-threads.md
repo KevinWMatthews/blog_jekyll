@@ -21,12 +21,13 @@ TODO point to example on GitHub.
 ## Background
 
 As of C++11, threads are part of the C++ standard library.
+This post assumes a basic understanding of (POSIX) threads.
 
 
 ## Syntax
 
 
-### Functions
+### Basic
 
 Initialize a thread with the function that it will call:
 
@@ -35,7 +36,7 @@ Initialize a thread with the function that it will call:
 
 void function()
 {
-  // Do stuff.
+    // Do stuff.
 }
 
 std::thread a_thread { function };
@@ -44,8 +45,6 @@ a_thread.join();
 
 Be sure to join so that the primary thread does not execute immediately.
 
-What about detaching?
-
 
 ### Passing Arguments
 
@@ -53,7 +52,7 @@ Pass arguments to a thread in an initializer list:
 ```c++
 void function(int value)
 {
-  // Do stuff.
+    // Do stuff.
 }
 
 std::thread a_thread { function, 42 };
@@ -61,31 +60,54 @@ a_thread.join();
 ```
 
 
-## Constructor (TODO title)
+### Multiple Arguments
+
+?
+Arguments are a `...` list
+
+
+### Reference Arguments
+
+References must be wrapped in [std::ref](https://en.cppreference.com/w/cpp/utility/functional/ref).
+
+
+## Function is a Callable Object
+
+C++ threads simply require a that the function they are passed is a
+[callable](https://en.cppreference.com/w/cpp/named_req/Callable) object.
+This can be a function, a function object, struct,
+class, lambda, etc.
+
 
 ### Function Objects
 
-Threads can be passed function objects:
+[docs](https://en.cppreference.com/w/cpp/utility/functional)
+
+
+### Struct
+
+TODO change this to a struct
+Function objects can be passed to a thread:
 
 ```c++
 struct FunctionObject
 {
-  void operator()();
-}
+    void operator()();
+};
 
 // Create a function object
 std::thread a_thread { FunctionObject() };
 a_thread.join();
 ```
 
-The function object is created using the constructor: `FunctionObject()`.
-This is passed into the thread, which then calls the `()` operator on the
-function object.
+Note that the function object must be created using its constructor: `FunctionObject()`.
+The thread can then call the `()` operator on the function object.
 
 
 ### Classes
 
-Threads can be passed callable (?) classes:
+Classes can be passed to a thread:
+
 ```c++
 class CallableClass
 {
@@ -96,10 +118,14 @@ public:
 std::thread a_thread { CallableClass() };
 ```
 
-Note that the `()` must be explicitly made public.
+As with function objects, the class must be instantiated using its constructur:
+`CallableClass()`. The thread can then call the `()` operator.
+Note that the `()` operator must be explicitly made public.
 
 
 ### Lambdas
+
+Lambdas can be passed to a thread:
 
 ```c++
 auto a_lambda = [](){};
@@ -107,6 +133,9 @@ std::thread a_thread { a_lambda };
 a_thread.join();
 ```
 
+The thread executes the lambda using `()`.
+
+Lambdas can be passed directly into a thread:
 
 ```c++
 std::thread a_thread { [](){} };
