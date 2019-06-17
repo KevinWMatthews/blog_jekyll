@@ -30,7 +30,6 @@ Formal documentation for [std::thread](https://en.cppreference.com/w/cpp/thread/
 and its [constructor](https://en.cppreference.com/w/cpp/thread/thread/thread).
 
 
-
 ### No Arguments
 
 Initialize a thread with the function that should run in a thread:
