@@ -1,7 +1,7 @@
 ---
-title: &title "Concurrency in C++: Threads"
-permalink: /concurrency-in-cxx-std-thread/
-excerpt: "Part 1: Using Threads from the standard library"
+title: &title "Concurrency in C++: Thread Syntax"
+permalink: /concurrency-in-cxx-std-thread-syntax/
+excerpt: "Part 1: Using threads from the standard library"
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -13,6 +13,8 @@ tags:
   - threads
 ---
 
+This is a short demonstration of the syntax of threads in C++. It assumes a basic understanding of (POSIX) threads and a modern C++ compiler.
+
 ## Source
 
 Find [source code](https://github.com/KevinWMatthews/cxx-concurrency) on GitHub.
@@ -20,8 +22,7 @@ Find [source code](https://github.com/KevinWMatthews/cxx-concurrency) on GitHub.
 
 ## Background
 
-As of C++11, threads are part of the C++ standard library.
-This post assumes a basic understanding of (POSIX) threads.
+C++ largely predates multi-threaded systems. Thread support was added to the standard library in C++11, with C++14 and C++17 adding refinements and more features.
 
 
 ## Syntax
