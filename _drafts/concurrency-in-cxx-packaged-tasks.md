@@ -18,7 +18,7 @@ tags:
 
 ## Source
 
-TODO point to example on GitHub.
+Find [source code](https://github.com/KevinWMatthews/cxx-concurrency) on GitHub.
 
 
 ## Background
