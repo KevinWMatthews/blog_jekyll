@@ -15,6 +15,8 @@ tags:
 
 How to create classes that can be plugged into a `for` loop.
 
+If you are already comfortable with iterators, look ahead to the [generators](/generators-in-python/) post.
+
 
 ## Source
 
@@ -344,7 +346,7 @@ using the iterator protocol. You must:
   * explicitly track the iterator's location in the collection across several calls to `__next__()`
   * explicitly check boundary conditions for the collection
 
-To circumvent these issues, Python provides generators.
+To circumvent these issues, Python provides [generators](/generators-in-python/).
 
 
 ## Summary
