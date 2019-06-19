@@ -1,7 +1,7 @@
 ---
 title: &title "Concurrency in C++: Futures and Promises"
 permalink: /concurrency-in-cxx-futures-and-promises
-excerpt: "Part 2: Using Futures and Promises From the Standard Library"
+excerpt: "Using Futures and Promises From the Standard Library"
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -14,6 +14,9 @@ tags:
   - promises
   - threads
 ---
+
+Use a promise/future pair to safely return a result from one thread to another.
+
 
 ## Source
 

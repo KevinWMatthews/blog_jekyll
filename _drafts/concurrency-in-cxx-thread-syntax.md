@@ -1,7 +1,7 @@
 ---
 title: &title "Concurrency in C++: Thread Syntax"
 permalink: /concurrency-in-cxx-std-thread-syntax/
-excerpt: "Part 1: Using threads from the standard library"
+excerpt: "Using threads from the standard library"
 toc: true
 toc_label: *title
 toc_sticky: true
