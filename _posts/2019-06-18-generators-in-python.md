@@ -15,6 +15,7 @@ tags:
 
 How to create classes that can be plugged into a `for` loop.
 
+If you're already comfortable with generators, look at the [generator cheat sheet](/python-generator-cheatsheet/).
 If you want an introduction to iterators, the underpinnings of generators, look at this [iterator](/iterators-in-python/) post.
 
 
@@ -170,10 +171,8 @@ First let's look at some differences between functions and generator functions.
 When Python encounters `def` it creates a function object:
 
 ```python
-$ python3
->>> def a_function():
-...     return
-...
+def a_function():
+    return
 ```
 
 We can see this by printing the function:
@@ -187,12 +186,15 @@ or inspecting it:
 ```python
 >>> import inspect
 >>> test_me = a_function
+
 >>> result = inspect.isfunction(test_me)
 >>> print(result)
 True
+
 >>> result = inspect.isgeneratorfunction(test_me)
 >>> print(result)
 False
+
 >>> result = inspect.isgenerator(test_me)
 >>> print(result)
 False
@@ -201,10 +203,8 @@ False
 If Python encounters `yield` within a function, it creates a special type of function: a generator function.
 
 ```python
-$ python3
->>> def a_generator_function():
-...     yield
-...
+def a_generator_function():
+    yield
 ```
 
 Printing this shows a function:
@@ -219,12 +219,15 @@ Inspecting this shows that Python creates a special type of function:
 ```python
 >>> import inspect
 >>> test_me = a_generator_function
+
 >>> result = inspect.isfunction(test_me)
 >>> print(result)
 True
+
 >>> result = inspect.isgeneratorfunction(test_me)
 >>> print(result)
 True
+
 >>> result = inspect.isgenerator(test_me)
 >>> print(result)
 False
@@ -239,10 +242,10 @@ Functions and generator functions be behave differently when called.
 A regular function returns a user-specified type - in this case `None`:
 
 ```python
-$ python3
->>> def a_function():
-...     return
-...
+def a_function():
+    return
+```
+```python
 >>> test_me = a_function()
 >>> print(test_me)
 None
@@ -250,11 +253,12 @@ None
 
 By contrast, a generator function returns a generator iterator:
 ```python
-$ python3
->>> def a_generator_function():
-...     yield
-...
+def a_generator_function():
+    yield
+```
+```python
 >>> test_me = a_generator_function()
+
 >>> print(test_me)
 <generator object a_generator_function at 0x7fe3e6112888>
 ```
@@ -263,12 +267,15 @@ Inspecting this shows that the returned value is a now generator iterator (not a
 ```python
 >>> import inspect
 >>> test_me = a_generator_function()
+
 >>> result = inspect.isfunction(test_me)
 >>> print(result)
 False
+
 >>> result = inspect.isgeneratorfunction(test_me)
 >>> print(result)
 False
+
 >>> result = inspect.isgenerator(test_me)
 >>> print(result)
 True
@@ -321,14 +328,14 @@ def a_generator_function():
 A generator implements `__iter__()` and it returns itself:
 
 ```python
-generator_iterator = a_generator_function()
+>>> generator_iterator = a_generator_function()
 
-print(generator_iterator)
-# <generator object a_generator_function at 0x7f7233de21a8>
+>>> print(generator_iterator)
+<generator object a_generator_function at 0x7f7233de21a8>
 
-test_me = generator_iterator.__iter__()
-print(test_me)
-# <generator object a_generator_function at 0x7f7233de21a8>
+>>> test_me = generator_iterator.__iter__()
+>>> print(test_me)
+<generator object a_generator_function at 0x7f7233de21a8>
 ```
 
 Notice that the body of the generator function has not yet executed.
@@ -339,14 +346,11 @@ Notice that the body of the generator function has not yet executed.
 A generator implements `__next__()`:
 
 ```python
-$ python3
-def a_generator_function():
-    yield
+>>> generator_iterator = a_generator_function()
 
-generator_iterator = a_generator_function()
-test_me = generator_iterator.__next__
-print(test_me)
-# <method-wrapper '__next__' of generator object at 0x7f7233de2200>
+>>> test_me = generator_iterator.__next__   # Python2 implements next()
+>>> print(test_me)
+<method-wrapper '__next__' of generator object at 0x7f7233de2200>
 ```
 
 We'll see later that `__next__()` contains the code from the generator function.
@@ -363,15 +367,15 @@ remembers precisely where it was in the call stack. When `__next__()` is called 
 the generator iterator picks up exactly where it left off. For example,
 
 ```python
-generator_iterator = a_generator_function()
-generator_iterator.__next__()
-# First execution
-# Before yield: 0
+>>> generator_iterator = a_generator_function()
+>>> generator_iterator.__next__()
+First execution
+Before yield: 0
 
-generator_iterator.__next__()
-# After yield: 0
-# After increment: 1
-# Before yield: 1
+>>> generator_iterator.__next__()
+After yield: 0
+After increment: 1
+Before yield: 1
 ```
 
 Python executes only up to the `yield` expression in the first call to `__next__()`. On the second call to `__next__()`, Python resumes executing just after `yield`.
@@ -387,20 +391,20 @@ it can simply use local variables.
 This is apparent in the previous example and is illustrated further with another call to `__next__()`:
 
 ```python
-generator_iterator = a_generator_function()
-generator_iterator.__next__()
-# First execution
-# Before yield: 0
+>>> generator_iterator = a_generator_function()
+>>> generator_iterator.__next__()
+First execution
+Before yield: 0
 
-generator_iterator.__next__()
-# After yield: 0
-# After increment: 1
-# Before yield: 1
+>>> generator_iterator.__next__()
+After yield: 0
+After increment: 1
+Before yield: 1
 
-generator_iterator.__next__()
-# After yield: 1
-# After increment: 2
-# Before yield: 2
+>>> generator_iterator.__next__()
+After yield: 1
+After increment: 2
+Before yield: 2
 ```
 
 The value of `i` is stored between calls.
@@ -412,28 +416,28 @@ When a generator function returns, the generator iterator automatically
 raises a `StopIteration` exception:
 
 ```python
-generator_iterator = a_generator_function()
-generator_iterator.__next__()
-# First execution
-# Before yield: 0
+>>> generator_iterator = a_generator_function()
+>>> generator_iterator.__next__()
+First execution
+Before yield: 0
 
-generator_iterator.__next__()
-# After yield: 0
-# After increment: 1
-# Before yield: 1
+>>> generator_iterator.__next__()
+After yield: 0
+After increment: 1
+Before yield: 1
 
-generator_iterator.__next__()
-# After yield: 1
-# After increment: 2
-# Before yield: 2
+>>> generator_iterator.__next__()
+After yield: 1
+After increment: 2
+Before yield: 2
 
-generator_iterator.__next__()
-# After yield: 2
-# After increment: 3
-# Returning from generator function
-# Traceback (most recent call last):
-#     generator_iterator.__next__()
-# StopIteration
+>>> generator_iterator.__next__()
+After yield: 2
+After increment: 3
+Returning from generator function
+Traceback (most recent call last):
+   generator_iterator.__next__()
+StopIteration
 ```
 
 
@@ -513,11 +517,16 @@ class Iterable:
     def __iter__(self):
         for item in self.collection:
             yield item
-
-collection = (4, 5, 6)
-iterable = Iterable(collection)
-for item in iterable:
-    print(item)
+```
+```python
+>>> collection = (4, 5, 6)
+>>> iterable = Iterable(collection)
+>>> for item in iterable:
+...     print(item)
+...
+4
+5
+6
 ```
 
 There are two distinct stages: creating an iterator and looping over the collection.
@@ -543,16 +552,20 @@ To loop over the collection,
 To demonstrate some of these steps we can manually loop over the collection:
 
 ```python
-collection = (4, 5, 6)
-iterable = Iterable(collection)
+>>> collection = (4, 5, 6)
+>>> iterable = Iterable(collection)
 
-iterator = iterable.__iter__()
-while True:
-    try:
-        item = iterator.__next__()
-        print(item)
-    except StopIteration:
-        break
+>>> iterator = iterable.__iter__()
+>>> while True:
+...     try:
+...         item = iterator.__next__()
+...         print(item)
+...     except StopIteration:
+...         break
+...
+4
+5
+6
 ```
 
 We've only implemented `Iterable.__iter__()` using `yield`. Python created the
@@ -574,11 +587,16 @@ class Iterable:
     def __iter__(self):
         for item in self.collection:
             yield item
-
-collection = (4, 5, 6)
-iterable = Iterable(collection)
-for item in iterable:
-    print(item)
+```
+```python
+>>> collection = (4, 5, 6)
+>>> iterable = Iterable(collection)
+>>> for item in iterable:
+...     print(item)
+...
+4
+5
+6
 ```
 
 There are still two distinct stages, but we'll ignore the details:

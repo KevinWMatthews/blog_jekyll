@@ -35,24 +35,24 @@ An instance of the class can then be passed directly into a `for` loop.
 ```python
 class Iterable:
     def __iter__(self):
-        # ...
-        yield
+        # loop over collection
+        yield   # each item in collection
 
 for item in Iterable():
-    # ...
+    # use item
 ```
 
 `__iter__()` will return a generator object that is only evaluated when necessary.
 
-Similarly, generators can be used to make a function iterable:
+To make a function iterable, use `yield`:
 
 ```python
 def function():
-    # ...
-    yield
+    # loop over collection
+    yield   # each item in collection
 
 for item in function():
-    # ...
+    # use item
 ```
 
 
@@ -76,12 +76,16 @@ class Iterable:
 Then pass an instance of the class to `for:`
 
 ```python
-collection = [7, 8, 9]
-iterable = Iterable(collection)
-
-for item in iterable:
-    print(item)
+>>> collection = [7, 8, 9]
+>>> iterable = Iterable(collection)
+>>> for item in iterable:
+...     print(item)
+...
+7
+8
+9
 ```
+
 
 ### Iterable function
 
@@ -95,9 +99,13 @@ def iterate_over(collection):
 
 Then call the function in `for`:
 ```python
-collection = [7, 8, 9]
-for item in iterate_over(collection):
-    print(item)
+>>> collection = [7, 8, 9]
+>>> for item in iterate_over(collection):
+...     print(item)
+...
+7
+8
+9
 ```
 
 
@@ -108,13 +116,19 @@ either at the end of a function or from the `return` keyword.
 
 ```python
 def iterable_function():
-    for i in range(1..10):
+    for i in range(1, 10):
         if i > 3:
             return
         yield i
+```
 
-for item in function():
-    print(item)
+```python
+>>> for item in iterable_function():
+...     print(item)
+...
+1
+2
+3
 ```
 
 

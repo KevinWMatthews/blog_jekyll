@@ -15,7 +15,8 @@ tags:
 
 How to create classes that can be plugged into a `for` loop.
 
-If you are already comfortable with iterators, look ahead to the [generators](/generators-in-python/) post.
+If you are already comfortable with iterators, look ahead to the [generators](/generators-in-python/) post
+or the [generator cheat sheet](/python-generator-cheatsheet/).
 
 
 ## Source
@@ -325,13 +326,17 @@ It can be used like this:
 
 ```python
 # user creates collection
-collection = (4, 5, 6)
-iterable = Iterable(collection)
+>>> collection = (4, 5, 6)
+>>> iterable = Iterable(collection)
 
 # loop over collection
-for item in iterable:
-    # user adds code here
-    print(item)
+>>> for item in iterable:
+...     # user adds code here
+...     print(item)
+...
+4
+5
+6
 ```
 
 Pretty slick!
