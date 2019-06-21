@@ -17,6 +17,7 @@ tags:
 ---
 
 Use a packaged task, a wrapper around a promise, to cleanly return a result from one thread to another.
+To learn the underlying language features, see [futures and promises](/concurrency-in-cxx-futures-and-promises/).
 
 
 ## Source
@@ -46,7 +47,7 @@ Recall the basic idea behind futures and promises: unidirectional, lock-free, sa
   * The thread with the promise sends data
   * The thread with the future waits for data
 
-At a high level, it looks something like this:
+At a high level, futures and promises look something like this:
 
 ```c++
 #include <future>
@@ -145,13 +146,9 @@ int do_actual_work()
     // return or throw
 }
 
-// Type must match the signature of the user's function
 std::packaged_task<int()> the_ptask { do_actual_work };
-
-// Type must match the return value of the user's function
 std::future<int> the_future { the_ptask.get_future() };
 
-// Move, don't copy
 std::thread worker_thread { std::move(the_ptask) };
 worker_thread.detach();
 
@@ -199,25 +196,32 @@ std::thread worker_thread { std::move(the_ptask), 42 };
 
 ### Example
 
-A full example is:
+Here is an example of using a packaged task with an argument:
 
 ```c++
 int do_actual_work(int)
 {
-    // ...
+    // return or throw
 }
 
-// Matches the function signature above
 using Task_type = int(int);
 
 std::packaged_task<Task_type> the_ptask { do_actual_work };
-auto the_future = the_ptask.get_future();
+std::future<int> the_future = the_ptask.get_future();
 
 int arg = 42;
 std::thread worker_thread { std::move(the_ptask), arg };
 worker_thread.detach();
 
-auto result = the_future.get();
+try
+{
+    int result = the_future.get();
+    // Use result
+}
+catch (...)
+{
+    // Handle exception
+}
 ```
 
 
