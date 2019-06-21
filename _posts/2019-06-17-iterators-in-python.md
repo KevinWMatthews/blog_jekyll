@@ -326,13 +326,17 @@ It can be used like this:
 
 ```python
 # user creates collection
-collection = (4, 5, 6)
-iterable = Iterable(collection)
+>>> collection = (4, 5, 6)
+>>> iterable = Iterable(collection)
 
 # loop over collection
-for item in iterable:
-    # user adds code here
-    print(item)
+>>> for item in iterable:
+...     # user adds code here
+...     print(item)
+...
+4
+5
+6
 ```
 
 Pretty slick!
