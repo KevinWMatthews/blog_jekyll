@@ -1,6 +1,6 @@
 ---
 title: &title "Concurrency in C++: Futures and Promises"
-permalink: /concurrency-in-cxx-futures-and-promises
+permalink: /concurrency-in-cxx-futures-and-promises/
 excerpt: "Using Futures and Promises From the Standard Library"
 toc: true
 toc_label: *title

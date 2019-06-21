@@ -1,6 +1,6 @@
 ---
 title: &title "Concurrency in C: C11 threads"
-permalink: /concurrency-in-c-c11-threads
+permalink: /concurrency-in-c-c11-threads/
 excerpt: "Part 2: C11 Threads"
 toc: true
 toc_label: *title

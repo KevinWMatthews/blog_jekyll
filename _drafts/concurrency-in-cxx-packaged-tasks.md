@@ -1,7 +1,7 @@
 ---
 title: &title "Concurrency in C++: Packaged Tasks"
-permalink: /concurrency-in-cxx-packages-tasks
-excerpt: "Using Packaged Tasks From the Standard Library"
+permalink: /concurrency-in-cxx-packaged-tasks/
+excerpt: "Using packaged tasks from the standard library"
 toc: true
 toc_label: *title
 toc_sticky: true
