@@ -6,7 +6,7 @@ toc: true
 toc_label: *title
 toc_sticky: true
 categories:
-  - cxx
+  - rust
 tags:
   - rust
   - borrowing
