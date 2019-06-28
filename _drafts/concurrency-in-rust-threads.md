@@ -8,6 +8,7 @@ toc_sticky: true
 categories:
   - rust
 tags:
+  - rust-concurrency
   - rust
   - concurrency
   - threads

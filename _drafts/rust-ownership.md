@@ -9,9 +9,8 @@ categories:
   - rust
 tags:
   - rust
-  - borrowing
-  - references
-  - non-lexical-lifetimes
+  - lifetimes
+  - ownership
 ---
 
 Rust's lifetime rules affect borrowing significantly.

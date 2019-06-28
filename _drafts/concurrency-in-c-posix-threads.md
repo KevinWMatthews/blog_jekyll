@@ -8,6 +8,7 @@ toc_sticky: true
 categories:
   - c
 tags:
+  - c-concurrency
   - c
   - concurrency
   - threads

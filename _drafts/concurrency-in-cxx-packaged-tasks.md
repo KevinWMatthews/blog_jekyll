@@ -8,6 +8,7 @@ toc_sticky: true
 categories:
   - cxx
 tags:
+  - cxx-concurrency
   - cxx
   - concurrency
   - packaged-tasks
