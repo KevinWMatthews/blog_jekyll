@@ -13,7 +13,9 @@ tags:
   - threads
 ---
 
-This is a short demonstration of the syntax of threads in C++. It assumes a basic understanding of (POSIX) threads and a modern C++ compiler.
+This is a reference for the basic syntax of threads in C++.
+It assumes an understanding of (POSIX) threads and a modern C++ compiler.
+
 
 ## Source
 
@@ -22,13 +24,14 @@ Find [source code](https://github.com/KevinWMatthews/cxx-concurrency) on GitHub.
 
 ## Background
 
-C++ largely predates multi-threaded systems. Thread support was added to the standard library in C++11, with C++14 and C++17 adding refinements and more features.
+C++ largely predates multi-threaded systems.
+Thread support was added to the standard library in C++11.
+Refinements and more features were added in C++14 and C++17.
 
 
 ## Syntax
 
-Formal documentation for [std::thread](https://en.cppreference.com/w/cpp/thread/thread)
-and its [constructor](https://en.cppreference.com/w/cpp/thread/thread/thread).
+All examples require the standard library header `<thread>`.
 
 
 ### No Arguments
@@ -36,8 +39,6 @@ and its [constructor](https://en.cppreference.com/w/cpp/thread/thread/thread).
 Initialize a thread with the function that should run in a thread:
 
 ```c++
-#include <thread>
-
 void function()
 {
     // Do stuff.
@@ -45,10 +46,11 @@ void function()
 
 std::thread a_thread { function };
 a_thread.join();
+// Alternatively,
 // a_thread.detach();
 ```
 
-Be sure to detach so that the primary thread can continue to run or join so that the primary thread does not exit immediately.
+Be sure to `detach()` so that the primary thread can continue to run or `join()` so that the primary thread does not exit immediately.
 
 
 ### Single Argument
@@ -188,3 +190,10 @@ std::function<void()> callable_object {function};
 std::thread a_thread { callable_object };
 a_thread.join();
 ```
+
+
+## Further reading
+
+Links to formal documentation:
+  * [std::thread](https://en.cppreference.com/w/cpp/thread/thread)
+  * [std::thread constructor](https://en.cppreference.com/w/cpp/thread/thread/thread)
