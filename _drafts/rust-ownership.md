@@ -23,6 +23,12 @@ In recent versions Rust has introduced [non-lexical lifetimes](https://doc.rust-
 This can be counterintuitive at first, but it offers quite a bit of flexibility with Rust's borrow checker.
 
 
+## Source
+
+Find [source code](https://github.com/KevinWMatthews/rust-ownership) on GitHub.
+For a similar example, see [this gist](https://gist.github.com/KevinWMatthews/bfd75c91adc6f23e8869992bd7c749c3).
+
+
 ## Reference lifetimes
 
 In older Rust code, the lifetime of a reference lasts until the end of a block:
