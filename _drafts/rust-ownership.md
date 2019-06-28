@@ -31,6 +31,9 @@ For a similar example, see [this gist](https://gist.github.com/KevinWMatthews/bf
 
 ## Reference lifetimes
 
+
+### Old Rust
+
 In older Rust code, the lifetime of a reference lasts until the end of a block:
 
 ```rust
@@ -44,12 +47,15 @@ fn main() {
 
     // Do other stuff
     // ...
-}                   // <-- Lifetime of reference 'y' ends
+} // <-- Lifetime of reference 'y' ends
 ```
 
 This is a "lexical lifetime", if you will.
 The reference is in scope until the end of the current lexical environment (here the block),
 i.e. the reference goes out of scope with the block that contains it.
+
+
+### New Rust
 
 In newer Rust code, the lifetime of a reference *lasts through the last time it is used*:
 
@@ -98,7 +104,25 @@ Notice that the reference is in scope while the "other stuff" is executed.
 Non-lexical lifetimes have a large impact on mutable references.
 Remember that in Rust a mutable reference can not exist while any other reference is "alive".
 
-Older Rust code (and many online examples!) uses lexical lifetimes, so it must introduce a new scope to avoid having multiple simultaneous references:
+
+### Old Rust
+
+Older Rust code (and many online examples!) uses lexical lifetimes, so this is a compiler error:
+
+```rust
+fn main() {
+    let mut x = 5;
+
+    let y = &x;     // <-- Lifetime of reference 'y' starts
+
+    // Compiler error!
+    let z = &mut x; // <-- Lifetime of reference 'z' starts
+} // <-- Lifetime of references 'y' and 'z' end
+```
+
+The borrow checker will not allow a mutable borrow while another borrow is in scope.
+
+To avoid having multiple simultaneous references, you must introduce a new scope:
 
 ```rust
 fn main() {
@@ -114,6 +138,9 @@ fn main() {
 ```
 
 The extra block forces the immutable reference `y` out of scope so that `z` can be created safely.
+
+
+### New Rust
 
 Newer Rust code can leverage the fact that a reference "dies" at its last use:
 
@@ -181,7 +208,7 @@ Introducing a scope around `z` does not solve the issue:
 fn main() {
     let mut x = 5;
 
-    let y = &x;     // <-- Lifetime of reference 'y' starts
+    let y = &x; // <-- Lifetime of reference 'y' starts
 
     // Use the reference
     let val = *y;
@@ -191,7 +218,8 @@ fn main() {
         let z = &mut x;
     }
 
-    let val2 = *y;  // <-- Lifetime of reference 'y' now ends!
+    // Use the reference again
+    let val2 = *y;  // <-- Lifetime of reference 'y' now ends
 }
 ```
 
@@ -209,7 +237,8 @@ fn main() {
     let z = &mut x;
     // Let reference 'z' go out of scope
 
-    let y = &x;     // <-- Create a new reference 'y'
+    // Create a new reference
+    let y = &x;     // <-- Lifetime of new reference 'y' starts
     let val2 = *y;  // <-- Lifetime of new reference 'y' ends
 
     // Do not use 'z' again! This would extend its scope.
