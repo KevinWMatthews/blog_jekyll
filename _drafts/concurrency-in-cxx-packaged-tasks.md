@@ -228,6 +228,7 @@ catch (...)
 
 ## Further Reading
 
-Docs:
+Links to formal docs:
 
+  * [\<future\>](http://www.cplusplus.com/reference/future/)
   * [packaged_task](https://en.cppreference.com/w/cpp/thread/packaged_task)
