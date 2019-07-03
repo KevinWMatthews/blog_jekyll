@@ -212,9 +212,9 @@ void parent_task()
 
 ## Caveats
 
-TODO verify this!
-
-Be sure to use the correct types! Compilers does not seem to throw an error or warning if incorrect types are passed to a promise or future.
+Be sure to use the correct types!
+Futures and promises are implemented using templates,
+so compilers does not necessarily throw an error or warning if incorrect types are passed to a promise or future.
 
 For example, setting the value of a promise from a mismatched type can give an unexpected result without warning:
 
