@@ -1,6 +1,6 @@
 ---
-title: &title "Rust: Borrowing and References"
-permalink: /rust-borrowing-and-references-non-lexical-lifetimes/
+title: &title "Rust: Lifetimes for References"
+permalink: /rust-non-lexical-lifetimes-for-references/
 excerpt: "Rust's unique scoping rules for references"
 toc: true
 toc_label: *title
