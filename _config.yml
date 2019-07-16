@@ -81,5 +81,5 @@ search: true
 search_full_content: true
 
 # Pagination for index page
-paginate: 5
+paginate: 10
 paginate_path: /page:num/
