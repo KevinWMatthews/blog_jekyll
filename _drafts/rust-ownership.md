@@ -13,19 +13,22 @@ tags:
   - ownership
 ---
 
-Rust's lifetime rules affect borrowing significantly.
-A recent version of Rust introduced a significate change to lifetimes, so Rust's borrow checker now behaves differently.
-
-Many languages, such as C, C++, Python, and Ruby, rely largely on lexical scoping.
-Historically Rust was similar - it used lexical lifetimes for references, aligning it with the common languages above.
-In recent versions Rust has introduced [non-lexical lifetimes](https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html) for references.
-This can be counterintuitive at first, but it offers quite a bit of flexibility with Rust's borrow checker.
+Rust recently changed the behavior of the borrow checker by introducing [non-lexical lifetimes](https://doc.rust-lang.org/stable/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html).
+This makes borrowing much easier but renders older example Rust code out of date.
 
 
 ## Source
 
 Find [source code](https://github.com/KevinWMatthews/rust-ownership) on GitHub.
 For a similar example, see [this gist](https://gist.github.com/KevinWMatthews/bfd75c91adc6f23e8869992bd7c749c3).
+
+
+## Background
+
+Many languages, such as C, C++, Python, and Ruby, rely largely on lexical scoping.
+Historically Rust was similar - it used lexical lifetimes for references, aligning it with the common languages above.
+Rust now allows non-lexical lifetimes for references.
+This can be counterintuitive at first, but it offers quite a bit of flexibility with Rust's borrow checker.
 
 
 ## Reference lifetimes
@@ -101,7 +104,7 @@ Notice that the reference is in scope while the "other stuff" is executed.
 ## Mutable references
 
 Non-lexical lifetimes have a large impact on mutable references.
-Remember that in Rust a mutable reference can not exist while any other reference is "alive".
+Remember that in Rust does not allow a mutable reference while any other reference is in scope.
 
 
 ### Old Rust
@@ -141,7 +144,7 @@ The extra block forces the immutable reference `y` out of scope so that `z` can 
 
 ### New Rust
 
-Newer Rust code can leverage the fact that a reference "dies" at its last use:
+Newer Rust code can leverage the fact that a reference goes out of scope at its last use:
 
 ```rust
 fn main() {
@@ -247,7 +250,7 @@ fn main() {
 Instead of using the existing reference `y`, create a new reference.
 This allows the original reference to go out of scope before `z` is created.
 
-I'm using shadowing to recreate `y` but any name will do.
+Of course, one need not recreate `y`; any name will do.
 
 Note that `z` can not be used after `y` is created again!
 This would reintroduce the same problem.
@@ -255,15 +258,16 @@ This would reintroduce the same problem.
 
 ## Further reading
 
-Read this:
+Rust docs:
 
-  * [rustlang docs](https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html)
-  * [Rust by Example on lifetimes](https://doc.rust-lang.org/rust-by-example/scope/lifetime.html)
-  * [cool graphic](https://rufflewind.com/2017-02-15/rust-move-copy-borrow)
-  * [blog on visualization](https://blog.adamant-lang.org/2019/rust-lifetime-visualization-ideas/)
-  * [rust ownership the hard way](https://chrismorgan.info/blog/rust-ownership-the-hard-way.html)
-  * [lifetimes in rust](https://blog.codeship.com/lifetimes-in-rust/)
-  * [SO on non-lexical lifetimes](https://stackoverflow.com/questions/50251487/what-are-non-lexical-lifetimes)
-  * [random post](https://dev.to/takaakifuruse/rust-lifetimes-a-high-wall-for-rust-newbies-3ap)
-  * [Medium post](https://medium.com/nearprotocol/understanding-rust-lifetimes-e813bcd405fa)
-  * [old Medium post](https://medium.com/@vikram.fugro/mutable-reference-in-rust-995320366e22)
+  * Non-lexical lifetimes in [rust-lang docs](https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html)
+  * Lifetimes in [Rust by Example](https://doc.rust-lang.org/rust-by-example/scope/lifetime.html)
+
+Also see this post on:
+
+  * [Stack Overflow](https://stackoverflow.com/questions/50251487/what-are-non-lexical-lifetimes)
+
+For a visual representation of lifetimes, see:
+
+  * [rufflewind](https://rufflewind.com/2017-02-15/rust-move-copy-borrow)
+  * [adamant-lant](https://blog.adamant-lang.org/2019/rust-lifetime-visualization-ideas/)
