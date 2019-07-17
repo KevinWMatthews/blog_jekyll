@@ -14,7 +14,6 @@ tags:
 ---
 
 Rust recently changed the behavior of the borrow checker by introducing [non-lexical lifetimes](https://doc.rust-lang.org/stable/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html).
-This makes borrowing much easier but renders older example Rust code out of date.
 
 
 ## Source
@@ -78,7 +77,7 @@ fn main() {
 This is a "non-lexical lifetime": the scope of the reference ends __before__ the end of the block!
 The lexical unit continues but the compiler considers the reference to be out of scope.
 
-If you use the reference again, Rust extends the reference's lifetime:
+If the reference is used again, its lifetime is extended:
 
 ```rust
 fn main() {
@@ -104,7 +103,7 @@ Notice that the reference is in scope while the "other stuff" is executed.
 ## Mutable references
 
 Non-lexical lifetimes have a large impact on mutable references.
-Remember that in Rust does not allow a mutable reference while any other reference is in scope.
+Remember that Rust does not allow a mutable reference while any other reference is in scope.
 
 
 ### Old Rust
@@ -124,7 +123,7 @@ fn main() {
 
 The borrow checker will not allow a mutable borrow while another borrow is in scope.
 
-To avoid having multiple simultaneous references, you must introduce a new scope:
+The only way to avoid having multiple simultaneous references is to introduce a new scope:
 
 ```rust
 fn main() {
