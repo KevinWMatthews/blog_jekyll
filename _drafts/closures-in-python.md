@@ -14,7 +14,7 @@ tags:
 
 ## Source
 
-This is part of a series on [closures]().
+This is part of a series on [closures](/tags/#closures).
 Find [source code]()
 and [documentation]() on GitHub.
 
