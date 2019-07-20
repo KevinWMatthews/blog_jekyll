@@ -83,7 +83,11 @@ fn get_value() {
 }
 ```
 
+
+## Passing to a function
+
 Deref coercion: can pass a `Box` to a function that takes a reference to the `Box`'s inner value:
+
 ```rust
 let the_box: <Box<i32>> = Box::new(42);
 func(&the_box);
