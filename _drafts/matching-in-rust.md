@@ -16,10 +16,15 @@ Matching, borrowing, and references.
 
 
 TODO Research error: cannot move out of borrowed content.
+Update: I think I have this now.
+TODO remove `println!()` from examples. It coerces values.
+
 We have a reference to an `Option`. We're trying to dereference this,
 which either copies or moves the value behind the reference? I don't know.
 I guess it tries to move, but it can't because this is on the heap.
 Play with this.
+
+TODO apply to tuples?
 
 
 ## Source
