@@ -12,5 +12,5 @@ tags:
   - c
   - concurrency
   - threads
-  - posix
+  - pthread
 ---

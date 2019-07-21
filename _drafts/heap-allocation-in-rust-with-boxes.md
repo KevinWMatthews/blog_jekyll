@@ -94,3 +94,8 @@ func(&the_box);
 
 fn func(x: &i32) {}
 ```
+
+
+## Further Reading
+
+  * The [Rust Book on Boxes](https://doc.rust-lang.org/book/ch15-01-box.html)
