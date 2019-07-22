@@ -14,6 +14,8 @@ tags:
 
 Matching, borrowing, and references.
 
+Pull from [my post](https://stackoverflow.com/questions/57128842/how-are-tuples-destructured-into-references/57128935#57128935)
+and possibly [my other post](https://stackoverflow.com/questions/56957770/how-are-tuples-inside-of-arcs-destructured-with-references).
 
 TODO Research error: cannot move out of borrowed content.
 Update: I think I have this now.
