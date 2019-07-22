@@ -122,13 +122,17 @@ Non-`Copy` types typically borrow from the tuple to avoid invalidating the origi
 ```rust
 let the_tuple = (Box::new(1), Box::new(2));
 let (box1, box2) = &the_tuple;
-// let &(ref box1, ref box2) = &the_tuple;
+
+// Can still use the tuple
+let (box1, box2) = the_tuple;
 ```
 
-Care must be taken when derefencing - assignment will try to move the value out of the tuple.
+Care must be taken when derefencing - a direct assignment will try to move the `Box` out of the tuple.
 This gives a compiler error:
 
 ```rust
+let the_tuple = (Box::new(1), Box::new(2));
+let (box1, box2) = &the_tuple;
 let x = *box1;
 ```
 ```
@@ -139,35 +143,8 @@ This is because `*box` dereferences the `&Box`, providing access to the underlyi
 The `let` assignment then must move the `Box` into the new variable (the `Box` isn't `Copy`).
 This isn't allowed, however; references only borrow and can not transfer ownership.
 
-Instead of assigning the `Box`, access its inner value directly:
-Care must be taken with the borrow checker.
+Instead of assigning the `Box`, access its inner value immediately:
 
-
-### `Copy` Types
-
-TODO probably remove this section?
-
-Destructuring `Copy` types is straightforward.
-There are no ownership concerns because data is simply copied.
-
-```rust
-#[derive(Copy, Clone)]
-struct CopyType {
-    data: i32,
-}
-
-let the_tuple = (
-    CopyType {data: 1},
-    CopyType {data: 2},
-)
-
-let (ct1, ct2) = the_tuple;
-let x = ct1.data;
-let y = ct2.data;
-
-// Can still use the tuple
-let (ct1, ct2) = the_tuple;
-```
 ```rust
 let x = **box1;
 let y = **box2;
@@ -186,11 +163,16 @@ let pair = Arc::new((Mutex::new(false), Condvar::new()));
 let (lock, cvar) = &*pair;
 ```
 
-This creates an `Arc` of a tuple.
-The tuple contains a `Mutex` and a `Condvar`.
-`*pair` uses the `Deref` trait to access the inner data of the `Arc`: the tuple.
-`&` takes a references to the tuple, then uses match ergonomics to destructure it into two references:
-`lock` and `cvar`.
+The first line:
+
+  * creates a tuple containing a `Mutex` and a `Condvar`
+  * creates an `Arc` containing the tuple
+
+The second line:
+
+  * uses `*pair` to access the inner data of the `Arc` (the tuple) using the `Deref` trait
+  * uses `&` to borrow/take a reference to the tuple`
+  * uses match ergonomics to destructure the tuple into two references: `lock` and `cvar`
 
 
 ## Further Reading:
