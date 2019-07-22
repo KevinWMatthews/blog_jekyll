@@ -9,7 +9,7 @@ categories:
   - rust
 tags:
   - rust
-  - boxes
+  - tuples
   - ownership
 ---
 
@@ -175,6 +175,22 @@ let y = **box2;
 
 The first application of `*` dereferences the reference.
 The second application of `*` accesses the inner of the `Box` using the `Deref` trait.
+
+
+## Example
+
+Real-world example from Rust's [`Condvar`](https://doc.rust-lang.org/std/sync/struct.Condvar.html):
+
+```rust
+let pair = Arc::new((Mutex::new(false), Condvar::new()));
+let (lock, cvar) = &*pair;
+```
+
+This creates an `Arc` of a tuple.
+The tuple contains a `Mutex` and a `Condvar`.
+`*pair` uses the `Deref` trait to access the inner data of the `Arc`: the tuple.
+`&` takes a references to the tuple, then uses match ergonomics to destructure it into two references:
+`lock` and `cvar`.
 
 
 ## Further Reading:
