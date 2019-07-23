@@ -1,7 +1,7 @@
 ---
 title: &title "Destructuring Tuples in Rust"
 permalink: /tuple-destructuring-in-rust/
-excerpt: ""
+excerpt: "Splitting tuples into individual variables or references"
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -13,11 +13,12 @@ tags:
   - ownership
 ---
 
-TODO add intro
+Splitting tuples into individual variables or references.
+
 
 ## Source
 
-On GitHub.
+Find [source code](https://github.com/KevinWMatthews/rust-tuple-destructure) on GitHub.
 
 
 ## Tuple Refresher
@@ -28,7 +29,7 @@ Tuples are a collection individual elements in a single variable:
 let the_tuple: (i32, i32, i32) = (1, 2, 3);
 ```
 
-Individual elements are not named but can be accessed by index.
+Individual elements are not named but can be accessed by index:
 
 ```rust
 let x = the_tuple.0;
@@ -36,7 +37,7 @@ let y = the_tuple.1;
 let z = the_tuple.2;
 ```
 
-Rust can frequently infer the type, allowing a tuple assignment to be simplified:
+Rust can frequently infer the type of the tuple elements, allowing a tuple assignment to be simplified:
 
 ```rust
 let the_tuple = (1, 2, 3);
@@ -87,22 +88,13 @@ let the_tuple = (1, 2, 3);
 let &(ref rx, ref ry, ref rz) = &the_tuple;
 ```
 
-This takes a reference to the tuple and assignes it to individual references
+This takes a reference to the tuple and assigns it to individual references.
 
 New Rust uses [match ergonomics](https://github.com/rust-lang/rfcs/blob/master/text/2005-match-ergonomics.md) to simplify the syntax considerably:
 
 ```rust
 let the_tuple = (1, 2, 3);
 let (rx, ry, rz) = &the_tuple;
-```
-
-`Copy` types can easily be dereferenced and assigned to new variables.
-Values are simply copied from the reference.
-
-```rust
-let x = *rx;
-let y = *ry;
-let z = *rz;
 ```
 
 `Copy` types can easily be dereferenced and assigned to new variables.
@@ -124,7 +116,7 @@ let the_tuple = (Box::new(1), Box::new(2));
 let (box1, box2) = &the_tuple;
 
 // Can still use the tuple
-let (box1, box2) = the_tuple;
+let (box1, box2) = &the_tuple;
 ```
 
 Care must be taken when derefencing - a direct assignment will try to move the `Box` out of the tuple.
@@ -133,15 +125,18 @@ This gives a compiler error:
 ```rust
 let the_tuple = (Box::new(1), Box::new(2));
 let (box1, box2) = &the_tuple;
-let x = *box1;
+let x = *box1;  // <-- compiler error
 ```
 ```
 cannot move out of borrowed content
 ```
 
-This is because `*box` dereferences the `&Box`, providing access to the underlying `Box`.
-The `let` assignment then must move the `Box` into the new variable (the `Box` isn't `Copy`).
-This isn't allowed, however; references only borrow and can not transfer ownership.
+Here's what is going on:
+
+  * `*box` dereferences the `&Box`, yielding the underlying `Box`
+  * `let x =` tries to move the `Box` into the new variable (the `Box` isn't `Copy`)
+
+This move isn't allowed; references don't own the underlying data (only borrow it) and can not transfer ownership.
 
 Instead of assigning the `Box`, access its inner value immediately:
 
@@ -154,9 +149,9 @@ The first application of `*` dereferences the reference.
 The second application of `*` accesses the inner of the `Box` using the `Deref` trait.
 
 
-## Example
+## Real-World Example
 
-Real-world example from Rust's [`Condvar`](https://doc.rust-lang.org/std/sync/struct.Condvar.html):
+Rust's [`Condvar`](https://doc.rust-lang.org/std/sync/struct.Condvar.html) provides a real-world use case for destructuring tuples into references:
 
 ```rust
 let pair = Arc::new((Mutex::new(false), Condvar::new()));
@@ -171,11 +166,11 @@ The first line:
 The second line:
 
   * uses `*pair` to access the inner data of the `Arc` (the tuple) using the `Deref` trait
-  * uses `&` to borrow/take a reference to the tuple`
+  * uses `&` to borrow/take a reference to the tuple
   * uses match ergonomics to destructure the tuple into two references: `lock` and `cvar`
 
 
-## Further Reading:
+## Further Reading
 
   * Rust's [match ergonomics RFC](https://github.com/rust-lang/rfcs/blob/master/text/2005-match-ergonomics.md)
   * [Stack Overflow post](https://stackoverflow.com/questions/57128842/how-are-tuples-destructured-into-references/57128935)
