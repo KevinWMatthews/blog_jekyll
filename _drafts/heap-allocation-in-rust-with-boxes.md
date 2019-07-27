@@ -13,7 +13,10 @@ tags:
   - ownership
 ---
 
-Allocating on the heap.
+Dynamically allocate memory on the heap using the standard library's `Box`.
+
+TODO copy and edit my example project from `rust/language/boxen`.
+
 
 ## Source
 
