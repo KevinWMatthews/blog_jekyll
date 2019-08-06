@@ -1,18 +1,23 @@
 ---
 title: &title "Named Tuples in Python"
 permalink: /named-tuples-in-python/
-excerpt: "TODO"
+excerpt: "Introduction to named tuples with syntax and alternatives"
 toc: true
 toc_label: *title
 toc_sticky: true
 categories:
-  - rust
+  - python
 tags:
   - python
   - tuples
 ---
 
-Named tuples.
+Short exploration of named tuples in Python.
+
+
+## Source
+
+Find [source code](https://github.com/KevinWMatthews/python-named_tuples) on GitHub.
 
 
 ## Background
@@ -240,7 +245,7 @@ Python3 docs for:
 
   * [`collections.namedtuple`](https://docs.python.org/3/library/collections.html#collections.namedtuple)
   * [`typing.NamedTuple`](https://docs.python.org/3/library/typing.html#typing.NamedTuple)
-  * [dataclasses](https://docs.python.org/3/library/dataclasses.html)
+  * [`dataclasses.dataclass`](https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass)
 
 See also:
 
