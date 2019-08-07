@@ -93,7 +93,7 @@ Available since Python 3.
 
 ### Inspection
 
-Add `verbose=True` to inspect the class that Python creates automatically:
+Before Python 3.7, add `verbose=True` to inspect the class that Python creates automatically:
 
 ```py
 Point(typename, field_names, verbose=True)
@@ -147,6 +147,8 @@ class Point(tuple):
 
 The `__new__` method is of interest;
 this shows the arguments that are required to create a named tuple.
+
+This option was [removed in Python 3.7](https://docs.python.org/3.7/library/collections.html#collections.namedtuple).
 
 
 ## `typing` module
