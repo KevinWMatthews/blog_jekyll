@@ -36,8 +36,7 @@ Point = collections.namedtuple(typename, field_names)
 `typename` is a string, `field_names` is an iterable.
 By convention, the new tuple object is stored in a variable with the same name as the typename.
 
-It is possible to set default arguments for a `namedtuple`.
-See the [`namedtuple` docs](https://docs.python.org/3/library/collections.html#collections.namedtuple).
+It is possible to [set default arguments](https://docs.python.org/3/library/collections.html#collections.namedtuple) for a `namedtuple` as of Python 3.7.
 
 This custom tuple type object can be used to instantiate individual tuples:
 
