@@ -1,7 +1,7 @@
 ---
 title: &title "Named Tuples in Python"
 permalink: /named-tuples-in-python/
-excerpt: "Introduction to named tuples with syntax and alternatives"
+excerpt: "Create custom tuple types with member access by field name"
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -12,7 +12,8 @@ tags:
   - tuples
 ---
 
-Short exploration of named tuples in Python.
+Create custom tuples with named members.
+These allow member access by field name as well as by index.
 
 
 ## Source
@@ -20,36 +21,7 @@ Short exploration of named tuples in Python.
 Find [source code](https://github.com/KevinWMatthews/python-named_tuples) on GitHub.
 
 
-## Background
-
-Named tuples can be used to create custom tuple data type that allows access by field name, much like a dictionary:
-
-```py
-import collections
-
-# Create tuple type
-typename = 'Point'
-field_names = ('x', 'y')
-Point = collections.namedtuple(typename, field_names)
-
-# Instantiate tuple
-point = Point(x=0, y=1)
-
-# Access
-point.x
-point.y
-
-point[0]
-point[1]
-```
-
-As with all Python tuples, assignment is not allowed.
-
-
-
 ## `collections` module
-
-Since Python 3.
 
 The `collections` module offers the function [`namedtuple`](https://docs.python.org/3/library/collections.html#collections.namedtuple).
 Use it to create a custom tuple type:
@@ -61,6 +33,7 @@ Point = collections.namedtuple(typename, field_names)
 ```
 
 `namedtuple` requires two arguments: `typename` and `field_names`.
+`typename` is a string, `field_names` is an iterable.
 By convention, the new tuple object is stored in a variable with the same name as the typename.
 
 It is possible to set default arguments for a `namedtuple`.
@@ -115,6 +88,7 @@ point.x = 42
 TypeError: 'Point' object does not support item assignment
 ```
 
+Available since Python 3.
 
 
 ### Inspection
@@ -171,8 +145,8 @@ class Point(tuple):
     y = _property(_itemgetter(1), doc='Alias for field number 1')
 ```
 
-Of primary interest is the `__new__` method;
-this shows the arguments that are required to initialize the object.
+The `__new__` method is of interest;
+this shows the arguments that are required to create a named tuple.
 
 
 ## `typing` module
@@ -180,11 +154,11 @@ this shows the arguments that are required to initialize the object.
 Since Python 3.6, `namedtuples` with strict typing can be created using the [`typing` module](https://docs.python.org/3/library/typing.html#typing.NamedTuple):
 
 ```python
-from typing import NamedTuple
+import typing
 
-class Point(NamedTuple):
+class Point(typing.NamedTuple):
     x: int
-    y: int = 1
+    y: int = 0
 ```
 
 Note that individual fields are typed!
@@ -205,21 +179,20 @@ point.y
 ```
 
 
-
 ## `dataclass`
 
-Since Python 3.7, a similar effect can be achieved using the [`dataclass` module](https://docs.python.org/3/library/dataclasses.html#module-dataclasses).
-`dataclass`es add special access methods for fields.
+Since Python 3.7, a similar effect can be achieved using the [`dataclasses` module](https://docs.python.org/3/library/dataclasses.html#module-dataclasses).
+The `dataclass` decorator adds special methods to a class, allowing easy access to fields by name.
 
-Create a custom `dataclass` similar to a typed `NamedTuple` but with the `@dataclass` decorator:
+The result is similar to but distinct from a named tuple:
 
 ```python
-from dataclasses import dataclass
+import dataclasses
 
-@dataclass
+@dataclasses.dataclass
 class Point:
     x: int
-    y: int = 1
+    y: int = 0
 ```
 
 As with the `typing` module, fields must be typed and a default value is optional.
@@ -238,6 +211,85 @@ point.x
 point.y
 ```
 
+Unlike with tuples, assignment is allowed:
+
+```py
+point.x = 42
+```
+
+
+## Summary
+
+Named tuples are custom tuple types.
+This custom type allows member access by field name and by index:
+
+```py
+# Since Python 3
+import collections
+
+typename = 'Point'
+field_names = ('x', 'y')
+Point = collections.namedtuple(typename, field_names)
+
+point = Point(x=0, y=1)
+
+point.x
+point.y
+
+point[0]
+point[1]
+
+# Error - tuples are immutable
+# point.x = 7
+# point[0] = 7
+```
+
+Alternatively, create a named tuple using the `typing` module:
+
+```py
+# Since Python 3.6
+import typing
+
+class Point(typing.NamedTuple):
+    x: int
+    y: int = 0
+
+point = Point(x=0, y=1)
+
+point.x
+point.y
+
+point[0]
+point[1]
+
+# Error - tuples are immutable
+# point.x = 7
+# point[0] = 7
+```
+
+A similar but distinct object is available in the `dataclass` module:
+
+```py
+import dataclasses
+
+@dataclasses.dataclass
+class Point():
+    x: int
+    y: int = 0
+
+point = Point(x=0, y=1)
+
+point.x
+point.y
+
+# Error - subscripting is not allowed
+# point[0]
+# point[1]
+
+# Assignment is allowed
+point.x = 7
+```
+
 
 ## Further Reading
 
@@ -251,5 +303,5 @@ See also:
 
   * [Named tuples on Stack Overflow](https://stackoverflow.com/questions/2970608/what-are-named-tuples-in-python)
   * [Typed named tuples on Stack Overflow](https://stackoverflow.com/questions/34269772/type-hints-in-namedtuple/34269877)
-  * [Gits on Named Tuples](https://gist.github.com/andilabs/15002176b2bda786b9037077fa06cc71)
+  * [Gist on Named Tuples](https://gist.github.com/andilabs/15002176b2bda786b9037077fa06cc71)
   * [Docs from the `attrs` package](http://www.attrs.org/en/stable/why.html#namedtuples)
