@@ -7,7 +7,7 @@ permalink: /about-this-blog/
 This blog is an outlet for my growth as a software developer - a collection of
 ideas on how to craft quality code.
 
-The examples center around design patterns, testing strategies, and how
+The examples center around semantics, design patterns, testing strategies, and how
 these vary between languages.
 
 The goal of each post is to actually do the thing in question, so
