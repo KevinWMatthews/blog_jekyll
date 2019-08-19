@@ -57,7 +57,8 @@ returns_function()()
 
 ## Returning Functions with Arguments
 
-It is also possible for the funcion to take an paramter [argument?]:
+It is also possible for the function to take an parameter [argument?]:
+
 ```python
 def returns_function():
   def some_function(param):
