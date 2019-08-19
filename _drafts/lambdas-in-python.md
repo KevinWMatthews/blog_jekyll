@@ -72,14 +72,14 @@ Python will automatically bind the lambda to the argument.
 
 ### Multi-line Lambdas
 
-Lambdas may *not* be multi-line!
+Lambdas *must not* be multi-line!
 This is a language design decision; see [Guido's blog post](https://www.artima.com/weblogs/viewpost.jsp?thread=147358).
 If you need a multi-line lambda, he recommends using a "named function nested in the current scope".
 
 
 ### With the `return` keyword
 
-Lambdas *may not* return a value!
+Lambdas *must not* return a value!
 This is by design - lambdas automatically evaluate and return their expression.
 
 
@@ -115,7 +115,7 @@ This is by design - lambdas automatically evaluate and return their expression.
 ## Further Reading
 
   * Python [language docs](https://docs.python.org/3/reference/expressions.html#lambda)
-  * [How-to](http://book.pythontips.com/en/latest/lambdas.html)
+  * How-to from [Python Tips](http://book.pythontips.com/en/latest/lambdas.html)
   * Guido on [multi-line lambdas](https://www.artima.com/weblogs/viewpost.jsp?thread=147358)
   * Stack Overflow on multi-line lambdas, answered [here](https://stackoverflow.com/questions/1233448/no-multiline-lambda-in-python-why-not/1233520#1233520) and [here](https://stackoverflow.com/questions/1233448/no-multiline-lambda-in-python-why-not/26210269#26210269)
-  * Failed proposal for [Ruby-style blocks](http://tav.espians.com/ruby-style-blocks-in-python.html)
+  * Failed proposal for [Ruby-style blocks](http://tav.espians.com/ruby-style-blocks-in-python.html) in Python
