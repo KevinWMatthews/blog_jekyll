@@ -4,10 +4,13 @@ permalink: /about-me/
 
 # Hello, I'm Kevin.
 
-I a software developer for embedded systems.
+I'm software developer.
 
-Most of my daily work is in C and Python but I've used and studied C++, Ruby,
-JavaScript, and a little bit of Rust.
+I work on embedded systems professionally.
+Most of my daily work is in C but I frequently use Python and JavaScript.
+
+I'm interested in how languages affect solutions so I've been studying
+Rust, C++, Python, Ruby, JavaScript, and a little bit of Elm.
 
 I'm hooked on fast feedback loops, automated tests, and solutions that are
 designed to evolve.
