@@ -1,7 +1,7 @@
 ---
 title: &title "Reduce in Python"
 permalink: /reduce-in-python/
-excerpt: "Introduction to the reduce() function in Python"
+excerpt: "Introduction to the reduce function in Python"
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -12,8 +12,7 @@ tags:
   - reduce
 ---
 
-Introduction to `functools.reduce()` in Python 3.
-Operate on a sequence of data and produce a single result.
+Cheatsheet for `functools.reduce()` in Python 3.
 
 
 ## Source
@@ -23,10 +22,25 @@ See [this gist](https://gist.github.com/KevinWMatthews/b41fc15da2cccdd9c16f8da09
 
 ## Background
 
-This is a quick example; see the above gist.
+`reduce()` will:
+
+  * operate on a sequence of data
+  * produce a single result
+
+The signature of `reduce()` is:
+
+```py
+reduce(function, iterable)
+```
+
+`function` performs the operation.
+`iterable` is the sequence of data.
 
 
 ## Examples
+
+
+### Sum
 
 Sum the items in a list:
 
@@ -39,6 +53,9 @@ total = functools.reduce(add_to_total, input)
 
 Of course, one should typically use Python's built-in function [`sum`](https://docs.python.org/3/library/functions.html#sum).
 
+
+### Minimum
+
 Find the minimum in a list:
 
 ```py
@@ -49,6 +66,9 @@ minimum = functools.reduce(smaller_of_two, input)
 ```
 
 Of course, one should typically use Python's built-in function [`min`](https://docs.python.org/3/library/functions.html#min).
+
+
+### Maximum
 
 Find the maximum in a list:
 
