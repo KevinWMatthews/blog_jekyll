@@ -12,38 +12,73 @@ tags:
   - lists
 ---
 
-Lists *are not* arrays!
+[Lists](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) are one of Python's most common [sequence types](https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range).
+
+Lists are optimized for:
+
+  * access by index
+  * iteration
+  * append to end
+  * pop/remove from end
+
+that is, as an array or a stack (last-in, first-out).
+
+A list can be used as a queue (first-in, first-out),
+but operations on the front of the list are expensive.
+Use a [deque](https://docs.python.org/3/library/collections.html#collections.deque) instead.
+
+While lists roughly correspond to a C-style arrays,
+Python has a separate [array](https://docs.python.org/3/library/array.html) type that is streamlined for numeric values.
 
 
 ## Initializing
 
-Create a list with no elements:
+### Empty
+
+To create a list with no elements, use square brackets or the [list builtin](https://docs.python.org/3/library/functions.html#func-list):
 
 ```py
 the_list = []
 the_list = list()
 ```
 
-Must add to the list using `append()` or `extend()` - can't refer to a non-existent index.
+At this point the list has no elements; indexing into the list is an error.
+The list must be extended using `append()` or `extend()`.
+TODO what happens if we `insert()` into an empty list?
 
 
-Create a list with existing elements. These can be modified immediately.
+### With Elements
 
-Set all elements of the list to, say, an empty string:
+A list can be initialized with elements:
+
+```py
+# syntactic sugar
+the_list = [1, 2, 3]
+
+# list(iterable)
+the_list = list([1, 2, 3])
+```
+
+Lists, like all sequences, support [multiplication](https://docs.python.org/3/library/stdtypes.html#typesseq-common):
 
 ```py
 # sequence multiplication
-the_list = [''] * list_size
+the_list = [''] * N
 ```
+
+This creates a list with `N` elements.
+
+Lists can also be created using [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions):
 
 ```py
 # list comprehension
 the_list = [for '' in _ range(list_size)]
 ```
 
+The above methods can be combined with other library functions such as
+[`itertools.repeat()`](https://docs.python.org/3/library/itertools.html#itertools.repeat):
+
 ```py
-# itertools.repeat()
-# # https://docs.python.org/3/library/itertools.html#itertools.repeat
 import itertools
 the_list = [itertools.repeat('', list_size)]
 the_list = list(itertools.repeat('', list_size))
@@ -56,6 +91,7 @@ Python docs:
 
   * [lists](https://docs.python.org/3/tutorial/datastructures.html)
   * [on lists](https://docs.python.org/3/library/stdtypes.html#list)
+  * [`list()` builtin](https://docs.python.org/3/library/functions.html#func-list)
   * [on sequences](https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range)
   * [glossary on sequences](https://docs.python.org/3/glossary.html#term-sequence)
   * [ABC for sequences](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)
