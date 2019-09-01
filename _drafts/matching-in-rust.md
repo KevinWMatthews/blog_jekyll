@@ -1,7 +1,7 @@
 ---
 title: &title "Matching in Rust"
 permalink: /matching-in-rust/
-excerpt: "Getting values out of an Option type"
+excerpt: "Match statements on Copy types, non-Copy types, and references to both"
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -12,34 +12,26 @@ tags:
   - matching
 ---
 
-Matching, borrowing, and references.
+An introduction to the complexities of pattern matching in Rust.
 
-Pull from [my post](https://stackoverflow.com/questions/57128842/how-are-tuples-destructured-into-references/57128935#57128935)
-and possibly [my other post](https://stackoverflow.com/questions/56957770/how-are-tuples-inside-of-arcs-destructured-with-references).
-
-TODO Research error: cannot move out of borrowed content.
-Update: I think I have this now.
-TODO remove `println!()` from examples. It coerces values.
-
-We have a reference to an `Option`. We're trying to dereference this,
-which either copies or moves the value behind the reference? I don't know.
-I guess it tries to move, but it can't because this is on the heap.
-Play with this.
-
-TODO apply to tuples?
+Explores the differences between matching `Copy` types, non-`Copy` types,
+references, and how Rust's match ergonomics affects these.
 
 
 ## Source
 
-On GitHub.
+Find [source code](https://github.com/KevinWMatthews/rust-pattern-matching) on GitHub.
 
 
 ## Copy Types
 
-These are easier - they're on the stack.
-Always copied, no ownership to worry about.
+Copy types are easy to match.
+They are on the stack and can always be copied, so ownership is not a concern.
 
-`Some` type in an `Option`:
+
+### Copy
+
+Here is an example of matching a `Some` type in an `Option`:
 
 ```rust
 let maybe_number = Some(42);
@@ -49,7 +41,7 @@ match maybe_number {
 }
 ```
 
-`None` type in an `Option`:
+and a `None` type in an `Option`:
 
 ```rust
 // Must specify type - Rust can't deduce a type from None
@@ -60,13 +52,68 @@ match maybe_number {
 }
 ```
 
-TODO Add example of `Some(_)`?
+
+### Borrow
+
+References can be matched using Rust's match ergonomics:
+
+```rust
+let maybe_number = Some(42);
+match &maybe_number {
+    Some(borrowed) => {
+        let x = *borrowed;
+        println!("Found something: {}", x);
+    },
+    None => println!("Found nothing"),
+}
+```
+
+
+### Old-style Borrow
+
+Before match ergonomics, one had to explicitly:
+
+  * match against a reference
+  * bind the `Option`'s value as a reference using the `ref` keyword
+
+For example:
+
+```rust
+let maybe_number = Some(42);
+let maybe_number_ref = &maybe_number;
+match maybe_number_ref {
+    &Some(ref borrowed) => {
+        let x = *borrowed;
+        println!("Found something: {}", x);
+    },
+    &None => println!("Found nothing"),
+}
+```
+
+Alternatively, one could:
+
+  * dereference before matching
+  * bind the `Option`'s value as a reference using the `ref` keyword
+
+```rust
+let maybe_number = Some(42);
+let maybe_number_ref = &maybe_number;
+match *maybe_number_ref {
+    Some(ref borrowed) => {
+        let x = *borrowed;
+        println!("Found something: {}", x);
+    },
+    None => println!("Found nothing"),
+}
+```
 
 
 ## Non-Copy Types
 
-Let's use a `Box`.
-These are on the heap so we need to worry about ownership.
+Ownership is a concern when matching Non-Copy types.
+These live on the heap and must either be moved or borrowed.
+
+These examples use a `Box`.
 
 
 ### Move
@@ -84,8 +131,7 @@ match maybe_number {
 }
 ```
 
-This works fine.
-Using the value again fails to compile:
+Note that using the value again fails to compile:
 
 ```rust
 match maybe_number {
@@ -95,28 +141,24 @@ match maybe_number {
 ```
 
 ```
-use of moved value: `maybe_number`
+Some(owns_box) => {
+     -------- value moved here
+
+match maybe_number {
+      ^^^^^^^^^^^^ value used here after partial move
 ```
-
-
-### Reference
-
-Match on a reference
 
 
 ### Borrow
 
-FIXME this seems lame. Try references first.
+The `match` can borrow the matched value instead of owning it.
 
-The `match` itself is actually performing a borrow.
-
-Borrow using the `ref` pattern (is this recommended against?):
+Using [match ergonomics](https://github.com/rust-lang/rfcs/blob/master/text/2005-match-ergonomics.md),
+borrowing can be done simply using the `&` operator:
 
 ```rust
-let maybe_number = Some(Box::new(42));
-match maybe_number {
-    Some(ref borrows_box) => {
-        // Dereference borrow, then dereference Box
+match &maybe_number {
+    Some(borrows_box) => {
         let x = **borrows_box;
         println!("Found something: {}", x);
     },
@@ -124,25 +166,30 @@ match maybe_number {
 }
 ```
 
-Alternatively, use a `&`:
+This uses a reference match expression (`&maybe_number`) and a non-reference pattern (`Some(borrows_box)`),
+so Rust will use match ergonomics to:
+
+  * pattern-match the `Option` as a reference
+  * bind the `Option`'s value as a reference
+
+Note the double dereference; the first `*` dereferences the borrow,
+the second gets the value out of the `Box` (using the `Deref` trait).
+
+The `Box` is borrowed so we can match again:
 
 ```rust
 match &maybe_number {
-    Some(borrows_box) => {
-        // Dereference borrow, then dereference Box
-        let x = **borrows_box;
-        println!("Found something: {}", x);
-    },
-    None => println!("Found nothing"),
+    Some(_) => {},
+    None => {},
 }
 ```
 
-The double dereference must be done in-place to avoid a "move out of borrowed content" compiler error:
+Note that the double dereference must be done in-place to avoid a "move out of borrowed content" compiler error:
 
 ```rust
 match &maybe_number {
     Some(borrows_box) => {
-        let the_box = *borrows_box;     // <-- fails
+        let the_box = *borrows_box;   // <-- error
         let x = *the_box;
         println!("Found something: {}", x);
     },
@@ -150,23 +197,59 @@ match &maybe_number {
 }
 ```
 
+This assignment attempts to move the `Box` out of the `Option` and into a new variable.
+This is not allowed because the `Option` is borrowed.
 
-Both of these borrow, so we can match again (and in this case take ownership):
+
+### Old-style Borrow
+
+Before match ergonomics, one had to explicitly:
+
+  * match against a reference
+  * bind the `Option`'s value as a reference using the `ref` keyword
+
+For example:
 
 ```rust
-match maybe_number {
-    Some(_) => {},
-    None => {},
+let maybe_number = Some(Box::new(42));
+let maybe_number_ref = &maybe_number;
+
+match maybe_number_ref {
+    &Some(ref borrows_box) => {
+        let x = **borrows_box;
+        println!("Found something: {}", x);
+    },
+    &None => println!("Found nothing"),
+}
+```
+
+Alternatively, one could:
+
+  * dereference before matching
+  * bind the `Option`'s value as a reference using the `ref` keyword
+
+```rust
+let maybe_number = Some(Box::new(42));
+let maybe_number_ref = &maybe_number;
+match *maybe_number_ref {
+    Some(ref borrows_box) => {
+        let x = **borrows_box;
+        println!("Found something: {}", x);
+    },
+    None => println!("Found nothing"),
 }
 ```
 
 
-To avoid the double dereference, add a leading `&` to the patterns:
-
-
-
-
 ## Further Reading
 
-  * [match ergonomics](https://github.com/rust-lang/rfcs/blob/master/text/2005-match-ergonomics.md)
-  * [ergonomics?](https://blog.rust-lang.org/2017/03/02/lang-ergonomics.html)
+Rust sources:
+
+  * [RFC 2005](https://github.com/rust-lang/rfcs/blob/master/text/2005-match-ergonomics.md)
+  * [Rust by Example](https://doc.rust-lang.org/rust-by-example/flow_control/match.html)
+  * [Rust blog](https://blog.rust-lang.org/2017/03/02/lang-ergonomics.html)?
+
+Stack Overflow:
+
+  * [Rust pattern matching](https://stackoverflow.com/questions/56511328/how-does-rust-pattern-matching-determine-if-the-bound-variable-will-be-a-referen)
+  * [Rust tuple dereferencing](https://stackoverflow.com/questions/57128842/how-are-tuples-destructured-into-references/57128935#57128935)
