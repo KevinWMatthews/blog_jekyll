@@ -12,18 +12,43 @@ tags:
   - map
 ---
 
-Returns an *iterator* that applies a function to each item in an iterable:
+Quick-start on Python's built-in library function [`map()`](https://docs.python.org/3/library/functions.html#map).
+
+
+## Background
+
+`map()` returns an *iterator* that applies a function to each item in an iterable:
 
 ```py
 map(function, iterable)
 ```
 
-For example, convert all elements in a list to a string:
+The iterator is evaluated lazily - it won't traverse the list until another function requires it.
+
+All sequences in Python are iterable.
+Custom types are iterable if they implement the `__iter__()` method.
+
+
+## Examples
+
+Convert all elements in a list to a string using the builtin `str()`:
 
 ```py
 numbers = [1, 2, 3]
 iterator = map(str, numbers)
 strings = list(iterator)
+```
+
+Double all elements in a list using a custom function:
+
+```py
+numbers = [1, 2, 3]
+
+def double_it(value):
+    return value * 2
+
+iterator = map(double_it, numbers)
+doubled = list(iterator)
 ```
 
 
