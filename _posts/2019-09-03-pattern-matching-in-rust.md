@@ -1,6 +1,6 @@
 ---
-title: &title "Matching in Rust"
-permalink: /matching-in-rust/
+title: &title "Pattern Matching in Rust"
+permalink: /pattern-matching-in-rust/
 excerpt: "Match statements on Copy types, non-Copy types, and references to both"
 toc: true
 toc_label: *title
