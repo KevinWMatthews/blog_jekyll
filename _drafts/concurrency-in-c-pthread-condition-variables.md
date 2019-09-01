@@ -6,7 +6,7 @@ toc: true
 toc_label: *title
 toc_sticky: true
 categories:
-  - rust
+  - c
 tags:
   - c
   - concurrency
