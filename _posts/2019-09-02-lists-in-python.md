@@ -78,8 +78,7 @@ Like all sequences, lists support [multiplication](https://docs.python.org/3/lib
 the_list = [''] * list_size
 ```
 
-This creates a list with `N` elements.
-The new elements are **not** new copies of the object;
+The list elements are **not** new copies of the object;
 they are references to *the same object*.
 This has implications for [creating 2d lists](/2d-lists-in-python/).
 
