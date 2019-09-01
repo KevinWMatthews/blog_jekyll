@@ -12,7 +12,9 @@ tags:
   - reduce
 ---
 
-Cheatsheet for `functools.reduce()` in Python 3.
+Cheatsheet for [`functools.reduce()`](https://docs.python.org/3/library/functools.html#functools.reduce) in Python 3.
+
+`for` loops seem to be more prevalent in Python.
 
 
 ## Source
@@ -30,11 +32,22 @@ See [this gist](https://gist.github.com/KevinWMatthews/b41fc15da2cccdd9c16f8da09
 The signature of `reduce()` is:
 
 ```py
-reduce(function, iterable)
+reduce(function, iterable[, initializer])
 ```
 
-`function` performs the operation.
-`iterable` is the sequence of data.
+where:
+
+  * `function` performs the operation
+  * `iterable` is the sequence of data
+  * `initializer` is an optional first value for the accumulator
+
+The signature of the `function` should be similar to:
+
+```py
+def function(accumulator, value):
+```
+
+where `accumulator` is a running total and `value` is the current value in the collection.
 
 
 ## Examples
