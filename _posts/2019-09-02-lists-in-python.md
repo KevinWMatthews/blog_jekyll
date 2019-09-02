@@ -1,7 +1,7 @@
 ---
 title: &title "Lists in Python"
 permalink: /lists-in-python/
-excerpt: "Things to remember"
+excerpt: "List of facts and features about Python's lists"
 toc: true
 toc_label: *title
 toc_sticky: true
@@ -40,7 +40,7 @@ While lists roughly correspond to a C-style arrays,
 Python has a separate [array](https://docs.python.org/3/library/array.html) type that is streamlined for numeric values.
 
 
-## Initializing
+## Initialize
 
 ### Empty
 
@@ -103,17 +103,186 @@ import itertools
 the_list = list(itertools.repeat('', list_size))
 ```
 
+## Insert
+
+Python provides the [`insert()`](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) method for adding a value to a location in the list:
+
+```py
+list.insert(i, x)
+```
+
+This inserts the value `x` _before_ the index `i`:
+
+```py
+the_list = [0, 1, 2]
+the_list.insert(1, 42)
+# [0, 42, 1, 2]
+```
+
+Inserting at index 0 prepends to the list:
+
+```py
+the_list = [0, 1, 2]
+the_list.insert(0, 42)
+# [42, 0, 1, 2]
+```
+
+Inserting after the last element appends to the list:
+
+```py
+the_list = [0, 1, 2]
+the_list.insert(len(the_list), 42)
+# [0, 1, 2, 42]
+
+the_list.insert(999, 1000)
+# [0, 1, 2, 42, 1000]
+```
+
+Inserting to any index of an empty list is safe; it simply creates the first element:
+
+```py
+the_list = []
+the_list.insert(0, 42)
+# [42]
+
+the_list = []
+the_list.insert(999, 42)
+# [42]
+```
+
+## Index
+
+Python provides an [index operator](https://python-reference.readthedocs.io/en/latest/docs/brackets/indexing.html), `[]`.
+
+This maps to a list's [`__getitem__`](https://docs.python.org/3/reference/datamodel.html#object.__getitem__)
+or [`__setitem__`](https://docs.python.org/3/reference/datamodel.html#object.__setitem__) methods.
+
+Specifically,
+
+  * `object.__getitem__(self, key)` maps to `self[key]`
+  * `object.__setitem__(self, key, value)` maps to `self[key] = value`
+
+Keys may be:
+
+  * integers
+  * slices
+
+See "Indexed Assignment", "Indexing", "Slice Assignment", and "Slicing" in Python's [operator module docs](https://docs.python.org/3/library/operator.html#mapping-operators-to-functions).
+
+
+### With Integer Key
+
+To get and set individual elements of a list, use an integer key.
+
+Get an item in a list using:
+
+```py
+the_list = [0, 1, 2]
+the_list[1]
+# 1
+```
+
+Set an item in a list using:
+
+```py
+the_list = [0, 1, 2]
+the_list[1] = 42
+# [0, 42, 2]
+```
+
+Both `__getitem__` and `__setitem__` raise an `IndexError` exception if the index is out of range!
+This means that `[]` can **not** be used to extend an array with an individual item:
+
+```py
+the_list = []
+the_list[0] = 42
+# IndexError: list assignment index out of range
+```
+
+
+### With Slice Key
+
+To get and set multiple elements in a list, use a [slice](https://docs.python.org/3/glossary.html#term-slice) key.
+
+Get multiple items in a list using:
+
+```py
+the_list = [0, 1, 2, 3]
+the_list[1:3]
+# [1, 2]
+```
+
+Slices do _not_ include the stop element (they are open on the right).
+
+For example, this returns an empty list:
+
+```py
+the_list = [0, 1, 2, 3]
+the_list[1:1]
+# []
+```
+
+Note that in this case `[]` returns a list!
+
+Set multiple items in a list using:
+
+```py
+the_list = [0, 1, 2, 3]
+the_list[1:3] = [11, 22]
+# [0, 11, 22, 3]
+```
+
+An open-ended slice can be used to extend a list:
+
+```py
+the_list = [0, 1, 2, 3]
+# Note the trailing ':' - the key is a slice!
+the_list[len(the_list):] = [11, 22]
+# [0, 1, 2, 3, 11, 22]
+```
+
+This is similar to the `extend()` method.
+
+Unlike for an integer key, a slice can be used to extend an empty list:
+
+```py
+the_list = []
+the_list[0:] = [11, 22]
+# [11, 22]
+```
+
+Slicing seems to be very sensitive to the index! For example,
+
+```py
+# Slice is too small!
+the_list = [0, 1, 2, 3]
+the_list[1:2] = [11, 22]
+# [0, 11, 22, 2, 3]
+
+# Slice is too large!
+the_list = [0, 1, 2, 3]
+the_list[1:4] = [11, 22]
+# [0, 11, 22]
+```
+
+I am not yet sure why Python behaves this way.
+
+See also "Slice objects" in Python's [data model](https://docs.python.org/3/reference/datamodel.html).
+
 
 ## Further Reading
 
-Python docs:
+Python docs on lists:
 
-  * [Data Structures: list](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)
-  * [stdtypes: list](https://docs.python.org/3/library/stdtypes.html#list)
+  * [Methods on lists](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)
+  * [list type](https://docs.python.org/3/library/stdtypes.html#list)
   * [`list()` builtin function](https://docs.python.org/3/library/functions.html#func-list)
-  * [sequences types](https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range)
+  * [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions)
+
+Python docs on sequences:
+
   * [glossary on sequences](https://docs.python.org/3/glossary.html#term-sequence)
+  * [sequences types](https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range)
   * [`collections.abc.Sequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence)
   * [common sequence operations](https://docs.python.org/3/library/stdtypes.html#typesseq-common)
   * [mutable sequence operations](https://docs.python.org/3/library/stdtypes.html#typesseq-mutable)
-  * [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions)
