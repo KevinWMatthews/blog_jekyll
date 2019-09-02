@@ -1,7 +1,7 @@
 ---
 title: &title "Concurrency in C++: Condition Variables"
 permalink: /concurrency-in-cxx-condition-variables/
-excerpt: "TODO"
+excerpt: ""
 toc: true
 toc_label: *title
 toc_sticky: true

@@ -1,7 +1,7 @@
 ---
 title: &title "Strings in Python"
 permalink: /strings-in-python/
-excerpt: "Things to know about Python strings"
+excerpt: "Reference on the ins and outs of Python strings"
 toc: true
 toc_label: *title
 toc_sticky: true

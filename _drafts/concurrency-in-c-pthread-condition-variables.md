@@ -1,7 +1,7 @@
 ---
 title: &title "Concurrency in C: pthread Condition Variables"
 permalink: /concurrency-in-c-pthread-condition-variables/
-excerpt: "TODO"
+excerpt: ""
 toc: true
 toc_label: *title
 toc_sticky: true

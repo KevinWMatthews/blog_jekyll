@@ -1,7 +1,7 @@
 ---
 title: &title "Closures in Rust"
 permalink: /closures-in-rust/
-excerpt: "Closures in Rust"
+excerpt: ""
 toc: true
 toc_label: *title
 toc_sticky: true

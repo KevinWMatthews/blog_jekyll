@@ -1,7 +1,7 @@
 ---
 title: &title "2D Lists in Python"
 permalink: /2d-lists-in-python/
-excerpt: "Things to remember"
+excerpt: "Right and wrong ways to create 2d lists"
 toc: true
 toc_label: *title
 toc_sticky: true

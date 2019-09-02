@@ -1,7 +1,7 @@
 ---
-title: &title "The map function in Python"
+title: &title "The map() function in Python"
 permalink: /map-function-in-python/
-excerpt: "Things to remember"
+excerpt: "Cheatsheet for Python's map function"
 toc: true
 toc_label: *title
 toc_sticky: true

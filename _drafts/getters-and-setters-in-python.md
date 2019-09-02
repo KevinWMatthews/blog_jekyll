@@ -1,7 +1,7 @@
 ---
 title: &title "Getters and Setters in Python"
 permalink: /getters-and-setters-in-python/
-excerpt: "Things to remember"
+excerpt: ""
 toc: true
 toc_label: *title
 toc_sticky: true

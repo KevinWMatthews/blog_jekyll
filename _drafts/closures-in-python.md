@@ -1,7 +1,7 @@
 ---
 title: &title "Closures in Python"
 permalink: /closures-in-python/
-excerpt: "Closures in Python"
+excerpt: ""
 toc: true
 toc_label: *title
 toc_sticky: true

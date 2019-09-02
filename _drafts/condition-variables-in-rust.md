@@ -1,7 +1,7 @@
 ---
 title: &title "Concurrency in Rust: Condition Variables"
 permalink: /concurrency-in-rust-condition-variables/
-excerpt: "TODO"
+excerpt: ""
 toc: true
 toc_label: *title
 toc_sticky: true

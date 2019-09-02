@@ -1,7 +1,7 @@
 ---
 title: &title "Decorators in Python"
 permalink: /decorators-in-python/
-excerpt: "Things to remember"
+excerpt: ""
 toc: true
 toc_label: *title
 toc_sticky: true

@@ -1,7 +1,7 @@
 ---
-title: &title "Reduce in Python"
-permalink: /reduce-in-python/
-excerpt: "Introduction to the reduce function in Python"
+title: &title "The reduce() function in Python"
+permalink: /reduce-function-in-python/
+excerpt: "Cheatsheet for Python's reduce function"
 toc: true
 toc_label: *title
 toc_sticky: true
