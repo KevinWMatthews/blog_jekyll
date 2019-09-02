@@ -5,7 +5,6 @@ categories:
   - ruby
 tags:
   - ruby
-  - python
 ---
 
 Find Ruby's analogue for Python's built-in list creation feature.
