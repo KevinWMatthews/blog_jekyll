@@ -14,6 +14,9 @@ tags:
 
 A cheat-sheet on Python lists.
 
+For 2d lists, see [this blog post](/2d-lists-in-python/).
+
+
 ## Source
 
 Find [source code](https://github.com/KevinWMatthews/python-lists) on GitHub.
