@@ -153,10 +153,8 @@ the_list.insert(999, 42)
 ## Index
 
 Python provides an [index operator](https://python-reference.readthedocs.io/en/latest/docs/brackets/indexing.html), `[]`.
-
 This maps to a list's [`__getitem__`](https://docs.python.org/3/reference/datamodel.html#object.__getitem__)
 or [`__setitem__`](https://docs.python.org/3/reference/datamodel.html#object.__setitem__) methods.
-
 Specifically,
 
   * `object.__getitem__(self, key)` maps to `self[key]`
@@ -212,8 +210,10 @@ the_list[1:3]
 # [1, 2]
 ```
 
-Slices do _not_ include the stop element (they are open on the right).
+Note that `[]` returns a value for an integer key,
+but for a slice key it returns a list!
 
+Slices do _not_ include the stop element (they are open on the right).
 For example, this returns an empty list:
 
 ```py
@@ -221,8 +221,6 @@ the_list = [0, 1, 2, 3]
 the_list[1:1]
 # []
 ```
-
-Note that in this case `[]` returns a list!
 
 Set multiple items in a list using:
 
@@ -236,7 +234,7 @@ An open-ended slice can be used to extend a list:
 
 ```py
 the_list = [0, 1, 2, 3]
-# Note the trailing ':' - the key is a slice!
+# The key is a slice - note the trailing ':'
 the_list[len(the_list):] = [11, 22]
 # [0, 1, 2, 3, 11, 22]
 ```
