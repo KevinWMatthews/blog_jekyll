@@ -14,7 +14,7 @@ tags:
 
 An introduction to the complexities of pattern matching in Rust.
 
-Explores the differences between matching `Copy` types, non-`Copy` types,
+Explore the differences between matching `Copy` types, non-`Copy` types,
 references, and how Rust's match ergonomics affects these.
 
 
@@ -26,7 +26,7 @@ Find [source code](https://github.com/KevinWMatthews/rust-pattern-matching) on G
 ## Copy Types
 
 Copy types are easy to match.
-They are on the stack and can always be copied, so ownership is not a concern.
+They are on the stack and are always copied so ownership is not a concern.
 
 
 ### Copy
@@ -55,7 +55,12 @@ match maybe_number {
 
 ### Borrow
 
-References can be matched using Rust's match ergonomics:
+References can be matched using Rust's [match ergonomics](https://github.com/rust-lang/rfcs/blob/master/text/2005-match-ergonomics.md).
+
+When the match expression is a reference (`&maybe_number`) and the pattern is not a reference (`Some(borrowed)`), Rust will:
+
+  * pattern-match the `Option` as a reference
+  * bind the `Option`'s value as a reference'
 
 ```rust
 let maybe_number = Some(42);
@@ -67,6 +72,9 @@ match &maybe_number {
     None => println!("Found nothing"),
 }
 ```
+
+That is, `Some(borrowed)` is treated as `&Some(ref borrowed)`.
+Similarly, `None` is treated as `&None`.
 
 
 ### Old-style Borrow
@@ -110,15 +118,14 @@ match *maybe_number_ref {
 
 ## Non-Copy Types
 
-Ownership is a concern when matching Non-Copy types.
-These live on the heap and must either be moved or borrowed.
-
-These examples use a `Box`.
+Ownership must be considered when matching Non-Copy types.
+These live on the heap and are either be moved or borrowed.
 
 
 ### Move
 
 By default, `match` statements move/own the matched value.
+For example,
 
 ```rust
 let maybe_number = Some(Box::new(42));
@@ -131,7 +138,7 @@ match maybe_number {
 }
 ```
 
-Note that using the value again fails to compile:
+Using the value again causes a compiler error:
 
 ```rust
 match maybe_number {
@@ -151,7 +158,7 @@ match maybe_number {
 
 ### Borrow
 
-The `match` can borrow the matched value instead of owning it.
+A matched value can be borrowed instead of owned.
 
 Using [match ergonomics](https://github.com/rust-lang/rfcs/blob/master/text/2005-match-ergonomics.md),
 borrowing can be done simply using the `&` operator:
@@ -172,7 +179,11 @@ so Rust will use match ergonomics to:
   * pattern-match the `Option` as a reference
   * bind the `Option`'s value as a reference
 
-Note the double dereference; the first `*` dereferences the borrow,
+That is, `Some(borrows_box)` is treated as `&Some(ref borrows_box)`.
+Similarly, `None` is treated as `&None`.
+
+Note the double dereference on the borrowed value;
+the first `*` dereferences the borrow,
 the second gets the value out of the `Box` (using the `Deref` trait).
 
 The `Box` is borrowed so we can match again:
@@ -198,7 +209,7 @@ match &maybe_number {
 ```
 
 This assignment attempts to move the `Box` out of the `Option` and into a new variable.
-This is not allowed because the `Option` is borrowed.
+This is not allowed because the `Option`'s value is borrowed.
 
 
 ### Old-style Borrow
@@ -213,7 +224,6 @@ For example:
 ```rust
 let maybe_number = Some(Box::new(42));
 let maybe_number_ref = &maybe_number;
-
 match maybe_number_ref {
     &Some(ref borrows_box) => {
         let x = **borrows_box;
